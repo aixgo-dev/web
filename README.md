@@ -24,7 +24,7 @@ make build                         # production build → public/
 make lint                          # markdown + html lint
 ```
 
-The Hugo version used in production is pinned via `HUGO_VERSION` in the Cloudflare Pages project config (currently `0.157.0` — keep your local Hugo within one minor version).
+The production Hugo version is set via `HUGO_VERSION` in the Cloudflare Pages project env vars (the canonical pin — not committed to this repo). Copy the value from the Cloudflare Pages dashboard to match locally.
 
 ## Repository layout
 
