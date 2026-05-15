@@ -1,6 +1,6 @@
 ---
 title: "Interactive Coding Assistant"
-description: "Use the aixgo chat command to interact with an AI coding assistant that can read and write files, run git operations, and execute terminal commands"
+description: "Use the Aixgo chat command to interact with an AI coding assistant that can read and write files, run git operations, and execute terminal commands"
 category: "Tools"
 weight: 3
 ---

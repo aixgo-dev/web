@@ -1,6 +1,6 @@
-# aixgo Configuration Examples
+# Aixgo Configuration Examples
 
-Comprehensive collection of YAML configuration examples for aixgo agents, LLM providers, MCP servers, security modes, orchestration patterns, and real-world use cases.
+Comprehensive collection of YAML configuration examples for Aixgo agents, LLM providers, MCP servers, security modes, orchestration patterns, and real-world use cases.
 
 ## Table of Contents
 
@@ -15,7 +15,7 @@ Comprehensive collection of YAML configuration examples for aixgo agents, LLM pr
 
 ## Agent Types
 
-Agent types define the behavior and capabilities of individual agents in your aixgo deployment.
+Agent types define the behavior and capabilities of individual agents in your Aixgo deployment.
 
 ### [Producer Agent](agents/producer.yaml)
 
