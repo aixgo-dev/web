@@ -44,8 +44,8 @@
              arriving on a product page from that product's README sees a
              persistent, high-contrast button pointing at a different product's
              tutorial — the framework quick start. */}}
-        {{- $ctaURL := hugo.Data.version.cta_url -}}
-        {{- $ctaText := hugo.Data.version.cta_text -}}
+        {{- $ctaURL := site.Data.version.cta_url -}}
+        {{- $ctaText := site.Data.version.cta_text -}}
         {{- if hasPrefix .RelPermalink "/code" -}}
           {{- $ctaURL = "/code/#install" -}}
           {{- $ctaText = "Install" -}}

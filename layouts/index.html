@@ -9,8 +9,8 @@
   .Content, so anything written in that file renders nowhere.
 */}}
 {{ define "main" }}
-{{- $v := hugo.Data.version -}}
-{{- $h := hugo.Data.home -}}
+{{- $v := site.Data.version -}}
+{{- $h := site.Data.home -}}
 
 <div class="ax-page">
 
@@ -197,7 +197,7 @@
       </div>
 
       <div class="ax-grid ax-grid--2">
-        {{- range hugo.Data.products }}
+        {{- range site.Data.products }}
         <a class="ax-card sibling-card" href="{{ .url }}">
           <h3>{{ .name }}</h3>
           <p>{{ .description }}</p>

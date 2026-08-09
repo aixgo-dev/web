@@ -12,7 +12,7 @@
 
 {{- $statusIcons := dict "complete" "✅" "in_progress" "🚧" "roadmap" "❌" -}}
 
-{{- with hugo.Data.features -}}
+{{- with site.Data.features -}}
   {{- range .categories -}}
     <h3>{{ .name }}</h3>
 

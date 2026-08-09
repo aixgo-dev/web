@@ -9,7 +9,7 @@
 
 {{- $labels := dict "complete" "Shipped" "in_progress" "In progress" "planned" "Planned" -}}
 
-{{- with hugo.Data.milestones -}}
+{{- with site.Data.milestones -}}
   <div class="ax-grid ax-grid--3">
     {{- range $m := .milestones -}}
       {{- $status := $m.status | default "planned" -}}
