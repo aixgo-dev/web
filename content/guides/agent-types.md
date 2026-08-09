@@ -1,7 +1,6 @@
 ---
 title: 'Agent Types Guide'
 description: "Comprehensive guide to all Aixgo agent types including Classifier and Aggregator agents with examples and best practices."
-breadcrumb: 'Guides'
 category: 'Agents'
 weight: 3
 ---

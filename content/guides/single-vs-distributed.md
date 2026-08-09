@@ -1,7 +1,6 @@
 ---
 title: 'Single Binary vs Distributed Mode'
 description: 'Understand how Aixgo scales from local development to distributed production with zero code changes.'
-breadcrumb: 'Core Concepts'
 category: 'Core Concepts'
 weight: 5
 ---

@@ -1,7 +1,6 @@
 ---
 title: 'Pattern Composition for Multi-Phase Workflows'
 description: 'Compose existing orchestration patterns to build complex multi-phase workflows without custom orchestrators'
-breadcrumb: 'Pattern Composition'
 category: 'Orchestration'
 weight: 20
 ---

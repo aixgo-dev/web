@@ -20,7 +20,7 @@
         <p class="ax-eyebrow">
           <span class="ax-eyebrow__num">&larr;</span>
           <a href="/{{ .Section }}/" class="ax-eyebrow__back">{{ if $isGuide }}Guides{{ else }}Blog{{ end }}</a>
-          {{ with .Params.breadcrumb }}<span aria-hidden="true">&middot;</span>{{ . }}{{ end }}
+          {{ with .Params.category }}<span aria-hidden="true">&middot;</span>{{ . }}{{ end }}
         </p>
         {{ end }}
 
