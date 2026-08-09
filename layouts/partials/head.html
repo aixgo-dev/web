@@ -1,11 +1,19 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>{{ if .IsHome }}{{ .Site.Title }}{{ else }}{{ .Title }} | {{ .Site.Title }}{{ end }}</title>
+{{/* The language file sets the site title to the bare word "Aixgo", which is
+     what the home branch used to render as its entire <title>. Give home the
+     full string; every other page keeps "Page | Aixgo". */}}
+<title>{{ if .IsHome }}{{ .Site.Params.homeTitle }}{{ else }}{{ .Title }} | {{ .Site.Title }}{{ end }}</title>
 <meta name="description" content="{{ if .Description }}{{ .Description }}{{ else }}{{ .Site.Params.description }}{{ end }}">
 
 <!-- Favicon -->
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <link rel="apple-touch-icon" href="/aixgo-logo.png">
+
+<!-- Fonts: self-hosted, preloaded ahead of the stylesheets so the request can
+     leave before the CSS finishes parsing -->
+<link rel="preload" href="/fonts/archivo-latin-var.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/inter-latin-var.woff2" as="font" type="font/woff2" crossorigin>
 
 <!-- SEO: canonical, OpenGraph, Twitter, JSON-LD -->
 {{ partial "seo.html" . }}
@@ -14,6 +22,7 @@
 <link rel="stylesheet" href="/css/main.css">
 <link rel="stylesheet" href="/css/custom.css">
 <link rel="stylesheet" href="/css/alpha-notices.css">
+{{ if eq .Layout "code" }}<link rel="stylesheet" href="/css/code.css">{{ end }}
 
 <!-- RSS -->
 {{ with .OutputFormats.Get "RSS" }}

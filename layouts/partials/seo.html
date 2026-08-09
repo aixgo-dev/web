@@ -1,8 +1,17 @@
 {{/* Canonical, OpenGraph, Twitter, JSON-LD. Included from head.html. */}}
 
-{{- $title := cond .IsHome .Site.Title (printf "%s | %s" .Title .Site.Title) -}}
+{{- $title := cond .IsHome (string .Site.Params.homeTitle) (printf "%s | %s" .Title .Site.Title) -}}
 {{- $description := cond (ne .Description "") .Description .Site.Params.description -}}
+{{/* A page that ships its own social card gets the large card. Everything else
+     falls back to the logo, which only reads at summary size. */}}
 {{- $ogImage := absURL "aixgo-logo.png" -}}
+{{- $ogImageAlt := .Site.Title -}}
+{{- $twitterCard := "summary" -}}
+{{- with .Params.image -}}
+  {{- $ogImage = absURL . -}}
+  {{- $twitterCard = "summary_large_image" -}}
+{{- end -}}
+{{- with .Params.imageAlt }}{{ $ogImageAlt = . }}{{ end -}}
 
 <link rel="canonical" href="{{ .Permalink }}">
 
@@ -12,7 +21,7 @@
 <meta property="og:title" content="{{ $title }}">
 <meta property="og:description" content="{{ $description }}">
 <meta property="og:image" content="{{ $ogImage }}">
-<meta property="og:image:alt" content="{{ .Site.Title }}">
+<meta property="og:image:alt" content="{{ $ogImageAlt }}">
 <meta property="og:locale" content="{{ replace .Site.Language.Lang "-" "_" }}_US">
 {{- if .IsPage }}
   {{- with .Date }}
@@ -26,10 +35,11 @@
   {{- end }}
 {{- end }}
 
-<meta name="twitter:card" content="summary">
+<meta name="twitter:card" content="{{ $twitterCard }}">
 <meta name="twitter:title" content="{{ $title }}">
 <meta name="twitter:description" content="{{ $description }}">
 <meta name="twitter:image" content="{{ $ogImage }}">
+<meta name="twitter:image:alt" content="{{ $ogImageAlt }}">
 
 <script type="application/ld+json">
 {

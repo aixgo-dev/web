@@ -4,8 +4,14 @@
 description = "Production-grade AI agent framework built for Go developers"
 author = "Charles Green"
 
+# Home page <title> and og:title. languages.en.toml sets the site title to the
+# bare word "Aixgo" so it reads well as a suffix, which left the site's
+# most-linked page with a one-word title in every tab and search result.
+homeTitle = "Aixgo - Production AI Agents in Go"
+
 # Social links
 github = "https://github.com/aixgo-dev/aixgo"
 
-# Footer text
-footerText = "MIT Licensed · Open Source · Community Driven"
+# Footer text. Licenses are stated per project now that the org ships more than
+# the framework: Aixgo and Aixgate are MIT, Aixgo Code is Apache-2.0.
+footerText = "Open source · Community driven"
