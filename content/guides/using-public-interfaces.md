@@ -5,8 +5,6 @@ category: 'Advanced'
 weight: 8
 ---
 
-# Using Public Interfaces
-
 Aixgo v0.2.2 introduces the `agent` package—a standalone, minimal-dependency package that exports core interfaces for building custom agents. This enables library-style integration into existing Go applications without requiring the full Aixgo framework.
 
 ## Overview

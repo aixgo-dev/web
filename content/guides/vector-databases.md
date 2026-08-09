@@ -5,8 +5,6 @@ category: 'RAG & Embeddings'
 weight: 4
 ---
 
-# Vector Databases in Aixgo
-
 This guide covers everything you need to build production-ready Retrieval-Augmented Generation (RAG) systems using Aixgo's vector database and embeddings integration.
 
 ## Overview

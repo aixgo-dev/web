@@ -5,8 +5,6 @@ category: 'RAG & Embeddings'
 weight: 5
 ---
 
-# Embeddings in Aixgo
-
 This guide provides a comprehensive reference for working with embeddings in Aixgo, covering provider selection, configuration, optimization, and production deployment strategies.
 
 ## Overview

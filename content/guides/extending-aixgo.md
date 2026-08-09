@@ -5,8 +5,6 @@ category: 'Advanced'
 weight: 7
 ---
 
-# Extending Aixgo
-
 Aixgo is designed to be extensible. This guide shows you how to add custom providers for LLMs, vector databases, and embeddings.
 
 ## Overview

@@ -677,7 +677,7 @@ groups:
 
 ## See also
 
-- [Router Pattern](./multi-agent-orchestration/#router-pattern) - Intelligent routing
+- [Router Pattern](./multi-agent-orchestration/#4-router-pattern) - Intelligent routing
 - [Aggregator Strategies](./agent-types/#aggregator-agent) - Deterministic vs LLM aggregation
 - [Observability Guide](./observability/) - Metrics and monitoring
 - [Production Deployment](./production-deployment/) - Production best practices

@@ -828,8 +828,8 @@ func processDocument(ctx context.Context, doc Document) (*Report, error) {
 ## See also
 
 - [Multi-Agent Orchestration Guide](./multi-agent-orchestration/) - All 13 orchestration patterns
-- [Sequential Pattern](./multi-agent-orchestration/#sequential-pattern) - Ordered execution
-- [Parallel Pattern](./multi-agent-orchestration/#parallel-pattern) - Concurrent execution
-- [Aggregation Pattern](./multi-agent-orchestration/#aggregation-pattern) - Multi-source synthesis
+- [Sequential Pattern](./multi-agent-orchestration/#2-sequential-pattern) - Ordered execution
+- [Parallel Pattern](./multi-agent-orchestration/#3-parallel-pattern) - Concurrent execution
+- [Aggregation Pattern](./multi-agent-orchestration/#11-aggregation-pattern) - Multi-source synthesis
 - [Validation with Retry](./validation-with-retry/) - Automatic validation and retry
 - [Multi-Phase Workflow Example](https://github.com/aixgo-dev/aixgo/tree/main/examples/multi-phase-workflow) - Complete working example
