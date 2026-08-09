@@ -584,21 +584,22 @@ body {
   padding: 0 2rem;
 }
 
-/* Header */
+/* Header. One row, 64px, translucent over whatever ground scrolls under it. */
 header {
   position: sticky;
   top: 0;
-  background-color: rgba(10, 15, 28, 0.95);
-  backdrop-filter: blur(10px);
-  border-bottom: 1px solid rgba(42, 53, 68, 0.3);
+  background-color: color-mix(in srgb, var(--ax-bg-0) 82%, transparent);
+  backdrop-filter: blur(12px) saturate(140%);
+  -webkit-backdrop-filter: blur(12px) saturate(140%);
+  border-bottom: 1px solid var(--ax-hairline);
   z-index: 100;
-  padding: 1rem 0;
 }
 
 .nav-wrapper {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  min-height: 64px;
 }
 
 .logo {
@@ -632,13 +633,36 @@ header {
 }
 
 .nav-menu a {
-  color: var(--color-text);
+  position: relative;
+  display: block;
+  padding-block: 1.25rem;
+  color: var(--ax-text-muted);
   text-decoration: none;
-  transition: color 0.2s;
+  transition: color var(--ax-dur-1) var(--ax-ease);
+  font-size: var(--ax-t-sm);
   font-weight: 500;
-  /* Two-word labels ("Aixgo Code") wrap to two lines and push the header to
-     three rows in the band between the hamburger breakpoint and 1024px. */
+  /* Two-word labels wrap to two lines and push the header to three rows in the
+     band between the hamburger breakpoint and 1024px. */
   white-space: nowrap;
+}
+
+.nav-menu a:hover { color: var(--ax-text); }
+
+/* Current section. The underline is the only place the accent appears in the
+   header, so the page you are on is the one thing it points at. */
+.nav-menu a[aria-current] {
+  color: var(--ax-text);
+}
+
+.nav-menu a[aria-current]::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 2px;
+  border-radius: 1px;
+  background: var(--ax-accent);
 }
 
 /* Between the hamburger at 768px and 1024px, five labels plus the logo and the
@@ -646,10 +670,6 @@ header {
    the row wrap or overflow. */
 @media (max-width: 1023px) {
   .nav-menu { gap: 1.125rem; }
-}
-
-.nav-menu a:hover {
-  color: var(--color-cyan);
 }
 
 .external-link-icon {
@@ -671,18 +691,20 @@ header {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 40px;
-  height: 40px;
+  width: 36px;
+  height: 36px;
+  padding-block: 0;
   border: 1px solid transparent;
-  border-radius: 6px;
-  transition: all 0.2s;
-  color: var(--color-text);
+  border-radius: var(--ax-r-sm);
+  transition:
+    border-color var(--ax-dur-1) var(--ax-ease),
+    color var(--ax-dur-1) var(--ax-ease);
+  color: var(--ax-text-muted);
 }
 
 .nav-github-icon:hover {
-  border-color: var(--color-cyan);
-  background-color: rgba(34, 211, 238, 0.05);
-  color: var(--color-cyan);
+  border-color: var(--ax-border-strong);
+  color: var(--ax-text);
 }
 
 .nav-github-icon svg {
@@ -698,23 +720,28 @@ header {
   margin-left: 0.5rem;
 }
 
+/* The header call to action takes the secondary treatment. It is persistent
+   and the hero call to action is not, so filling both meant two equally loud
+   primaries competed above the fold on every page. */
 .btn-get-started {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  padding: 0.625rem 1.25rem;
-  background: linear-gradient(135deg, var(--color-cyan) 0%, #06b6d4 100%);
-  color: var(--color-bg) !important;
-  border-radius: 6px;
-  font-weight: 600 !important;
-  transition: all 0.2s;
-  box-shadow: 0 2px 8px rgba(34, 211, 238, 0.2);
+  padding: 0.5rem 1rem;
+  padding-block: 0.5rem;
+  background: transparent;
+  border: 1px solid var(--ax-border-strong);
+  border-radius: var(--ax-r-sm);
+  color: var(--ax-text);
+  font-weight: 600;
+  transition:
+    border-color var(--ax-dur-1) var(--ax-ease),
+    color var(--ax-dur-1) var(--ax-ease);
 }
 
 .btn-get-started:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(34, 211, 238, 0.3);
-  color: var(--color-bg) !important;
+  border-color: var(--ax-accent);
+  color: var(--ax-accent);
 }
 
 /* Footer */
@@ -1547,26 +1574,45 @@ h1, h2, h3, h4, h5, h6 {
    Hidden on desktop, shown on mobile via media query
    ========================================================================== */
 
-/* Hide hamburger elements on desktop */
+/* Hidden without `display: none`, which would drop it out of the tab order and
+   leave the drawer openable by pointer only. */
 .nav-toggle {
-  display: none;
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
 }
 
+/* 44x44 is the smallest target a thumb reliably hits. The bars are 24px wide;
+   the rest is padding, which is why the box is sized rather than the glyph. */
 .nav-hamburger {
   display: none;
   flex-direction: column;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
   gap: 5px;
   z-index: 101;
-  padding: 10px;
+  width: 44px;
+  height: 44px;
+  margin-right: -10px;
 }
 
 .nav-hamburger span {
-  width: 25px;
-  height: 3px;
-  background-color: var(--color-text);
-  transition: all 0.3s ease;
-  border-radius: 3px;
+  width: 24px;
+  height: 2px;
+  background-color: var(--ax-text);
+  transition: transform var(--ax-dur-2) var(--ax-ease), opacity var(--ax-dur-1) var(--ax-ease);
+  border-radius: 2px;
+}
+
+/* The checkbox is the drawer's state. Keeping it focusable, and giving the
+   label a focus ring through it, is what makes the drawer keyboard-operable
+   without any JavaScript. */
+.nav-toggle:focus-visible ~ .nav-hamburger {
+  box-shadow: var(--ax-focus);
+  border-radius: var(--ax-r-sm);
 }
 
 /* ==========================================================================
@@ -1740,34 +1786,48 @@ h1, h2, h3, h4, h5, h6 {
     display: flex;
   }
 
-  /* Hide and transform nav menu into slide-out drawer */
+  /* Slide-out drawer. 100dvh, not 100vh: on iOS Safari the visual viewport
+     shrinks when the toolbars are showing, and 100vh leaves the last menu item
+     under the browser chrome with nothing to scroll to. */
   .nav-menu {
     position: fixed;
     top: 0;
     right: -100%;
-    height: 100vh;
-    width: 70%;
-    max-width: 300px;
-    background-color: var(--color-bg);
-    border-left: 1px solid var(--color-border);
+    height: 100dvh;
+    width: 78%;
+    max-width: 320px;
+    background-color: var(--ax-bg-2);
+    border-left: 1px solid var(--ax-border);
     flex-direction: column;
+    align-items: stretch;
     gap: 0;
-    padding: 4rem 1.5rem 2rem;
-    transition: right 0.3s ease;
-    box-shadow: -5px 0 15px rgba(0, 0, 0, 0.3);
+    padding: 5rem 1.25rem 2rem;
+    transition: right var(--ax-dur-3) var(--ax-ease);
+    box-shadow: -24px 0 48px -24px rgba(0, 0, 0, 0.8);
     z-index: 100;
-    overflow-y: auto; /* Allow scrolling if content is too tall */
+    overflow-y: auto;
+    overscroll-behavior: contain;
   }
 
   .nav-menu li {
     width: 100%;
-    border-bottom: 1px solid var(--color-border);
+    border-bottom: 1px solid var(--ax-hairline);
   }
 
   .nav-menu a {
     display: block;
     padding: 0.875rem 0;
     font-size: 1rem;
+    color: var(--ax-text-muted);
+  }
+
+  /* The underline marker is a desktop device; in the drawer the row itself
+     carries the state. */
+  .nav-menu a[aria-current] { color: var(--ax-text); }
+  .nav-menu a[aria-current]::after { display: none; }
+  .nav-menu li:has(a[aria-current]) {
+    box-shadow: inset 2px 0 0 var(--ax-accent);
+    padding-left: 0.75rem;
   }
 
   /* Mobile GitHub: show label, full-width like other items */
@@ -1826,16 +1886,21 @@ h1, h2, h3, h4, h5, h6 {
     transform: rotate(-45deg) translate(7px, -7px);
   }
 
-  /* Overlay backdrop when menu is open */
+  /* Backdrop. It covers the whole viewport, not the strip beside the drawer,
+     so the page behind reads as inert rather than half-dimmed. The label is
+     also the dismiss target, which is why it sits above the backdrop. */
   .nav-toggle:checked ~ .nav-menu::before {
     content: '';
     position: fixed;
-    top: 0;
-    left: 0;
-    right: 30%;
-    bottom: 0;
-    background-color: rgba(0, 0, 0, 0.5);
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.6);
     z-index: -1;
+  }
+
+  /* Scroll lock. Without it the page keeps scrolling under the open drawer and
+     closing it drops the reader somewhere they never navigated to. */
+  body:has(.nav-toggle:checked) {
+    overflow: hidden;
   }
 
   /* Transform Go Advantage table into cards */
