@@ -30,7 +30,7 @@ cta_sub: "The quick start wires a supervisor, a producer, a ReAct agent and a lo
 | Category | Count | Status |
 |----------|-------|--------|
 | Agent Types | 6 specialized types | Implemented |
-| LLM Providers | 6+ cloud + local | Implemented |
+| LLM Providers | 8 cloud + local | Implemented |
 | Orchestration Patterns | 13 patterns | Implemented |
 | Security Modes | 4 auth modes | Implemented |
 | Observability Backends | 6+ backends | Implemented |
