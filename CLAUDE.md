@@ -91,6 +91,15 @@ Required env vars (set in Cloudflare Pages project, not this repo): `HUGO_VERSIO
 
 Robots policy and sitemap are managed by Hugo's built-in features plus `layouts/partials/seo.html` (OpenGraph, JSON-LD, canonical URLs).
 
+### Social cards
+
+A page with no card of its own unfurls as the logo at `summary` size. To give one a full-width card, draw a **1200x630** PNG and either:
+
+1. drop it at `static/og-<slug>.png`, where `<slug>` is the last segment of the page URL, so `/code/` reads `static/og-code.png`, or
+1. name any path in front matter with `image:`, which overrides the convention.
+
+Either way the page switches to `summary_large_image` and declares 1200x630. Set `imageAlt:` in front matter too. Without it the alt text falls back to the site title, which describes the logo rather than the card.
+
 ## Common Tasks
 
 ### Add a new guide
