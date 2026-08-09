@@ -1,0 +1,32 @@
+{{/*
+  Inline icon. Call as {{ partial "icon.html" "shield" }}.
+
+  These six shapes are transcribed from lucide-static v0.469.0 (ISC), which is
+  the version the site used to pull from unpkg on every page load. The rest of
+  the site already inlines its SVGs by hand; loading a whole icon library over
+  a third party CDN to draw six of them was a render-blocking request, a flash
+  of unstyled feature cards on the homepage, and a supply-chain dependency on a
+  site whose lead product page argues for least privilege.
+
+  Adding an icon means adding a case here, not a script tag.
+*/}}
+{{- $name := . -}}
+<svg class="icon icon--{{ $name }}" width="24" height="24" viewBox="0 0 24 24" fill="none"
+     stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+     aria-hidden="true" focusable="false">
+{{- if eq $name "network" -}}
+  <rect x="16" y="16" width="6" height="6" rx="1"/><rect x="2" y="16" width="6" height="6" rx="1"/><rect x="9" y="2" width="6" height="6" rx="1"/><path d="M5 16v-3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3"/><path d="M12 12V8"/>
+{{- else if eq $name "boxes" -}}
+  <path d="M2.97 12.92A2 2 0 0 0 2 14.63v3.24a2 2 0 0 0 .97 1.71l3 1.8a2 2 0 0 0 2.06 0L12 19v-5.5l-5-3-4.03 2.42Z"/><path d="m7 16.5-4.74-2.85"/><path d="m7 16.5 5-3"/><path d="M7 16.5v5.17"/><path d="M12 13.5V19l3.97 2.38a2 2 0 0 0 2.06 0l3-1.8a2 2 0 0 0 .97-1.71v-3.24a2 2 0 0 0-.97-1.71L17 10.5l-5 3Z"/><path d="m17 16.5-5-3"/><path d="m17 16.5 4.74-2.85"/><path d="M17 16.5v5.17"/><path d="M7.97 4.42A2 2 0 0 0 7 6.13v4.37l5 3 5-3V6.13a2 2 0 0 0-.97-1.71l-3-1.8a2 2 0 0 0-2.06 0l-3 1.8Z"/><path d="M12 8 7.26 5.15"/><path d="m12 8 4.74-2.85"/><path d="M12 13.5V8"/>
+{{- else if eq $name "activity" -}}
+  <path d="M22 12h-2.48a2 2 0 0 0-1.93 1.46l-2.35 8.36a.25.25 0 0 1-.48 0L9.24 2.18a.25.25 0 0 0-.48 0l-2.35 8.36A2 2 0 0 1 4.49 12H2"/>
+{{- else if eq $name "shield" -}}
+  <path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/>
+{{- else if eq $name "check-circle" -}}
+  <path d="M21.801 10A10 10 0 1 1 17 3.335"/><path d="m9 11 3 3L22 4"/>
+{{- else if eq $name "trending-down" -}}
+  <polyline points="22 17 13.5 8.5 8.5 13.5 2 7"/><polyline points="16 17 22 17 22 11"/>
+{{- else -}}
+  {{- errorf "partials/icon.html: no icon named %q. Add its shape here rather than reaching for a library." $name -}}
+{{- end -}}
+</svg>
