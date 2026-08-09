@@ -6,7 +6,7 @@
   matter can override the text, the link and the heading; the default sends
   people to the quick start, which is where an interested reader goes next.
 */}}
-{{- $v := site.Data.version -}}
+{{- $v := hugo.Data.version -}}
 {{- $text := .Params.cta_text | default $v.cta_text -}}
 {{- $url := .Params.cta_url | default $v.cta_url -}}
 {{- $head := .Params.cta_heading | default "Ready to build one?" -}}
