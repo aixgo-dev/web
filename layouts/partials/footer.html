@@ -8,18 +8,22 @@
         </div>
         <p class="footer-tagline">Production AI for Go</p>
         <p class="footer-copyright">© {{ now.Year }} Aixgo</p>
-        <a href="https://github.com/aixgo-dev/aixgo/blob/main/LICENSE" target="_blank" rel="noopener noreferrer" class="footer-license">MIT License</a>
+        {{/* Not a blanket MIT claim any more. The framework and Aixgate are
+             MIT; Aixgo Code is Apache-2.0. Each product page states its own. */}}
+        <p class="footer-license">Open source — see each project's licence</p>
       </div>
 
       <!-- Resources Column -->
       <div class="footer-column">
         <h4 class="footer-heading">Resources</h4>
         <ul class="footer-links">
-          <li><a href="/guides/quick-start">Quick Start</a></li>
-          <li><a href="/docs">Documentation</a></li>
-          <li><a href="/features">Features</a></li>
-          <li><a href="/proverbs">Proverbs</a></li>
-          <li><a href="/blog">Blog</a></li>
+          <li><a href="/guides/quick-start/">Quick Start</a></li>
+          <li><a href="/guides/">Documentation</a></li>
+          <li><a href="/features/">Features</a></li>
+          <li><a href="/why-aixgo/">Why Aixgo</a></li>
+          <li><a href="/v1-compatibility/">v1.0 Compatibility</a></li>
+          <li><a href="/proverbs/">Proverbs</a></li>
+          <li><a href="/blog/">Blog</a></li>
         </ul>
       </div>
 
@@ -34,14 +38,14 @@
         </ul>
       </div>
 
-      <!-- About Column -->
+      <!-- Products Column -->
       <div class="footer-column">
-        <h4 class="footer-heading">About</h4>
+        <h4 class="footer-heading">Products</h4>
         <ul class="footer-links">
-          <li><a href="/why-aixgo">Why Aixgo</a></li>
-          <li><a href="/v1-compatibility">v1.0 Compatibility</a></li>
+          <li><a href="/">Aixgo <span class="footer-note">the agent framework</span></a></li>
+          <li><a href="/code/">Aixgo Code <span class="footer-note">an agent in your GitHub</span></a></li>
+          <li><a href="/aixgate/">Aixgate <span class="footer-note">a sandbox for coding agents</span></a></li>
           <li><a href="https://github.com/aixgo-dev/aixgo/releases" target="_blank" rel="noopener noreferrer">Changelog</a></li>
-          <li><a href="/aixgate/">Aixgate <span style="opacity:0.6;font-size:0.85em;">(sandbox for AI coding agents)</span></a></li>
         </ul>
       </div>
     </div>
