@@ -1,0 +1,373 @@
+# Aixgo Code product page (/code/).
+#
+# Every claim here traces to a line in https://github.com/aixgo-dev/code
+# README.md. If a fact is not in that README, it does not belong on the page.
+# Prose lives in layouts/_default/code.html; the lists live here.
+
+repo: "https://github.com/aixgo-dev/code"
+release: "v0.5.0"
+license: "Apache-2.0"
+
+# --- Hero -------------------------------------------------------------------
+
+hero:
+  eyebrow: "Aixgo Code · Open source · Beta"
+  headline: "An autonomous coding agent that runs inside your GitHub, not ours."
+  subhead: >-
+    File an issue, apply one label, and get a pull request that a human still
+    has to merge. Everything executes in your own GitHub Actions, on your
+    runners, with your secrets. Aixgo hosts nothing and never sees your code.
+  status: >-
+    Two loops run end to end: issue to pull request, and fix-on-request.
+    Expect rough edges.
+  subcta: "Your own GitHub App. Your runners. Your model provider key."
+  footnote: "Apache-2.0 · Your runners · A human merges every pull request"
+
+# Four cells. The 0 and the 1 carry the argument, so they get the accent.
+stats:
+  - value: "Apache-2.0"
+    label: "Open source licence"
+    accent: false
+  - value: "0"
+    label: "Lines of your code reach Aixgo"
+    accent: true
+  - value: "3"
+    label: "GitHub App permissions: contents, pull requests, issues"
+    accent: false
+  - value: "1"
+    label: "Label (ax:go) is the only human trigger"
+    accent: true
+
+# --- 01 The blocker ---------------------------------------------------------
+
+blockers:
+  - title: "Blast radius"
+    body: >-
+      An agent that can merge has an unbounded blast radius. The question is not
+      whether the model is good enough. It is what the model is allowed to reach.
+  - title: "Drift"
+    body: >-
+      An ungated loop wanders. It breaks things, and then reports success,
+      because nothing in the loop is qualified to disagree with it.
+  - title: "Security review"
+    body: >-
+      Evaluations die in security review. A pilot that has to send your source
+      code to a vendor runtime never gets past the person who signs off on it.
+pivot: "So put the agent inside your GitHub instead of sending your code out of it."
+
+# --- 02 Label lifecycle -----------------------------------------------------
+
+lifecycle:
+  - label: "ax:go"
+    means: "Start work on this issue. The only trigger a person sets."
+    by: "You"
+    human: true
+  - label: "ax:queued"
+    means: "Accepted, waiting to start."
+    by: "Bot"
+  - label: "ax:working"
+    means: "Implementing the change."
+    by: "Bot"
+  - label: "ax:review"
+    means: "Review and fix pass in progress."
+    by: "Bot"
+  - marker: "A human reviews the pull request and merges it. Only then does the bot close the issue."
+  - label: "ax:blocked"
+    means: "Needs a human. The agent stopped and left a note."
+    by: "Bot"
+  - label: "ax:done"
+    means: "The bot is finished. A human merged the pull request; the bot closes out the issue."
+    by: "Bot"
+
+commands:
+  - cmd: "@your-app go"
+    means: "On an issue, starts work on it, the same as applying ax:go."
+  - cmd: "@your-app address"
+    means: "On a pull request, addresses the current review feedback."
+  - cmd: "@your-app help"
+    means: "Lists what it understands."
+
+# --- 03 How it works --------------------------------------------------------
+
+steps:
+  - kicker: "Human"
+    title: "File and label"
+    body: >-
+      Someone writes an issue and applies ax:go. That label is the only thing a
+      person applies to start the work.
+  - kicker: "Agent"
+    title: "Implement, then run your gate"
+    body: >-
+      The agent works on a branch and runs the repository's own quality gate,
+      using the gate's output to guide each retry until it passes or it stops
+      and asks for a human.
+  - kicker: "Agent"
+    title: "Open the pull request"
+    body: >-
+      Once the gate passes, the agent opens a pull request and hands it back.
+      That is the strongest action available to it.
+  - kicker: "Human · Agent"
+    title: "Review, and fix on request"
+    body: >-
+      A reviewer requests changes. A fixer role reads the feedback, makes the
+      changes, re-runs the gate, and pushes back to the same pull request. Only
+      feedback left against the current head is addressed, so the loop never
+      re-litigates a comment it already handled.
+  - kicker: "Human"
+    title: "Merge"
+    body: >-
+      A human merges. The agent does not. There is no code path by which it
+      could.
+
+triggers:
+  - "An issue labelled ax:go."
+  - "A review submitted by an owner, member or collaborator."
+  - "A comment that begins with a mention of your own App."
+
+# --- 04 Where it runs -------------------------------------------------------
+
+guarantees:
+  - lead: "No Aixgo control plane."
+    body: >-
+      There is no Aixgo-hosted service managing your repositories. When your
+      team installs the App and adds the workflow, the work runs on your
+      runners inside your account.
+  - lead: "Your code stays in your repos."
+    body: "Aixgo never receives it."
+  - lead: "Your secrets stay in your secret store."
+    body: >-
+      Model provider keys and the App's private key are read by your own
+      Actions runs and never transit our infrastructure.
+  - lead: "Your minutes, your bill."
+    body: >-
+      A reusable workflow runs with the calling repository's own variables and
+      secrets, so you bring your own endpoint and key and pay for your own
+      tokens.
+  - lead: "One audit signal."
+    body: >-
+      Everything the agent does appears under your own App's [bot] account.
+      That bot is the single thing to audit.
+
+questions:
+  - q: "Can it merge its own work?"
+    a: "No. The GitHub interface it is built against has no merge method. The capability is absent from the code, not forbidden by a prompt."
+  - q: "Does it hold deploy credentials?"
+    a: "No deploy credentials and no path to production. Your branch protection rules decide what happens once the pull request exists."
+  - q: "Is the gate mandatory?"
+    a: "Yes. A repo with no gate is refused rather than defaulted."
+  - q: "Can we read the source?"
+    a: "Yes, under Apache-2.0. You are free to read, audit, use and fork it."
+  - q: "Whose model provider account?"
+    a: "Yours. Your endpoint and your key, billed to you, never inherited from Aixgo."
+
+permissions_granted:
+  - scope: "Contents"
+    body: "Read the repository and push to a branch."
+  - scope: "Pull requests"
+    body: "Open and update a pull request. Not merge one."
+  - scope: "Issues"
+    body: "Read issues and manage the ax:* labels."
+
+permissions_denied:
+  - scope: "Workflows"
+    body: "It cannot add or change anything under .github/workflows/."
+  - scope: "Administration"
+    body: "It cannot touch repository or branch protection settings."
+  - scope: "Environments"
+    body: "It cannot reach a deployment environment."
+  - scope: "Secrets"
+    body: "It cannot read or write repository secrets."
+
+cannot:
+  - "Merge a pull request, its own or anyone else's."
+  - "Deploy, release, or reach anything in production."
+  - "Change a workflow file, or the branch protection that guards it."
+  - "Send your code to Aixgo. There is nothing on our side to send it to."
+
+proofs:
+  - title: "The interface has no merge method"
+    body: "internal/forge/forge.go is the whole GitHub surface the loop is built against. Read it and count the methods."
+    url: "https://github.com/aixgo-dev/code/blob/main/internal/forge/forge.go"
+  - title: "Every run proves its own scope"
+    body: "The workflow calls an Actions-administration endpoint and expects the denial, so your own run log carries the evidence rather than our marketing page."
+    url: "https://github.com/aixgo-dev/code/blob/main/.github/workflows/aixgo.yml"
+  - title: "The model's shell holds no token"
+    body: "GH_TOKEN and GITHUB_TOKEN are stripped from the engine's environment before it starts."
+    url: "https://github.com/aixgo-dev/code/blob/main/docs/decisions/0002-no-merge-path.md"
+
+# --- 05 Built in the open ---------------------------------------------------
+
+files:
+  - path: "STATUS.md"
+    body: "What works today, stated plainly."
+    url: "https://github.com/aixgo-dev/code/blob/main/STATUS.md"
+  - path: "docs/faq.md"
+    body: "Getting the gate right, with real onboarding examples."
+    url: "https://github.com/aixgo-dev/code/blob/main/docs/faq.md"
+  - path: "docs/decisions/"
+    body: "Every architectural decision, including 0002-no-merge-path."
+    url: "https://github.com/aixgo-dev/code/tree/main/docs/decisions"
+  - path: "docs/setup.md"
+    body: "The whole install in one place, CLI through first pull request."
+    url: "https://github.com/aixgo-dev/code/blob/main/docs/setup.md"
+  - path: "loop/goal.json"
+    body: "The machine-gradable contract the project builds against."
+    url: "https://github.com/aixgo-dev/code/blob/main/loop/goal.json"
+  - path: "Makefile"
+    body: "The gate we hold ourselves to, in the repo that ships the agent."
+    url: "https://github.com/aixgo-dev/code/blob/main/Makefile"
+  - path: ".github/workflows/check.yml"
+    body: "The required check. Same shape we ask you to point the agent at."
+    url: "https://github.com/aixgo-dev/code/blob/main/.github/workflows/check.yml"
+  - path: "LICENSE"
+    body: "Apache-2.0, in full."
+    url: "https://github.com/aixgo-dev/code/blob/main/LICENSE"
+  - path: "SECURITY.md"
+    body: "How to report a vulnerability, and what happens next."
+    url: "https://github.com/aixgo-dev/code/blob/main/SECURITY.md"
+
+# --- 06 Install -------------------------------------------------------------
+
+prerequisites:
+  - "GitHub Actions on the repository, with minutes to spend."
+  - "Your own model provider key. Codex on Azure OpenAI is what the reusable workflow runs today."
+  - "A gate you trust: one command that fails when the code is wrong."
+
+install_steps:
+  - title: "Create your own GitHub App"
+    you: true
+    body: >-
+      App names are globally unique, so it cannot be named after ours, and its
+      private key is what mints the tokens that act on your repository. Grant
+      Contents, Pull requests and Issues only. Disable the webhook: the App is
+      an identity, not a delivery target, and there is no Aixgo server to
+      receive deliveries.
+  - title: "Run aixgo-code init --workflow"
+    body: >-
+      That writes .github/aixgo.yml, writes .github/workflows/aixgo.yml pinned
+      to a released reusable-workflow tag, and creates the ax:* labels through
+      your local gh auth.
+  - title: "Fill in the real gate"
+    body: "Set gate: in .github/aixgo.yml to whatever your repo already runs to know a change is good."
+  - title: "Add the four repository values"
+    body: >-
+      Variables AIXGO_GH_APP_CLIENT_ID and AIXGO_AZURE_OPENAI_ENDPOINT, secrets
+      AIXGO_GH_APP_PRIVATE_KEY and AIXGO_AZURE_OPENAI_API_KEY. The private key
+      must be the full PEM, BEGIN and END lines included.
+  - title: "Open the setup pull request and merge it yourself"
+    you: true
+    body: >-
+      Setup files are written locally by aixgo-code init and merged by a human,
+      because the runtime holds no workflows permission and cannot add its own
+      workflow files.
+  - title: "File an issue and apply ax:go"
+    body: >-
+      Reviews submitted on the resulting pull request call back into the same
+      reusable workflow for the fix-on-request loop.
+
+# --- 07 Configuration -------------------------------------------------------
+
+config_keys:
+  - key: "gate"
+    required: true
+    body: "The command that decides whether a change is good. The one key with no default."
+  - key: "review: true"
+    body: "Turns on the read-only reviewer. It comments; it never approves and never merges."
+  - key: "prDescription: rich"
+    body: "Adds a generated walkthrough, a changes table and a sequence diagram to each pull request body."
+  - key: "attribution: false"
+    body: "Drops the Co-Authored-By trailer and the pull-request footer the agent adds by default."
+
+# --- 08 Status and roadmap --------------------------------------------------
+
+roadmap:
+  - item: "The issue-to-pull-request loop."
+    state: "done"
+  - item: "The fix-on-request loop: a human requests changes, a fixer role addresses them."
+    state: "done"
+  - item: "Wiring the read-only reviewer role into the loop, so a diff is reviewed before it reaches a human."
+    state: "progress"
+  - item: "The self-onboarding flow via init and init --workflow."
+    state: "done"
+  - item: "The Codex on Azure OpenAI engine adapter."
+    state: "done"
+  - item: "Self-hosted models on Hugging Face."
+    state: "todo"
+
+# --- 09 Fit check -----------------------------------------------------------
+
+fit_for:
+  - "You have a backlog of small, well-specified changes and nobody free to do them."
+  - "Your repository already has a quality gate you would let decide whether a change is good."
+  - "Your security position is that source code does not leave your accounts."
+  - "You want implementation help without giving up the merge button."
+  - "You would rather read the code than take a vendor's word for what it can reach."
+
+fit_against:
+  - "You want an agent that merges its own work. That is the one thing this cannot be configured to do."
+  - "You have no gate, and no appetite to write one. A repo with no gate is refused."
+  - "Your work is exploratory rather than specified. The loop needs an issue it can finish."
+  - "You need a hosted service with a dashboard and an account manager."
+  - "You need this running on GitHub Actions against Claude rather than Codex on Azure. That path is not wired up yet."
+
+# --- 10 FAQ -----------------------------------------------------------------
+
+faq:
+  - q: "Is it installable yet?"
+    a: >-
+      Yes. v0.5.0 is the latest release. Install the CLI with go install, create
+      your own GitHub App, and run aixgo-code init --workflow in the repository you
+      want it working in.
+  - q: "Can it merge or deploy?"
+    a: >-
+      No, on both counts, and not because it is told not to. The GitHub
+      interface it is built against has no merge method, and the App holds three
+      permissions: contents, pull requests and issues. Not workflows,
+      administration, environments or secrets. It holds no deploy credentials
+      and has no path to production.
+  - q: "Do you see our code?"
+    a: >-
+      No. There is no Aixgo control plane. The agent runs in your GitHub
+      Actions, on your runners, reading your repository with a token your own
+      App minted. Nothing is sent to us because there is nothing on our side to
+      send it to.
+  - q: "Do we need our own GitHub App?"
+    a: >-
+      Yes. App names are globally unique, so it cannot be named after ours, and
+      its private key is what mints the tokens that act on your repository. The
+      App is an identity rather than a webhook target: there is no Aixgo server
+      to receive deliveries, so the webhook stays disabled.
+  - q: "Can it change our workflow files?"
+    a: >-
+      No. The App is deliberately denied the Workflows permission, so a change
+      under .github/workflows/ has to be a human commit or a local CLI run under
+      your own gh auth. That is also why the setup files are written locally and
+      merged by a person.
+  - q: "Why is a gate mandatory?"
+    a: >-
+      An agent loop with nothing to stop it will wander, break things, and still
+      report success. The gate is the safety mechanism, so the tool treats its
+      absence as a configuration error rather than a default to paper over. The
+      engineering that matters here is the gate, not the loop.
+  - q: "What if our CI is not worth trusting?"
+    a: >-
+      Then that is the first thing to fix, and it was already costing you before
+      any agent showed up. A check that has only ever been observed green is
+      indistinguishable from no check at all. That is why a repo with no gate is
+      refused rather than given a default.
+  - q: "Which models does it use?"
+    a: >-
+      The reusable workflow runs the Codex CLI against Azure OpenAI, with a
+      default deployment of gpt-5.4. The Claude Code adapter is written and
+      tested behind engine: claude, but it is reachable from a local CLI run
+      only: the workflow still installs the Codex CLI alone.
+  - q: "What does it cost?"
+    a: >-
+      The software is Apache-2.0 and free. You pay GitHub for Actions minutes
+      and your model provider for tokens, both billed to your own accounts.
+  - q: "Can we contribute?"
+    a: >-
+      The source is open under Apache-2.0, so you are free to read, audit, use
+      and fork it. Aixgo Code is not currently accepting external code
+      contributions. Bug reports and security reports are welcome through issues
+      and the process in SECURITY.md.

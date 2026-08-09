@@ -8,8 +8,8 @@
    Typography Enhancements
    ========================================================================== */
 
-/* Import professional fonts for better readability */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
+/* Fonts are self-hosted. The @font-face blocks live at the top of main.css and
+   head.html preloads the two faces that are needed above the fold. */
 
 /* CSS variables consolidated in main.css */
 
@@ -1384,14 +1384,21 @@ article table strong,
   }
 }
 
-/* Code block improvements */
-pre {
-  margin: var(--space-8) 0 !important;
-  border-radius: 8px !important;
+/* Code block improvements. These were bare `pre` and `code` rules carrying
+   !important, so they reached inside any component that wraps a code block and
+   forced 4rem of margin into it. Scoped to prose, where they were meant to
+   apply, and the !important dropped. */
+.content pre,
+.prose pre,
+article pre {
+  margin: var(--space-6) 0;
+  border-radius: 8px;
 }
 
-code {
-  font-size: 0.95rem !important;
+.content code,
+.prose code,
+article code {
+  font-size: 0.95rem;
 }
 
 /* Lists improvements */
@@ -1491,29 +1498,11 @@ article pre {
   margin-right: auto;
 }
 
-/* Hide BlowFish's auto-generated hero title to prevent duplicate "Aixgo" */
-.hero-title {
-  display: none !important;
-}
-
-/* Also try hiding by article title class */
-article.hero .article-title {
-  display: none !important;
-}
-
-/* And header title in hero layout */
-.hero header h1:first-child {
-  display: none !important;
-}
-/* Hide BlowFish's auto-generated hero H1 (lines 70-80 in hero.html template) */
-article.prose > div > div > div > div > div > h1.mb-2.text-4xl {
-  display: none !important;
-}
-
-/* Also hide the author headline H2 if present */
-article.prose > div > div > div > div > div > h2.mt-0.mb-0.text-xl {
-  display: none !important;
-}
+/* The five Blowfish-era `display: none !important` hides that used to sit here
+   were written against a theme this site no longer uses. Four matched nothing.
+   The fifth matched `.hero-title`, which is the homepage's only H1, so the
+   headline had been suppressed on the site's most-linked page. All five are
+   gone; `.hero-title` is styled in main.css. */
 
 /* ==========================================================================
    Code Section Improvements - Inline Labels
@@ -1745,3 +1734,53 @@ article.prose > div > div > div > div > div > h2.mt-0.mb-0.text-xl {
   }
 }
 
+
+/* ==========================================================================
+   Sibling products band (homepage) — driven by data/products.yaml.
+   Replaces a one-off section that carried its styling in inline attributes.
+   ========================================================================== */
+
+.sibling-section {
+  padding: 6rem 0;
+  border-top: 1px solid var(--ax-hairline);
+  background: var(--ax-bg-1);
+}
+
+.sibling-kicker { display: block; text-align: center; }
+
+.sibling-title { margin-top: 0.75rem; }
+
+.sibling-lead {
+  font-style: italic;
+  color: var(--ax-text-muted);
+  margin-bottom: 0;
+}
+
+.sibling-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--ax-card-gap);
+  max-width: 60rem;
+  margin: 3rem auto 0;
+}
+
+.sibling-card {
+  display: block;
+  text-decoration: none;
+  text-align: left;
+}
+
+.sibling-card h3 { color: var(--ax-text); }
+.sibling-card p { color: var(--ax-text-muted); }
+.sibling-status { display: block; margin-top: 1rem; }
+
+@media (max-width: 768px) {
+  .sibling-section { padding: 4rem 0; }
+  .sibling-grid { grid-template-columns: 1fr; }
+}
+
+/* Footer: the parenthetical after a product name. Was an inline style. */
+.footer-note {
+  opacity: 0.6;
+  font-size: 0.85em;
+}

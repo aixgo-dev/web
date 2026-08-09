@@ -1,0 +1,640 @@
+{{/*
+  /code/ — the Aixgo Code product page.
+
+  Front matter only in content/code.md; the lists live in data/code.yaml; the
+  prose lives here. This page deliberately does not route through .Content:
+  every block is a bespoke component rather than markdown, and content/_index.md
+  is the cautionary tale about writing a page body that no template ever calls.
+
+  Every fact on this page traces to a line in the Aixgo Code README. If you are
+  editing and cannot find the line, do not ship the sentence.
+*/}}
+{{ define "main" }}
+{{- $c := .Site.Data.code -}}
+{{- $repo := $c.repo -}}
+
+{{/* A <div>, not an <article>. custom.css carries legacy prose rules —
+     `article > * { max-width: 1280px; padding-inline: 2rem }` and
+     `article h2 { text-align: center }` — that would clamp these full-bleed
+     bands to 1280px and centre every section headline. */}}
+<div class="ax-code">
+
+  <!-- ============================================================ 00 Hero -->
+  <section class="ax-section ax-hero" id="top">
+    <div class="ax-hero__halo ax-halo" aria-hidden="true"></div>
+    <div class="ax-hero__grid ax-dotgrid ax-dotgrid--fade" aria-hidden="true"></div>
+    <div class="ax-wrap">
+      <div class="ax-hero__body ax-edge ax-edge--section">
+        <p class="ax-eyebrow"><span class="ax-eyebrow__num">&rarr;</span>{{ $c.hero.eyebrow }}</p>
+
+        <h1 class="ax-hero__title">{{ $c.hero.headline }}</h1>
+        <span class="ax-rule ax-rule--wide" aria-hidden="true"></span>
+
+        <p class="ax-hero__sub">{{ $c.hero.subhead }}</p>
+
+        <div class="ax-statuscard ax-edge">
+          <p class="ax-microlabel">Status</p>
+          <p>Beta. Current release <code>{{ $c.release }}</code>. {{ $c.hero.status }}</p>
+        </div>
+
+        <div class="ax-btnrow">
+          <a class="ax-btn ax-btn--primary" href="#install">Install it &rarr;</a>
+          <a class="ax-btn ax-btn--secondary js-repo-link" data-link-target="hero"
+             href="{{ $repo }}" target="_blank" rel="noopener">Read the source on GitHub &rarr;<span class="sr-only"> (opens in a new tab)</span></a>
+        </div>
+
+        <p class="ax-hero__subcta">{{ $c.hero.subcta }}</p>
+        <p class="ax-microlabel ax-hero__foot">{{ $c.hero.footnote }}</p>
+      </div>
+
+      <!-- Trust rail. The 0 and the 1 are the two numbers that carry the argument. -->
+      <dl class="ax-statrail">
+        {{- range $c.stats }}
+        <div>
+          <dd{{ if .accent }} class="is-accent"{{ end }}>{{ .value }}</dd>
+          <dt>{{ .label }}</dt>
+        </div>
+        {{- end }}
+      </dl>
+    </div>
+  </section>
+
+  <!-- ===================================================== 01 The blocker -->
+  <section class="ax-section ax-section--alt ax-textured" id="the-blocker">
+    <div class="ax-wrap">
+      <div class="ax-section__intro">
+        <p class="ax-eyebrow"><span class="ax-eyebrow__num">01</span>The blocker</p>
+        <h2>The blocker on AI coding agents is not capability. It is what they can reach.</h2>
+      </div>
+
+      <div class="ax-grid ax-grid--3">
+        {{- range $c.blockers }}
+        <div class="ax-card">
+          <h3>{{ .title }}</h3>
+          <p>{{ .body }}</p>
+        </div>
+        {{- end }}
+      </div>
+
+      <p class="ax-pivot">{{ $c.pivot }}</p>
+    </div>
+  </section>
+
+  <!-- ===================================================== 02 What it is -->
+  <section class="ax-section" id="what-it-is">
+    <div class="ax-wrap">
+      <div class="ax-split">
+        <div class="ax-split__lead">
+          <p class="ax-eyebrow"><span class="ax-eyebrow__num">02</span>What it is</p>
+          <h2>Issue in. Reviewed pull request out. A human merges.</h2>
+        </div>
+        <div class="ax-split__body">
+          <p>
+            Your team describes work in a GitHub issue and applies one label. The agent
+            implements the change on a branch, runs the quality gate your repository
+            already has, and opens a pull request when that gate passes. If a reviewer
+            requests changes, a fixer role addresses them and pushes back to the same
+            pull request.
+          </p>
+          <p>
+            It proposes. It does not dispose. Nothing about the merge decision moves.
+            Configuration is one file, <code>.github/aixgo.yml</code>, and the only key
+            without a default is the gate.
+          </p>
+
+          <div class="ax-subblock">
+            <p class="ax-microlabel">Driving it by comment</p>
+            <p>
+              Commands address <strong>your own App</strong>, not ours, because App names are
+              globally unique and every installation has its own handle. If you installed an
+              App called <code>acme-code</code>, your team types <code>@acme-code go</code>.
+            </p>
+            <ul class="ax-cmdlist">
+              {{- range $c.commands }}
+              <li><code>{{ .cmd }}</code><span>{{ .means }}</span></li>
+              {{- end }}
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================== Label lifecycle — the signature moment -->
+  <section class="ax-section ax-section--alt ax-textured" id="label-lifecycle">
+    <div class="ax-wrap">
+      <div class="ax-section__intro ax-lifecycle__intro">
+        <p class="ax-microlabel">You apply one label. The bot owns the other five.</p>
+        <h2>Only a person merges.</h2>
+      </div>
+
+      <div class="ax-consolewrap ax-console">
+        <div class="ax-panel">
+          <div class="ax-lifecycle__head" aria-hidden="true">
+            <span class="ax-microlabel">Label</span>
+            <span class="ax-microlabel">Means</span>
+            <span class="ax-microlabel ax-by">Set by</span>
+          </div>
+
+          <ul class="ax-lifecycle">
+            {{- range $c.lifecycle }}
+              {{- if .marker }}
+            <li class="ax-lifecycle__row ax-lifecycle__row--marker">
+              <span class="ax-lifecycle__glyph" aria-hidden="true">&rarr;</span>
+              <span class="ax-lifecycle__means">{{ .marker }}</span>
+              <span class="ax-by ax-by--human">Human</span>
+            </li>
+              {{- else }}
+            <li class="ax-lifecycle__row{{ if .human }} ax-lifecycle__row--human{{ end }}">
+              <span><code class="ax-label{{ if .human }} ax-label--human{{ end }}">{{ .label }}</code></span>
+              <span class="ax-lifecycle__means">{{ .means }}</span>
+              <span class="ax-by{{ if .human }} ax-by--human{{ end }}"><span class="sr-only">Set by </span>{{ .by }}</span>
+            </li>
+              {{- end }}
+            {{- end }}
+          </ul>
+        </div>
+      </div>
+
+      <p class="ax-note">
+        An issue sits in one state at a time. The prefix is configurable with
+        <code>labelPrefix</code>, and defaults to <code>ax</code>.
+      </p>
+    </div>
+  </section>
+
+  <!-- ==================================================== 03 How it works -->
+  <section class="ax-section" id="how-it-works">
+    <div class="ax-wrap">
+      <div class="ax-section__intro">
+        <p class="ax-eyebrow"><span class="ax-eyebrow__num">03</span>How it works</p>
+        <h2>Five steps, and the fifth one is yours.</h2>
+      </div>
+
+      <ol class="ax-grid ax-grid--3 ax-steps">
+        {{- range $i, $s := $c.steps }}
+        <li class="ax-step">
+          <div class="ax-step__head">
+            <span class="ax-step__kicker">{{ $s.kicker }}</span>
+            <span class="ax-step__num" aria-hidden="true">{{ printf "%02d" (add $i 1) }}</span>
+          </div>
+          <h3>{{ $s.title }}</h3>
+          <p>{{ $s.body }}</p>
+        </li>
+        {{- end }}
+      </ol>
+
+      <!-- The README draws this as mermaid. There is no mermaid renderer on this
+           site and the rest of the site inlines its own SVG, so it is a grid of
+           nodes instead: same three trigger paths, legible at 390px. -->
+      <div class="ax-flow" role="group" aria-label="What triggers a run">
+        <div class="ax-flow__col">
+          <p class="ax-microlabel">Triggers</p>
+          <div class="ax-node ax-node--human"><code>ax:go</code> on an issue</div>
+          <div class="ax-node ax-node--human"><code>@your-app go</code></div>
+          <div class="ax-node ax-node--human">A submitted review</div>
+          <div class="ax-node ax-node--human"><code>@your-app address</code></div>
+        </div>
+        <div class="ax-flow__arrow" aria-hidden="true"></div>
+        <div class="ax-flow__col">
+          <p class="ax-microlabel">Jobs</p>
+          <div class="ax-node"><code>aixgo-code run</code></div>
+          <div class="ax-node"><code>aixgo-code address</code></div>
+        </div>
+        <div class="ax-flow__arrow" aria-hidden="true"></div>
+        <div class="ax-flow__col">
+          <p class="ax-microlabel">Outcome</p>
+          <div class="ax-node ax-node--out">
+            <strong>A pull request opens.</strong>
+            <span>A human merges it.</span>
+          </div>
+        </div>
+      </div>
+
+      <p class="ax-note">
+        A plain comment in the conversation box is not a review. To run the fixer from a
+        review, submit it through <strong>Files changed &rarr; Review changes</strong>. Every
+        path checks that the person has write access before anything else happens.
+      </p>
+
+      <!-- Deliberately headingless: it must survive a fifteen-second skim
+           without becoming a sixth step in the document outline. -->
+      <div class="ax-callout ax-edge">
+        <p class="ax-microlabel ax-callout__label">Required</p>
+        <p class="ax-callout__lead">
+          <code>gate:</code> is required in the config. A repo with no gate is refused,
+          on purpose.
+        </p>
+        <p>
+          An agent loop with nothing to stop it will wander, break things, and still
+          report success. The gate is the safety mechanism, so its absence is treated as
+          a configuration error rather than a default to paper over.
+          <a class="js-repo-link" data-link-target="faq-gate" href="{{ $repo }}/blob/main/docs/faq.md"
+             target="_blank" rel="noopener">Getting the gate right &rarr;<span class="sr-only"> (opens in a new tab)</span></a>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- =================================================== 04 Where it runs -->
+  <!-- No scroll reveal, no JavaScript, nothing lazy. This is the band a
+       security reviewer is forwarded, and it has to read correctly when it is
+       the first thing on their screen. -->
+  <section class="ax-section ax-section--deep ax-textured" id="where-it-runs">
+    <div class="ax-wrap">
+      <div class="ax-section__intro">
+        <p class="ax-eyebrow"><span class="ax-eyebrow__num">04</span>Where it runs</p>
+        <h2>
+          Your runners. Your secrets. Your branch protection.
+          <a class="ax-anchor" href="#where-it-runs" aria-label="Link to this section">#</a>
+        </h2>
+        <p>
+          It can open a pull request against a branch. That is the strongest action
+          available to it. Everything below is checkable in the repository rather than
+          taken on our word.
+        </p>
+      </div>
+
+      <div class="ax-trust">
+        <div class="ax-trust__col">
+          <p class="ax-microlabel">The deployment model</p>
+          <dl class="ax-guarantees">
+            {{- range $c.guarantees }}
+            <div>
+              <dt>{{ .lead }}</dt>
+              <dd>{{ .body }}</dd>
+            </div>
+            {{- end }}
+          </dl>
+        </div>
+
+        <div class="ax-trust__col">
+          <p class="ax-microlabel">Five questions to ask of any coding agent</p>
+          <dl class="ax-questions">
+            {{- range $c.questions }}
+            <div>
+              <dt>{{ .q }}</dt>
+              <dd>{{ .a }}</dd>
+            </div>
+            {{- end }}
+          </dl>
+        </div>
+      </div>
+
+      <div class="ax-perms">
+        <p class="ax-microlabel">The GitHub App permissions, exactly</p>
+        <div class="ax-grid ax-grid--3">
+          {{- range $c.permissions_granted }}
+          <div class="ax-perm">
+            <code>{{ .scope }}</code>
+            <p>{{ .body }}</p>
+          </div>
+          {{- end }}
+        </div>
+
+        <p class="ax-microlabel ax-perms__denied">Not granted</p>
+        <div class="ax-grid ax-grid--4">
+          {{- range $c.permissions_denied }}
+          <div class="ax-perm ax-perm--denied">
+            <code><span class="ax-x" aria-hidden="true">&#10005;</span>{{ .scope }}</code>
+            <p>{{ .body }}</p>
+          </div>
+          {{- end }}
+        </div>
+      </div>
+
+      <div class="ax-trust__foot">
+        <div>
+          <p class="ax-microlabel">What it can never do</p>
+          <ul class="ax-cannot">
+            {{- range $c.cannot }}
+            <li>{{ . }}</li>
+            {{- end }}
+          </ul>
+        </div>
+        <div>
+          <p class="ax-microlabel">Proof, in the repository</p>
+          <ul class="ax-proofs">
+            {{- range $c.proofs }}
+            <li>
+              <a class="js-repo-link" data-link-target="proof" href="{{ .url }}" target="_blank" rel="noopener">{{ .title }} &rarr;<span class="sr-only"> (opens in a new tab)</span></a>
+              <span>{{ .body }}</span>
+            </li>
+            {{- end }}
+          </ul>
+          <p class="ax-note">
+            <a class="js-repo-link" data-link-target="security" href="{{ $repo }}/blob/main/SECURITY.md"
+               target="_blank" rel="noopener">SECURITY.md &rarr;<span class="sr-only"> (opens in a new tab)</span></a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================== 05 Built in the open -->
+  <section class="ax-section ax-section--alt" id="built-in-the-open">
+    <div class="ax-wrap">
+      <div class="ax-section__intro">
+        <p class="ax-eyebrow"><span class="ax-eyebrow__num">05</span>Built in the open</p>
+        <h2>Read it before you trust it.</h2>
+        <p>Nine files worth opening. Each one is the answer to a question this page could otherwise only assert.</p>
+      </div>
+
+      <div class="ax-grid ax-grid--3">
+        {{- range $c.files }}
+        <a class="ax-card ax-filecard js-repo-link" data-link-target="file" href="{{ .url }}" target="_blank" rel="noopener">
+          <code>{{ .path }}</code>
+          <p>{{ .body }}</p>
+          <span class="sr-only">(opens in a new tab)</span>
+        </a>
+        {{- end }}
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================== 06 Install -->
+  <section class="ax-section" id="install">
+    <div class="ax-wrap">
+      <div class="ax-section__intro">
+        <p class="ax-eyebrow"><span class="ax-eyebrow__num">06</span>Install</p>
+        <h2>Six steps, and you own all of them.</h2>
+      </div>
+
+      <div class="ax-prereq">
+        <p class="ax-microlabel">Before you start</p>
+        <ul>
+          {{- range $c.prerequisites }}
+          <li>{{ . }}</li>
+          {{- end }}
+        </ul>
+      </div>
+
+      <div class="ax-install__lanes">
+        <div class="ax-install__lane">
+          <div class="ax-codeblock" id="install-cli">
+            <div class="ax-codeblock__bar">
+              <span>Terminal</span>
+              <button type="button" class="ax-codeblock__copy js-copy" data-copy-target="install-cli-code" data-copy-event="code_install_copied">Copy</button>
+            </div>
+            <pre id="install-cli-code" tabindex="0" role="group" aria-label="Install commands, scrollable"><code>go install github.com/aixgo-dev/code/cmd/aixgo-code@v0.5.0
+aixgo-code version</code></pre>
+          </div>
+          <p class="ax-note">
+            With <code>{{ $c.release }}</code> that prints <code>0.5.0</code>. Pin the tag you
+            have validated rather than floating on <code>@latest</code>: pre-1.0 minor
+            versions may still change behaviour.
+          </p>
+
+          <div class="ax-codeblock">
+            <div class="ax-codeblock__bar">
+              <span>.github/aixgo.yml</span>
+            </div>
+            <pre tabindex="0" role="group" aria-label="Minimal configuration file, scrollable"><code>labelPrefix: ax
+
+gate: make check</code></pre>
+          </div>
+          <p class="ax-note">The gate command is the required key. Everything else has a default.</p>
+
+          <div class="ax-callout ax-edge">
+            <p class="ax-microlabel ax-callout__label">Evaluate it without letting it touch anything</p>
+            <p class="ax-callout__lead"><code>aixgo-code run owner/repo#12 --dry-run</code></p>
+            <p>
+              That runs the whole loop, including the model and your own gate. It makes no
+              GitHub writes and never pushes; it prints what it would have done instead.
+              Separately, <code>aixgo-code init --workflow</code> writes a self-test that proves,
+              in your own runner, that the token is denied Actions administration. The
+              install fails if that denial does not hold.
+            </p>
+          </div>
+        </div>
+
+        <div class="ax-install__lane">
+          <p class="ax-microlabel">Install into your GitHub</p>
+          <ol class="ax-install">
+            {{- range $c.install_steps }}
+            <li>
+              <h3>{{ .title }}{{ if .you }} <span class="ax-you">You</span>{{ end }}</h3>
+              <p>{{ .body }}</p>
+            </li>
+            {{- end }}
+          </ol>
+          <p class="ax-note">
+            <a class="js-repo-link" data-link-target="setup" href="{{ $repo }}/blob/main/docs/setup.md"
+               target="_blank" rel="noopener">Full setup walkthrough &rarr;<span class="sr-only"> (opens in a new tab)</span></a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================================== 07 Configuration -->
+  <section class="ax-section ax-section--alt" id="configuration">
+    <div class="ax-wrap">
+      <div class="ax-section__intro">
+        <p class="ax-eyebrow"><span class="ax-eyebrow__num">07</span>Configuration</p>
+        <h2>Four keys, and one of them is not optional.</h2>
+      </div>
+
+      <ul class="ax-keylist">
+        {{- range $c.config_keys }}
+        <li>
+          <code>{{ .key }}</code>
+          {{/* Always emit the middle cell. Omitting it puts the description
+               into the narrow Required column and the row collapses. */}}
+          <span class="ax-req">{{ if .required }}Required{{ end }}</span>
+          <span>{{ .body }}</span>
+        </li>
+        {{- end }}
+      </ul>
+
+      <p class="ax-note">
+        On engines: Codex on Azure OpenAI is what the reusable workflow runs today.
+        <code>engine: claude</code> is written and tested and works for local CLI runs, but
+        the workflow still installs only the Codex CLI, so GitHub Actions cannot use Claude
+        yet. The loop, the roles and the gate are identical either way.
+      </p>
+    </div>
+  </section>
+
+  <!-- ============================================= 08 Status and roadmap -->
+  <section class="ax-section" id="status">
+    <div class="ax-wrap">
+      <div class="ax-split">
+        <div class="ax-split__lead">
+          <p class="ax-eyebrow"><span class="ax-eyebrow__num">08</span>Status</p>
+          <h2>Beta, and honest about it.</h2>
+          <p class="ax-releasechip"><code>{{ $c.release }}</code></p>
+        </div>
+        <div class="ax-split__body">
+          <p>
+            Two loops run end to end via the CLI on the Codex-on-Azure engine: issue to
+            pull request, and fix-on-request. <code>{{ $c.release }}</code> is the latest
+            release and you should still expect rough edges. If you are evaluating it now,
+            read that as beta software rather than a polished product.
+          </p>
+
+          <ul class="ax-roadmap">
+            {{- range $c.roadmap }}
+            <li class="is-{{ .state }}">
+              <span class="ax-roadmap__glyph" aria-hidden="true">{{ if eq .state "done" }}&#10003;{{ else if eq .state "progress" }}&#9680;{{ else }}&#9675;{{ end }}</span>
+              <span class="ax-roadmap__item">{{ .item }}</span>
+              {{- if eq .state "done" }}<span class="ax-microlabel ax-roadmap__tag">Done</span>
+              {{- else if eq .state "progress" }}<span class="ax-microlabel ax-roadmap__tag">In progress</span>{{ end }}
+            </li>
+            {{- end }}
+          </ul>
+
+          <p class="ax-note">
+            <a class="js-repo-link" data-link-target="releases" href="{{ $repo }}/releases"
+               target="_blank" rel="noopener">Releases &rarr;<span class="sr-only"> (opens in a new tab)</span></a>
+            <a class="js-repo-link" data-link-target="status" href="{{ $repo }}/blob/main/STATUS.md"
+               target="_blank" rel="noopener">STATUS.md &rarr;<span class="sr-only"> (opens in a new tab)</span></a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================================================== 09 Fit check -->
+  <section class="ax-section ax-section--alt ax-textured" id="fit">
+    <div class="ax-wrap">
+      <div class="ax-section__intro">
+        <p class="ax-eyebrow"><span class="ax-eyebrow__num">09</span>Fit check</p>
+        <h2>It is not for everyone, and that is not a disclaimer.</h2>
+      </div>
+
+      <div class="ax-fit">
+        <div>
+          <p class="ax-microlabel ax-fit__for">Worth your time if&hellip;</p>
+          <ul class="ax-fitlist ax-fitlist--for">
+            {{- range $c.fit_for }}<li>{{ . }}</li>{{ end }}
+          </ul>
+        </div>
+        <div>
+          <p class="ax-microlabel ax-fit__against">Not for you if&hellip;</p>
+          <ul class="ax-fitlist ax-fitlist--against">
+            {{- range $c.fit_against }}<li>{{ . }}</li>{{ end }}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ 10 FAQ -->
+  <section class="ax-section" id="faq">
+    <div class="ax-wrap">
+      <div class="ax-section__intro">
+        <p class="ax-eyebrow"><span class="ax-eyebrow__num">10</span>FAQ</p>
+        <h2>The questions that decide it.</h2>
+      </div>
+
+      <div class="ax-faq">
+        {{- range $c.faq }}
+        <details class="js-faq">
+          <summary>{{ .q }}</summary>
+          <p>{{ .a }}</p>
+        </details>
+        {{- end }}
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================================================== 11 Final call -->
+  <section class="ax-section ax-section--alt ax-final" id="get-started">
+    <div class="ax-final__halo ax-halo" aria-hidden="true"></div>
+    <div class="ax-wrap">
+      <div class="ax-final__body">
+        <h2>Read the source, or install it.</h2>
+        <span class="ax-rule" aria-hidden="true"></span>
+        <p>The repository is open, Apache-2.0, and in beta. Both of those are the point.</p>
+        <div class="ax-btnrow">
+          <a class="ax-btn ax-btn--primary" href="#install">Install it &rarr;</a>
+          <a class="ax-btn ax-btn--secondary js-repo-link" data-link-target="final"
+             href="{{ $repo }}" target="_blank" rel="noopener">Read the source on GitHub &rarr;<span class="sr-only"> (opens in a new tab)</span></a>
+        </div>
+        <p class="ax-final__cross">
+          Building agents in Go? <a href="/">Aixgo is the framework &rarr;</a>
+        </p>
+        <p class="ax-microlabel">Apache-2.0 · Issues and security reports welcome · Not accepting external pull requests</p>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+{{/* Structured data. The homepage-only SoftwareApplication node stays in
+     seo.html; per-page nodes are emitted here so that partial does not grow a
+     branch for every product page. */}}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareSourceCode",
+  "name": "Aixgo Code",
+  "description": {{ .Description | jsonify }},
+  "url": {{ .Permalink | jsonify }},
+  "codeRepository": {{ $repo | jsonify }},
+  "programmingLanguage": "Go",
+  "license": "https://www.apache.org/licenses/LICENSE-2.0",
+  "author": {
+    "@type": "Organization",
+    "name": "Aixgo",
+    "url": "https://aixgo.dev"
+  }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {{- range $i, $f := $c.faq }}{{ if $i }},{{ end }}
+    {
+      "@type": "Question",
+      "name": {{ $f.q | jsonify }},
+      "acceptedAnswer": { "@type": "Answer", "text": {{ $f.a | jsonify }} }
+    }
+    {{- end }}
+  ]
+}
+</script>
+
+{{/* Copy button, plus the three events autocapture cannot answer. Everything
+     here is progressive enhancement: the page is complete without it, and
+     section 04 in particular renders with no JavaScript at all. */}}
+<script>
+(function () {
+  var track = function (name, props) {
+    if (window.posthog && typeof window.posthog.capture === 'function') {
+      window.posthog.capture(name, props || {});
+    }
+  };
+
+  document.querySelectorAll('.js-copy').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var src = document.getElementById(btn.dataset.copyTarget);
+      if (!src || !navigator.clipboard) { return; }
+      navigator.clipboard.writeText(src.innerText.trim()).then(function () {
+        btn.dataset.copied = 'true';
+        btn.textContent = 'Copied';
+        setTimeout(function () { btn.removeAttribute('data-copied'); btn.textContent = 'Copy'; }, 2000);
+        track(btn.dataset.copyEvent, { snippet: 'go install' });
+      });
+    });
+  });
+
+  document.querySelectorAll('details.js-faq').forEach(function (d) {
+    d.addEventListener('toggle', function () {
+      if (!d.open) { return; }
+      var q = d.querySelector('summary');
+      track('code_faq_opened', { question: q ? q.textContent.trim() : '' });
+    });
+  });
+
+  document.querySelectorAll('.js-repo-link').forEach(function (a) {
+    a.addEventListener('click', function () {
+      track('code_repo_clicked', { link_target: a.dataset.linkTarget, href: a.getAttribute('href') });
+    });
+  });
+})();
+</script>
+{{ end }}

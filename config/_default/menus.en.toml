@@ -1,8 +1,28 @@
 # -- Main Menu --
+#
+# Two products sit above Docs because they are products, not reference. When a
+# THIRD product lands, stop adding entries here: build /products/ as a hub page
+# and collapse these two into one item. That is the trigger condition.
+#
+# "Aixgo Code", not "Code" — a bare "Code" sitting next to "Docs" and a GitHub
+# icon reads as "source code", which is the one thing it is not.
 
 [[main]]
+  name = "Aixgo Code"
+  url = "/code/"
+  weight = 5
+
+[[main]]
+  name = "Aixgate"
+  url = "/aixgate/"
+  weight = 6
+
+# /docs is an alias declared on content/guides/_index.md. Following it costs a
+# 308 to /docs/ and then a meta-refresh to /guides/. Point the nav at the
+# destination; the alias stays for inbound links.
+[[main]]
   name = "Docs"
-  url = "/docs"
+  url = "/guides/"
   weight = 7
 
 [[main]]
@@ -16,6 +36,11 @@
   weight = 25
 
 # -- Footer Menu --
+#
+# NOTE: layouts/partials/footer.html hardcodes every link and consumes none of
+# this. Adding an entry below does nothing. It is kept only because Hugo's
+# menu API is the eventual destination; until footer.html is wired to it, edit
+# footer.html directly and leave this block alone.
 
 [[footer]]
   name = "Proverbs"

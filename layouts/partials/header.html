@@ -36,8 +36,21 @@
             {{ end }}
           </li>
         {{ end }}
+        {{/* The header call to action is page-aware. Without this, a reader
+             arriving on a product page from that product's README sees a
+             persistent, high-contrast button pointing at a different product's
+             tutorial — the framework quick start. */}}
+        {{- $ctaURL := .Site.Data.version.cta_url -}}
+        {{- $ctaText := .Site.Data.version.cta_text -}}
+        {{- if hasPrefix .RelPermalink "/code" -}}
+          {{- $ctaURL = "/code/#install" -}}
+          {{- $ctaText = "Install" -}}
+        {{- else if hasPrefix .RelPermalink "/aixgate" -}}
+          {{- $ctaURL = "/aixgate/#install" -}}
+          {{- $ctaText = "Install" -}}
+        {{- end }}
         <li class="nav-cta">
-          <a href="{{ .Site.Data.version.cta_url }}" class="btn-get-started">{{ .Site.Data.version.cta_text }}</a>
+          <a href="{{ $ctaURL }}" class="btn-get-started">{{ $ctaText }}</a>
         </li>
       </ul>
     </div>

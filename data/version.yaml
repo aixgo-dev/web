@@ -8,4 +8,4 @@ subheadline: "Build, deploy, and scale AI agents in Go. No containers. No cold s
 
 # CTA button text
 cta_text: "Get Started"
-cta_url: "/guides/quick-start"
+cta_url: "/guides/quick-start/"
