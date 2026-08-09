@@ -1,7 +1,6 @@
 ---
 title: 'Core Concepts'
 description: "Understand Aixgo's fundamental building blocks: agent types, supervisor patterns, and message-based communication."
-breadcrumb: 'Getting Started'
 category: 'Getting Started'
 weight: 2
 ---

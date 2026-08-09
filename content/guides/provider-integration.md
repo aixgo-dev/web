@@ -1,7 +1,6 @@
 ---
 title: 'Provider Integration Guide'
 description: 'Integrate Aixgo with OpenAI, Anthropic, Google Vertex AI, Amazon Bedrock, HuggingFace, Ollama (local), and vector databases.'
-breadcrumb: 'Reference'
 category: 'Reference'
 weight: 11
 ---

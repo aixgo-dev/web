@@ -1,7 +1,6 @@
 ---
 title: 'AWS Bedrock Integration Guide'
 description: 'Integrate Aixgo with Amazon Bedrock for enterprise-grade AI models with single API access, regional deployment, and AWS security.'
-breadcrumb: 'Reference'
 category: 'Reference'
 weight: 12
 ---

@@ -1,7 +1,6 @@
 ---
 title: 'Multi-Agent Orchestration'
 description: 'Learn how to coordinate multiple agents with supervisor patterns and message routing.'
-breadcrumb: 'Core Concepts'
 category: 'Core Concepts'
 weight: 4
 ---

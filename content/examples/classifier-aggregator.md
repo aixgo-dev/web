@@ -1,7 +1,6 @@
 ---
 title: 'Classifier and Aggregator Examples'
 description: "Production-ready examples showcasing AI-powered content classification and multi-agent aggregation workflows."
-breadcrumb: 'Examples'
 category: 'Examples'
 weight: 4
 ---
