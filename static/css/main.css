@@ -443,7 +443,7 @@
   transform: translateY(var(--ax-lift));
 }
 
-.ax-card h3 {
+.ax-card :where(h2, h3) {
   font-family: var(--ax-font-display);
   font-size: var(--ax-t-h3);
   font-weight: 700;
@@ -572,12 +572,6 @@ body {
 }
 
 /* Wide container for feature tables - supports 4 columns */
-.container-wide {
-  max-width: 1400px;
-  margin: 0 auto;
-  padding: 0 2rem;
-}
-
 .container-narrow {
   max-width: 800px;
   margin: 0 auto;
@@ -881,238 +875,16 @@ h1, h2, h3, h4, h5, h6 {
   color: var(--color-bg);
 }
 
-.btn-cta {
-  background-color: var(--ax-accent);
-  color: var(--ax-accent-ink);
-  border: 1px solid var(--ax-accent);
-  box-shadow: var(--ax-e-1);
-}
-
-.btn-cta:hover {
-  background-color: var(--ax-accent-deep);
-  border-color: var(--ax-accent-deep);
-  color: var(--ax-accent-ink);
-  transform: translateY(var(--ax-lift));
-  box-shadow: var(--ax-glow-accent);
-}
-
-.btn-cta:active { transform: none; }
-
 /* The homepage sections that used to live here are gone. layouts/index.html
    is now assembled from the shared section primitives in sections.css: the
    hero, the stat rail, the step spine, the comparison card, the table, the
    icon card and the release card. What sat here was a parallel set of
    one-page-only components for the same jobs. */
 
-/* List Pages (Guides & Blog) */
-.list-page {
-  padding: 4rem 0;
-}
-
-.page-title {
-  font-size: var(--text-4xl);  /* 36px - list page titles */
-  margin-bottom: 1rem;
-  font-weight: 700;
-}
-
-.page-title.cyan {
-  color: var(--color-cyan);
-}
-
-.page-description {
-  font-size: 1.1rem;
-  color: var(--color-text-muted);
-  margin-bottom: 3rem;
-}
-
-/* Guides */
-.guide-category {
-  margin-bottom: 4rem;
-}
-
-.guide-category h2 {
-  font-size: 1.5rem;
-  margin-bottom: 1.5rem;
-  color: var(--color-text);
-}
-
-.guide-list {
-  display: grid;
-  gap: 1.5rem;
-}
-
-.guide-card {
-  display: flex;
-  gap: 1.5rem;
-  padding: 1.5rem;
-  background-color: var(--color-bg-card);
-  border: 1px solid var(--color-border);
-  border-radius: 0.75rem;
-  text-decoration: none;
-  transition: all 0.3s;
-}
-
-.guide-card:hover {
-  border-color: var(--color-cyan);
-  transform: translateX(8px);
-}
-
-.guide-icon {
-  color: var(--color-cyan);
-  flex-shrink: 0;
-}
-
-.guide-content h3 {
-  color: var(--color-text);
-  margin-bottom: 0.5rem;
-  font-size: 1.2rem;
-}
-
-.guide-content p {
-  color: var(--color-text-muted);
-  line-height: 1.6;
-}
-
-/* Blog */
-.blog-list {
-  display: grid;
-  gap: 2rem;
-}
-
-.blog-card {
-  padding: 2rem;
-  background-color: var(--color-bg-card);
-  border: 1px solid var(--color-border);
-  border-radius: 0.75rem;
-  text-decoration: none;
-  display: block;
-  transition: all 0.3s;
-}
-
-.blog-card:hover {
-  border-color: var(--color-cyan);
-  transform: translateY(-4px);
-}
-
-.blog-meta {
-  display: flex;
-  gap: 1.5rem;
-  margin-bottom: 1rem;
-  font-size: 0.9rem;
-  color: var(--color-text-muted);
-}
-
-.blog-date,
-.blog-author {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.blog-card h2 {
-  color: var(--color-text);
-  margin-bottom: 0.75rem;
-  font-size: 1.5rem;
-}
-
-.blog-card p {
-  color: var(--color-text-muted);
-  line-height: 1.6;
-  margin-bottom: 1rem;
-}
-
-.tags-inline {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-}
-
-.tag {
-  display: inline-block;
-  background-color: rgba(34, 211, 238, 0.1);
-  color: var(--color-cyan);
-  padding: 0.25rem 0.75rem;
-  border-radius: 0.375rem;
-  font-size: 0.9rem;
-  font-weight: 500;
-}
-
-/* Single Page */
-.single-page {
-  padding: 4rem 0;
-}
-
-.back-link {
-  display: inline-flex;
-  align-items: center;
-  color: var(--color-text-muted);
-  text-decoration: none;
-  margin-bottom: 2rem;
-  transition: color 0.2s;
-}
-
-.back-link:hover {
-  color: var(--color-cyan);
-}
-
-.post-meta {
-  display: flex;
-  gap: 1.5rem;
-  margin-bottom: 2rem;
-  font-size: 0.9rem;
-  color: var(--color-text-muted);
-}
-
-.post-date,
-.post-author {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.breadcrumb {
-  margin-bottom: 1rem;
-}
-
-.breadcrumb-link {
-  color: var(--color-cyan);
-  text-decoration: none;
-  font-size: 0.9rem;
-}
-
-.breadcrumb-link:hover {
-  text-decoration: underline;
-}
-
-.single-page h1 {
-  font-size: 2.5rem;
-  margin-bottom: 1.5rem;
-  font-weight: 700;
-}
-
-.lead {
-  font-size: 1.2rem;
-  color: var(--color-text-muted);
-  margin-bottom: 2rem;
-  line-height: 1.6;
-}
-
-/* Everything inside `.content` is styled in custom.css, the prose layer. It
-   used to be styled here as well, with different sizes, colours and spacing,
-   and custom.css loads second, so this copy only ever half-applied. */
-
-.tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  margin-top: 3rem;
-  padding-top: 2rem;
-  border-top: 1px solid var(--color-border);
-}
-
-/* Prose tables live in custom.css as a single implementation shared with
-   `.ax-table`. The rules that used to sit here drew a second, heavier table
-   with a cyan header band and 2px white borders. */
+/* The index and article page chrome that used to live here is gone with it.
+   _default/list.html and _default/single.html are built from the shared
+   section shell now: the compact hero, the card, the micro-label meta line
+   and the tag chip, all in sections.css. Prose tables live in custom.css. */
 
 /* ==========================================================================
    Hamburger Menu Base Styles
@@ -1312,8 +1084,6 @@ h1, h2, h3, h4, h5, h6 {
   .logo img { height: 1.75rem; max-width: 160px; }
   .footer-logo img { height: 1.5rem; max-width: 140px; }
 
-  .page-title { font-size: var(--text-3xl); }
-
   /* Show hamburger on mobile */
   .nav-hamburger {
     display: flex;
@@ -1436,185 +1206,9 @@ h1, h2, h3, h4, h5, h6 {
     overflow: hidden;
   }
 
-  /* Transform Go Advantage table into cards */
-  .advantage-table-wrapper {
-    overflow: visible; /* No horizontal scroll needed */
-  }
-
-  .advantage-table {
-    border: none;
-    border-radius: 0;
-  }
-
-  /* Hide table header on mobile (accessibility: keep in DOM) */
-  .advantage-table thead {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    white-space: nowrap;
-    border: 0;
-  }
-
-  /* Transform each row into a card */
-  .advantage-table tbody tr {
-    display: block;
-    margin-bottom: 1.5rem;
-    border: 1px solid var(--color-border);
-    border-radius: 0.75rem;
-    background-color: rgba(0, 0, 0, 0.2);
-    padding: 1rem;
-  }
-
-  .advantage-table tbody tr:hover {
-    background-color: rgba(34, 211, 238, 0.08);
-  }
-
-  /* Stack cells vertically within each card */
-  .advantage-table td {
-    display: block;
-    border: none;
-    padding: 0.5rem 0;
-    text-align: left;
-  }
-
-  /* Feature name (first cell) - large and cyan */
-  .advantage-table td:first-child {
-    color: var(--color-cyan);
-    font-size: 1.1rem;
-    font-weight: 700;
-    margin-bottom: 0.75rem;
-    padding-bottom: 0.75rem;
-    border-bottom: 1px solid var(--color-border);
-    background: none;
-  }
-
-  /* Add context labels using ::before pseudo-elements */
-  .advantage-table td:nth-child(2)::before {
-    content: 'Python Frameworks: ';
-    display: block;
-    color: var(--color-text-muted);
-    font-size: 0.8rem;
-    font-weight: 500;
-    margin-bottom: 0.25rem;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-  }
-
-  .advantage-table td:nth-child(3)::before {
-    content: 'Aixgo: ';
-    display: block;
-    color: var(--color-cyan);
-    font-size: 0.8rem;
-    font-weight: 600;
-    margin-bottom: 0.25rem;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-  }
-
-  /* Python Frameworks value - muted */
-  .advantage-table td:nth-child(2) {
-    color: var(--color-text-muted);
-    font-size: 0.9rem;
-    margin-bottom: 0.5rem;
-  }
-
-  /* Aixgo value - emphasized with cyan */
-  .advantage-table td:nth-child(3) {
-    color: var(--color-cyan);
-    font-weight: 600;
-    font-size: 0.95rem;
-  }
-
-  /* Optimize code blocks for mobile - enable wrapping for accessibility */
-  .code-step pre,
-  .content pre {
-    padding: 0.75rem;
-    padding-right: 2.5rem; /* Space for copy button */
-    font-size: 0.85rem; /* Slightly smaller for mobile */
-    max-width: 100%; /* Prevent code blocks from expanding page width */
-    box-sizing: border-box;
-    overflow-x: visible; /* Allow wrapping instead of scroll */
-    white-space: pre-wrap; /* Wrap long lines while preserving formatting */
-    overflow-wrap: break-word; /* Break long words at boundaries */
-    word-break: break-word; /* Fallback for URLs/paths */
-  }
-
-  /* Ensure code step containers don't overflow */
-  .code-step {
-    max-width: 100%;
-    overflow-x: visible;
-  }
-
-  .code-step code,
-  .content pre code {
-    font-size: 0.8rem;
-    line-height: 1.5;
-    white-space: pre-wrap; /* Enable wrapping in code elements */
-    overflow-wrap: break-word; /* Break long words */
-  }
-
-  /* Make copy button smaller on mobile */
-  .copy-button {
-    padding: 0.25rem;
-    top: 0.35rem;
-    right: 0.35rem;
-  }
-
-  .copy-button svg {
-    width: 14px;
-    height: 14px;
-  }
-
-  /* Additional mobile improvements */
-
-  /* Hero section - reduce vertical padding */
-  .hero {
-    padding: 5rem 0 3.5rem;
-  }
-
-  .hero-subtitle {
-    font-size: 1.1rem;
-    padding: 0 1rem;
-  }
-
-  /* Full-width buttons on mobile, but only the page-level calls to action.
-     This used to hit every inline link styled as a button. */
-  .btn-cta,
-  .hero .btn {
-    width: 100%;
-    max-width: 300px;
-  }
-
-  /* Features grid - single column */
-  .features-grid {
-    grid-template-columns: 1fr;
-    gap: 1.5rem;
-  }
-
-  .feature-card {
-    padding: 1.25rem;
-  }
-
-  /* Container padding - reduce for more mobile space */
-  .container,
-  .container-narrow {
-    padding-left: 1.25rem;
-    padding-right: 1.25rem;
-  }
-
-  /* Section padding - reduce vertical spacing */
-  .code-section,
-  .why-go-section,
-  .advantage-section,
-  .built-for-section,
-  .roadmap-section,
-  .cta-section {
-    padding: 4rem 0;
-  }
+  /* The Go Advantage table, the code steps and the hero all had mobile
+     rules here. Their components are gone; the shared table scrolls inside
+     its own wrapper and the hero sizes itself off a clamp. */
 
   /* Mobile Footer */
   .footer-grid {
@@ -1645,16 +1239,6 @@ h1, h2, h3, h4, h5, h6 {
     font-size: 0.875rem;
     padding: 0.5rem 0;
     min-height: 44px;
-  }
-
-  .content table {
-    font-size: 0.9rem;
-    margin: 2rem auto;
-  }
-
-  .content table thead th,
-  .content table tbody td {
-    padding: 1rem;
   }
 
   /* Feature Grid - Mobile responsive adjustments */

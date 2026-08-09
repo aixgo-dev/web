@@ -162,6 +162,17 @@
   color: var(--ax-accent);
 }
 
+/* Every fenced block goes through _markup/render-codeblock.html and comes out
+   as `.ax-codeblock`, which brings its own frame. A bare `pre` only appears
+   from raw HTML in a page body, and still needs one. */
+.content .ax-codeblock { margin-top: var(--ax-s-5); }
+.content .ax-codeblock pre {
+  margin-top: 0;
+  background: none;
+  border: 0;
+  border-radius: 0;
+}
+
 .content pre {
   margin-top: var(--ax-s-5);
   padding: 1.125rem 1.25rem;
