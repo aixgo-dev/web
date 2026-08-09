@@ -1,26 +1,41 @@
+{{/* Not-found page, on the same shell as everything else. It used to render
+     through the old single-page chrome, which no longer exists, so the
+     headline sat flush against the header. */}}
 {{ define "main" }}
-<article class="single-page">
-  <div class="container-narrow">
-    <h1>404 — Page not found</h1>
-    <p class="lead">
-      The page you're looking for doesn't exist, or it has moved. Try one of the links below.
-    </p>
+<div class="ax-page">
 
-    <div class="content">
-      <h2>Where to go next</h2>
-      <ul>
-        <li><a href="/">Home</a></li>
-        <li><a href="/code/">Code</a></li>
-        <li><a href="/aixgate/">Aixgate</a></li>
-        <li><a href="/guides/">Documentation</a></li>
-        <li><a href="/guides/quick-start/">Quick start guide</a></li>
-        <li><a href="/features/">Features</a></li>
-        <li><a href="/why-aixgo/">Why Aixgo</a></li>
-        <li><a href="/blog/">Blog</a></li>
-        <li><a href="https://github.com/aixgo-dev/aixgo" target="_blank" rel="noopener noreferrer">GitHub repository</a></li>
-        <li><a href="https://github.com/aixgo-dev/aixgo/issues" target="_blank" rel="noopener noreferrer">Report a broken link</a></li>
-      </ul>
+  <section class="ax-section ax-hero ax-hero--compact">
+    <div class="ax-hero__halo ax-halo" aria-hidden="true"></div>
+    <div class="ax-hero__grid ax-dotgrid ax-dotgrid--fade" aria-hidden="true"></div>
+    <div class="ax-wrap">
+      <div class="ax-hero__body ax-edge ax-edge--section">
+        <p class="ax-eyebrow"><span class="ax-eyebrow__num">404</span>Not found</p>
+        <h1 class="ax-hero__title">That page is not here.</h1>
+        <span class="ax-rule ax-rule--wide" aria-hidden="true"></span>
+        <p class="ax-hero__sub">
+          It either never existed or it moved. These are the pages people usually
+          want.
+        </p>
+      </div>
     </div>
-  </div>
-</article>
+  </section>
+
+  <section class="ax-section ax-section--alt ax-textured">
+    <div class="ax-wrap">
+      <div class="ax-grid ax-grid--3">
+        <a class="ax-card ax-listcard" href="/"><h2>Aixgo</h2><p>The agent framework, and where the quick start lives.</p></a>
+        <a class="ax-card ax-listcard" href="/code/"><h2>Code</h2><p>An autonomous coding agent that runs in your own GitHub.</p></a>
+        <a class="ax-card ax-listcard" href="/aixgate/"><h2>Aixgate</h2><p>A deny-by-default sandbox for AI coding agents.</p></a>
+        <a class="ax-card ax-listcard" href="/guides/"><h2>Guides</h2><p>Everything from the quick start to production deployment.</p></a>
+        <a class="ax-card ax-listcard" href="/features/"><h2>Features</h2><p>What is implemented, with the numbers that go with it.</p></a>
+        <a class="ax-card ax-listcard" href="/blog/"><h2>Blog</h2><p>Release notes and what changed in each one.</p></a>
+      </div>
+
+      <p class="ax-note">
+        <a href="https://github.com/aixgo-dev/aixgo/issues" target="_blank" rel="noopener">Report a broken link &rarr;<span class="sr-only"> (opens in a new tab)</span></a>
+      </p>
+    </div>
+  </section>
+
+</div>
 {{ end }}

@@ -1,0 +1,55 @@
+{{/*
+  A landing page whose body is still markdown.
+
+  _default/single.html renders prose into an 800px column with no hero and no
+  way out at the end. That is right for a guide and wrong for a page someone
+  arrives on from a search result. This layout gives the same markdown a hero
+  band, an optional stat rail, a graded ground under the prose and a closing
+  call to action, without asking the author to restructure the file.
+
+  Front matter it reads, all optional:
+    eyebrow  - the mono kicker above the title
+    stats    - list of {value, label, accent} for the hero rail
+    cta_*    - see partials/page-cta.html
+*/}}
+{{ define "main" }}
+<div class="ax-page">
+
+  <section class="ax-section ax-hero">
+    <div class="ax-hero__halo ax-halo" aria-hidden="true"></div>
+    <div class="ax-hero__grid ax-dotgrid ax-dotgrid--fade" aria-hidden="true"></div>
+    <div class="ax-wrap">
+      <div class="ax-hero__body ax-edge ax-edge--section">
+        {{ with .Params.eyebrow }}
+        <p class="ax-eyebrow"><span class="ax-eyebrow__num">&rarr;</span>{{ . }}</p>
+        {{ end }}
+        <h1 class="ax-hero__title">{{ .Title }}</h1>
+        <span class="ax-rule ax-rule--wide" aria-hidden="true"></span>
+        {{ with .Description }}<p class="ax-hero__sub">{{ . }}</p>{{ end }}
+      </div>
+
+      {{ with .Params.stats }}
+      <dl class="ax-statrail">
+        {{- range . }}
+        <div>
+          <dd{{ if .accent }} class="is-accent"{{ end }}>{{ .value }}</dd>
+          <dt>{{ .label }}</dt>
+        </div>
+        {{- end }}
+      </dl>
+      {{ end }}
+    </div>
+  </section>
+
+  <section class="ax-section ax-section--alt ax-textured">
+    <div class="ax-wrap">
+      <div class="content ax-prose">
+        {{ .Content }}
+      </div>
+    </div>
+  </section>
+
+  {{ partial "page-cta.html" . }}
+
+</div>
+{{ end }}

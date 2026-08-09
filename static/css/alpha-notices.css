@@ -1,229 +1,204 @@
-/* Alpha Notice Banner */
-.alpha-notice-banner {
-  background: #FFB74D;
-  color: white;
-  padding: 1rem 2rem;
-  text-align: center;
-  font-weight: 600;
-  border-radius: 8px;
-  margin-bottom: 2rem;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-}
+/**
+ * Status notices: the components behind layouts/shortcodes/status-badge.html,
+ * layouts/shortcodes/roadmap-timeline.html, layouts/partials/alpha-notice.html
+ * and the feature shortcodes.
+ *
+ * These were written against a white page with Material palette colours, so on
+ * the dark ground they drew orange banners and white cards that belonged to no
+ * other part of the site. They are retokened here rather than replaced: the
+ * markup is a published interface that content authors call by name.
+ *
+ * Status maps onto the semantic tokens: alpha is --ax-warn, planned is quiet,
+ * available is --ax-ok. Cyan is not a status colour.
+ */
 
-/* Alpha Banner (used in templates) */
-.alpha-banner {
-  background: #FFB74D;
-  color: white !important;
-  padding: 1rem 2rem;
-  text-align: center;
-  font-weight: 600;
-}
+/* ==========================================================================
+   Notice callouts. One shape, the accent-edge block used site-wide, with the
+   left edge carrying the status.
+   ========================================================================== */
 
-.alpha-banner .container {
-  color: white !important;
-}
-
-.alpha-banner span {
-  color: white !important;
-}
-
-.alpha-banner strong {
-  color: white !important;
-}
-
-.alpha-banner a {
-  color: white !important;
-  text-decoration: underline;
-  font-weight: 700;
-}
-
-.alpha-notice-banner a {
-  color: white;
-  text-decoration: underline;
-  font-weight: 700;
-}
-
-.alpha-notice-banner strong {
-  font-size: 1.1em;
-  letter-spacing: 0.5px;
-}
-
-/* Alpha Status Section */
+.alpha-notice-banner,
+.alpha-banner,
+.page-alpha-notice,
 .alpha-status-section {
-  background: #FFB74D;
-  padding: 3rem 2rem;
-  margin: 3rem 0;
-  border-radius: 8px;
+  padding: 1.25rem 1.5rem;
+  margin-bottom: var(--ax-s-6);
+  background: rgba(245, 158, 11, 0.08);
+  border: 1px solid rgba(245, 158, 11, 0.28);
+  border-left: var(--ax-bw-accent) solid var(--ax-warn);
+  border-radius: var(--ax-r-lg);
+  color: var(--ax-text-body);
+  font-size: var(--ax-t-sm);
+  line-height: 1.6;
+  text-align: left;
 }
 
-.alpha-status-section h2 {
-  color: white !important;
-  margin-top: 0;
+.alpha-status-section {
+  padding: var(--ax-s-6);
+  margin: var(--ax-s-8) 0;
 }
 
+.alpha-notice-banner strong,
+.alpha-banner strong,
+.page-alpha-notice strong,
+.alpha-status-section h2,
 .alpha-status-section h3 {
-  margin-top: 1.5rem;
-  margin-bottom: 0.5rem;
+  color: var(--ax-text);
 }
 
-.alpha-status-section p {
-  color: white !important;
-}
+.alpha-status-section h2 { margin-top: 0; font-size: var(--ax-t-h3); }
+.alpha-status-section h3 { margin-top: var(--ax-s-5); font-size: var(--ax-t-h4); }
+.alpha-status-section p { margin-top: var(--ax-s-3); color: var(--ax-text-muted); }
 
+.alpha-notice-banner a,
+.alpha-banner a,
+.page-alpha-notice a,
 .alpha-status-section a {
-  color: white !important;
+  color: var(--ax-warn);
+  font-weight: 600;
   text-decoration: underline;
-  font-weight: 700;
+  text-underline-offset: 3px;
 }
 
-/* Status Badges */
+/* ==========================================================================
+   Status badge. Mono caps, the same micro-label voice as every other label on
+   the site, tinted by status rather than filled with it.
+   ========================================================================== */
+
 .status-badge {
   display: inline-block;
-  padding: 0.25rem 0.75rem;
-  border-radius: 4px;
-  font-size: 0.85rem;
-  font-weight: 600;
-  color: white;
+  padding: 0.2rem 0.5rem;
   margin-left: 0.5rem;
+  border: 1px solid currentColor;
+  border-radius: var(--ax-r-xs);
   vertical-align: middle;
-}
-
-/* Feature Version Badge */
-.version-badge-inline {
-  background-color: #FFB74D;
-  color: white;
-  padding: 0.25rem 0.5rem;
-  border-radius: 4px;
-  font-size: 0.7rem;
-  font-weight: 600;
-  margin-left: 0.5rem;
-}
-
-.status-alpha {
-  background-color: #FFB74D;
-}
-
-.status-planned {
-  background-color: #2196F3;
-}
-
-.status-available {
-  background-color: #4CAF50;
-}
-
-/* Page-level Alpha Notice */
-.page-alpha-notice {
-  background: #FFB74D;
-  border-radius: 8px;
-  padding: 1.5rem 2rem;
-  margin-bottom: 2rem;
-  font-weight: 500;
-  color: white !important;
-}
-
-.page-alpha-notice strong {
-  color: white !important;
-}
-
-.page-alpha-notice a {
-  color: white !important;
-  text-decoration: underline;
+  font-family: var(--ax-font-mono);
+  font-size: var(--ax-t-microlabel);
   font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  white-space: nowrap;
 }
 
-/* Feature Status Grid */
+.status-alpha { color: var(--ax-warn); background: rgba(245, 158, 11, 0.1); }
+.status-planned { color: var(--ax-text-dim); background: rgba(148, 163, 184, 0.08); }
+.status-available { color: var(--ax-ok); background: rgba(16, 185, 129, 0.1); }
+
+/* The release chip. Same shape, carrying a version rather than a state. */
+.version-badge-inline {
+  display: inline-block;
+  padding: 0.15rem 0.45rem;
+  margin-left: 0.5rem;
+  border: 1px solid var(--ax-accent-line);
+  border-radius: var(--ax-r-xs);
+  background: var(--ax-accent-soft);
+  color: var(--ax-accent);
+  font-family: var(--ax-font-mono);
+  font-size: var(--ax-t-microlabel);
+  font-weight: 700;
+  letter-spacing: 0.1em;
+}
+
+/* ==========================================================================
+   Feature status grid. The site card, with the status on the top edge.
+   ========================================================================== */
+
 .feature-status-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 1.5rem;
-  margin: 2rem 0;
+  grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr));
+  gap: var(--ax-card-gap);
+  margin: var(--ax-s-6) 0;
 }
+
+.feature-status-grid > * { min-width: 0; }
 
 .feature-status-card {
-  background: white;
-  border: 2px solid #e0e0e0;
-  border-radius: 8px;
-  padding: 1.5rem;
+  background: var(--ax-bg-3);
+  border: 1px solid var(--ax-border);
+  border-top: 2px solid var(--ax-border-strong);
+  border-radius: var(--ax-r-lg);
+  padding: var(--ax-s-5);
+  box-shadow: var(--ax-e-1);
 }
 
-.feature-status-card.available {
-  border-color: #4CAF50;
-}
-
-.feature-status-card.planned {
-  border-color: #2196F3;
-}
-
-.feature-status-card.alpha {
-  border-color: #FFB74D;
-}
+.feature-status-card.available { border-top-color: var(--ax-ok); }
+.feature-status-card.planned { border-top-color: var(--ax-text-faint); }
+.feature-status-card.alpha { border-top-color: var(--ax-warn); }
 
 .feature-status-card h4 {
   margin-top: 0;
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  font-family: var(--ax-font-display);
+  font-size: var(--ax-t-h3);
+  color: var(--ax-text);
 }
 
-/* Roadmap Timeline */
+/* ==========================================================================
+   Roadmap timeline. A hairline spine with a node per entry; the node colour is
+   the state, and the trailing label repeats it in words.
+   ========================================================================== */
+
 .roadmap-timeline {
   position: relative;
-  padding-left: 2rem;
-  margin: 2rem 0;
+  margin: var(--ax-s-6) 0;
+  padding-left: var(--ax-s-5);
 }
 
 .roadmap-timeline::before {
-  content: '';
+  content: "";
   position: absolute;
   left: 0;
-  top: 0;
-  bottom: 0;
-  width: 3px;
-  background: linear-gradient(to bottom, #4CAF50 0%, #2196F3 50%, #FFB74D 100%);
+  top: 0.5rem;
+  bottom: 0.5rem;
+  width: 1px;
+  background: var(--ax-hairline);
 }
 
 .roadmap-item {
   position: relative;
-  margin-bottom: 2rem;
-  padding-left: 2rem;
+  margin-bottom: var(--ax-s-6);
+  padding-left: var(--ax-s-5);
 }
 
 .roadmap-item::before {
-  content: '';
+  content: "";
   position: absolute;
-  left: -2rem;
+  left: calc(var(--ax-s-5) * -1 - 5px);
   top: 0.5rem;
-  width: 12px;
-  height: 12px;
+  width: 11px;
+  height: 11px;
   border-radius: 50%;
-  background: white;
-  border: 3px solid currentColor;
+  background: var(--ax-bg-0);
+  border: 2px solid currentColor;
 }
 
-.roadmap-item.complete {
-  color: #4CAF50;
+.roadmap-item.complete { color: var(--ax-ok); }
+.roadmap-item.in-progress { color: var(--ax-warn); }
+.roadmap-item.planned { color: var(--ax-text-faint); }
+
+.roadmap-item h4 {
+  font-family: var(--ax-font-display);
+  font-size: var(--ax-t-h3);
+  color: var(--ax-text);
 }
 
-.roadmap-item.in-progress {
-  color: #2196F3;
+.roadmap-item ul {
+  margin-top: var(--ax-s-3);
+  padding-left: 1.1rem;
+  color: var(--ax-text-muted);
+  font-size: var(--ax-t-sm);
 }
 
-.roadmap-item.planned {
-  color: #FFB74D;
-}
+.roadmap-item li { margin-top: var(--ax-s-2); }
 
-/* Mobile Responsiveness */
 @media (max-width: 768px) {
-  .alpha-notice-banner {
-    padding: 0.75rem 1rem;
-    font-size: 0.9rem;
-  }
+  .alpha-notice-banner,
+  .alpha-banner,
+  .page-alpha-notice { padding: 1rem 1.125rem; }
 
-  .hidden-mobile {
-    display: none;
-  }
+  .feature-status-grid { grid-template-columns: 1fr; }
 
-  .feature-status-grid {
-    grid-template-columns: 1fr;
-  }
+  .hidden-mobile { display: none; }
 }

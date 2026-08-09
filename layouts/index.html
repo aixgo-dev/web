@@ -1,381 +1,232 @@
+{{/*
+  The homepage.
+
+  Built from the section primitives in sections.css, the same set /code is
+  assembled from. Lists come from data/home.yaml, data/milestones.yaml and
+  data/products.yaml; the prose lives here.
+
+  content/_index.md carries front matter only. This template never calls
+  .Content, so anything written in that file renders nowhere.
+*/}}
 {{ define "main" }}
+{{- $v := site.Data.version -}}
+{{- $h := site.Data.home -}}
 
-<!-- Hero Section -->
-<section class="hero">
-  <div class="container">
-    <h1 class="hero-title">
-      {{ .Site.Data.version.tagline }}
-    </h1>
-    <p class="hero-subtitle">
-      {{ .Site.Data.version.subheadline }}
-    </p>
-    <a href="{{ .Site.Data.version.cta_url }}" class="btn btn-cta">{{ .Site.Data.version.cta_text }} →</a>
-  </div>
-</section>
+<div class="ax-page">
 
-<!-- Code Example Section -->
-<section class="code-section">
-  <div class="container">
-    <h2 class="section-title">
-      From Prototype to Planet-Scale in <span class="highlight">60 Seconds</span>
-    </h2>
+  <!-- ============================================================ 00 Hero -->
+  <section class="ax-section ax-hero" id="top">
+    <div class="ax-hero__halo ax-halo" aria-hidden="true"></div>
+    <div class="ax-hero__grid ax-dotgrid ax-dotgrid--fade" aria-hidden="true"></div>
+    <div class="ax-wrap">
+      <div class="ax-hero__body ax-edge ax-edge--section">
+        <p class="ax-eyebrow"><span class="ax-eyebrow__num">&rarr;</span>Aixgo &middot; Open source &middot; MIT</p>
 
-    <div class="code-steps">
-      <div class="code-step">
-        <h3>1. Install</h3>
-        <div class="code-block-wrapper">
-          <button class="copy-button" aria-label="Copy code">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
-              <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
-            </svg>
-          </button>
-          <pre><code>go get github.com/aixgo-dev/aixgo</code></pre>
+        <h1 class="ax-hero__title">{{ $v.tagline }}</h1>
+        <span class="ax-rule ax-rule--wide" aria-hidden="true"></span>
+
+        <p class="ax-hero__sub">{{ $v.subheadline }}</p>
+
+        <div class="ax-statuscard ax-edge">
+          <p class="ax-microlabel">Status</p>
+          <p>
+            {{ $v.current }}. The agent types, the orchestration patterns and the
+            provider integrations are implemented; the releases below say what
+            landed when.
+          </p>
         </div>
+
+        <div class="ax-btnrow">
+          <a class="ax-btn ax-btn--primary" href="{{ $v.cta_url }}">{{ $v.cta_text }} &rarr;</a>
+          <a class="ax-btn ax-btn--secondary" href="{{ $h.repo }}" target="_blank" rel="noopener">Read the source on GitHub &rarr;<span class="sr-only"> (opens in a new tab)</span></a>
+        </div>
+
+        <p class="ax-hero__subcta">One Go module. Nothing to install alongside it at runtime.</p>
+        <p class="ax-microlabel ax-hero__foot">MIT &middot; 13 patterns &middot; 8+ providers &middot; one binary</p>
       </div>
 
-      <div class="code-step">
-        <h3>2. Create config/agents.yaml</h3>
-        <div class="code-block-wrapper">
-          <button class="copy-button" aria-label="Copy code">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
-              <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
-            </svg>
-          </button>
-          <pre><code>supervisor:
-  name: coordinator
-  model: gpt-4o-mini  # OpenAI - fast orchestration
-  max_rounds: 10
-
-agents:
-  - name: data-producer
-    role: producer
-    interval: 1s
-    outputs:
-      - target: analyzer
-
-  - name: analyzer
-    role: react
-    model: claude-3-5-haiku  # Anthropic - strong reasoning
-    prompt: |
-      You are a data analyst. Analyze incoming data and provide insights.
-    inputs:
-      - source: data-producer
-    outputs:
-      - target: logger
-
-  - name: logger
-    role: logger
-    inputs:
-      - source: analyzer</code></pre>
+      <dl class="ax-statrail">
+        {{- range $h.stats }}
+        <div>
+          <dd{{ if .accent }} class="is-accent"{{ end }}>{{ .value }}</dd>
+          <dt>{{ .label }}</dt>
         </div>
+        {{- end }}
+      </dl>
+    </div>
+  </section>
+
+  <!-- ====================================================== 01 Quick start -->
+  <section class="ax-section ax-section--alt ax-textured" id="quick-start">
+    <div class="ax-wrap">
+      <div class="ax-section__intro">
+        <p class="ax-eyebrow"><span class="ax-eyebrow__num">01</span>Quick start</p>
+        <h2>Four steps from an empty directory to a running agent.</h2>
+        <p>
+          The configuration describes the agents and the wiring between them. The Go
+          file does nothing but hand that configuration to the runtime.
+        </p>
       </div>
 
-      <div class="code-step">
-        <h3>3. Create main.go</h3>
-        <div class="code-block-wrapper">
-          <button class="copy-button" aria-label="Copy code">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
-              <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
-            </svg>
-          </button>
-          <pre><code>package main
+      <ol class="ax-install ax-install--wide">
+        {{- range $h.quickstart }}
+        <li>
+          <h3>{{ .title }}</h3>
+          <div class="ax-codeblock">
+            <div class="ax-codeblock__bar">
+              <span>{{ .bar }}</span>
+              <button type="button" class="ax-codeblock__copy js-copy" aria-label="Copy code">Copy</button>
+            </div>
+            <pre><code>{{- .code | strings.TrimSuffix "\n" -}}</code></pre>
+          </div>
+        </li>
+        {{- end }}
+      </ol>
 
-import (
-    "github.com/aixgo-dev/aixgo"
-    _ "github.com/aixgo-dev/aixgo/agents"
-)
+      <p class="ax-note"><a href="/guides/">Read the guides &rarr;</a></p>
+    </div>
+  </section>
 
-func main() {
-    if err := aixgo.Run("config/agents.yaml"); err != nil {
-        panic(err)
-    }
-}</code></pre>
-        </div>
+  <!-- =========================================================== 02 Why Go -->
+  <section class="ax-section" id="why-go">
+    <div class="ax-wrap">
+      <div class="ax-section__intro">
+        <p class="ax-eyebrow"><span class="ax-eyebrow__num">02</span>Why Go</p>
+        <h2>What changes when an agent ships as a compiled binary.</h2>
+        <p>
+          Python won prototyping because it is quick to write. The costs arrive
+          later, at the point where the thing has to be deployed and kept running.
+        </p>
       </div>
 
-      <div class="code-step">
-        <h3>4. Deploy anywhere</h3>
-        <div class="code-block-wrapper">
-          <button class="copy-button" aria-label="Copy code">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
-              <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
-            </svg>
-          </button>
-          <pre><code># Local development
-go run main.go
-
-# Production - single <20MB binary
-go build -o agent
-./agent
-
-# Edge, Lambda, Cloud Run, Kubernetes - one binary, zero configuration</code></pre>
+      <div class="ax-grid ax-grid--2">
+        {{- range $h.comparisons }}
+        <div class="ax-card ax-compare">
+          <h3>{{ .title }}</h3>
+          <dl>
+            <div>
+              <dt class="ax-microlabel">Python frameworks</dt>
+              <dd>{{ .them }}</dd>
+            </div>
+            <div>
+              <dt class="ax-microlabel">Aixgo</dt>
+              <dd class="is-accent">{{ .us }}</dd>
+            </div>
+            <div>
+              <dt class="ax-microlabel">What that buys you</dt>
+              <dd>{{ .impact }}</dd>
+            </div>
+          </dl>
         </div>
+        {{- end }}
       </div>
     </div>
+  </section>
 
-    <div class="code-cta">
-      <a href="/docs" class="btn btn-primary">View Full Documentation →</a>
-    </div>
-  </div>
-</section>
-
-<!-- Why Go Section -->
-<section class="why-go-section">
-  <div class="container">
-    <h2 class="section-title">
-      Why the Industry is Moving to <span class="highlight">Go</span>
-    </h2>
-    <p class="section-subtitle">
-      Python dominated AI because it was easy to prototype. Go will dominate production because it's built to ship.
-    </p>
-
-    <div class="features-grid">
-      <div class="feature-card">
-        <h3>Container Size</h3>
-        <div class="feature-comparison">
-          <div class="comparison-item">
-            <p class="comparison-label">Python frameworks</p>
-            <p class="comparison-value">1.2GB with dependencies</p>
-          </div>
-          <div class="comparison-divider"></div>
-          <div class="comparison-item">
-            <p class="comparison-label">Aixgo</p>
-            <p class="comparison-value highlight"><20MB single binary</p>
-          </div>
-          <div class="comparison-divider"></div>
-          <div class="comparison-item">
-            <p class="comparison-label">Impact:</p>
-            <p class="comparison-impact">Deploy to edge devices, serverless, anywhere</p>
-          </div>
-        </div>
+  <!-- ========================================================= 03 Compared -->
+  <section class="ax-section ax-section--alt ax-textured" id="compared">
+    <div class="ax-wrap">
+      <div class="ax-section__intro">
+        <p class="ax-eyebrow"><span class="ax-eyebrow__num">03</span>Side by side</p>
+        <h2>The six differences that show up in production.</h2>
       </div>
 
-      <div class="feature-card">
-        <h3>Startup Performance</h3>
-        <div class="feature-comparison">
-          <div class="comparison-item">
-            <p class="comparison-label">Python frameworks</p>
-            <p class="comparison-value">30-45s cold start</p>
-          </div>
-          <div class="comparison-divider"></div>
-          <div class="comparison-item">
-            <p class="comparison-label">Aixgo</p>
-            <p class="comparison-value highlight">&lt;100ms instant startup</p>
-          </div>
-          <div class="comparison-divider"></div>
-          <div class="comparison-item">
-            <p class="comparison-label">Impact:</p>
-            <p class="comparison-impact">True serverless viability, real-time response</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="feature-card">
-        <h3>Runtime Safety</h3>
-        <div class="feature-comparison">
-          <div class="comparison-item">
-            <p class="comparison-label">Python frameworks</p>
-            <p class="comparison-value">Runtime - Discover errors in production</p>
-          </div>
-          <div class="comparison-divider"></div>
-          <div class="comparison-item">
-            <p class="comparison-label">Aixgo</p>
-            <p class="comparison-value highlight">Compile-time - Compiler catches errors before deploy</p>
-          </div>
-          <div class="comparison-divider"></div>
-          <div class="comparison-item">
-            <p class="comparison-label">Impact:</p>
-            <p class="comparison-impact">Ship with confidence, sleep at night</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="feature-card">
-        <h3>LLM Data Validation</h3>
-        <div class="feature-comparison">
-          <div class="comparison-item">
-            <p class="comparison-label">Python frameworks</p>
-            <p class="comparison-value">Runtime only - Type changes found in production</p>
-          </div>
-          <div class="comparison-divider"></div>
-          <div class="comparison-item">
-            <p class="comparison-label">Aixgo</p>
-            <p class="comparison-value highlight">Compile-time - Type changes caught before deploy, auto-retry</p>
-          </div>
-          <div class="comparison-divider"></div>
-          <div class="comparison-item">
-            <p class="comparison-label">Impact:</p>
-            <p class="comparison-impact">Refactor with confidence, LLM errors auto-recover</p>
-          </div>
-        </div>
+      <div class="ax-tablewrap" tabindex="0" role="group" aria-label="Python frameworks compared with Aixgo">
+        <table class="ax-table">
+          <thead>
+            <tr>
+              <th scope="col">What matters in production</th>
+              <th scope="col">Python frameworks</th>
+              <th scope="col">Aixgo</th>
+            </tr>
+          </thead>
+          <tbody>
+            {{- range $h.advantage }}
+            <tr>
+              <th scope="row">{{ .what }}</th>
+              <td>{{ .them }}</td>
+              <td class="is-accent">{{ .us }}</td>
+            </tr>
+            {{- end }}
+          </tbody>
+        </table>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-
-<!-- The Go Advantage Section -->
-<section class="advantage-section">
-  <div class="container">
-    <h2 class="section-title">
-      The <span class="highlight">Go</span> Advantage
-    </h2>
-
-    <div class="advantage-table-wrapper">
-      <table class="advantage-table">
-        <thead>
-          <tr>
-            <th>What Matters in Production</th>
-            <th>Python Frameworks</th>
-            <th>Aixgo</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Deploy Anywhere</td>
-            <td>1GB+ containers, complex deps</td>
-            <td><20MB binary, zero deps</td>
-          </tr>
-          <tr>
-            <td>Cold Start Speed</td>
-            <td>10-45 seconds</td>
-            <td>&lt;100ms</td>
-          </tr>
-          <tr>
-            <td>Type Safety</td>
-            <td>Runtime discovery</td>
-            <td>Compile-time guarantees</td>
-          </tr>
-          <tr>
-            <td>Concurrency</td>
-            <td>GIL bottleneck</td>
-            <td>Native parallelism</td>
-          </tr>
-          <tr>
-            <td>Scaling Pattern</td>
-            <td>Rewrite for distribution</td>
-            <td>Same code, local → distributed</td>
-          </tr>
-          <tr>
-            <td>Operational Cost</td>
-            <td>High compute overhead</td>
-            <td>60-70% infrastructure savings</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-</section>
-
-<!-- Built for What's Next Section -->
-<section class="built-for-section">
-  <div class="container">
-    <h2 class="section-title">
-      Built for What's <span class="highlight">Next</span>
-    </h2>
-    <p class="section-subtitle">
-      Aixgo isn't just another framework. It's the foundation for the next generation of AI systems.
-    </p>
-
-    <div class="features-grid-2">
-      <div class="feature-card-2">
-        <div class="feature-header">
-          <div class="feature-icon"><i data-lucide="network"></i></div>
-          <h3>13 Orchestration Patterns</h3>
-        </div>
-        <p>All patterns production-ready: Supervisor, Sequential, Parallel, Router, Swarm, RAG, Reflection, Ensemble, and more. Go channels locally, gRPC for distributed.</p>
+  <!-- ===================================================== 04 In the binary -->
+  <section class="ax-section" id="capabilities">
+    <div class="ax-wrap">
+      <div class="ax-section__intro">
+        <p class="ax-eyebrow"><span class="ax-eyebrow__num">04</span>In the binary</p>
+        <h2>What you get without adding a dependency.</h2>
       </div>
 
-      <div class="feature-card-2">
-        <div class="feature-header">
-          <div class="feature-icon"><i data-lucide="boxes"></i></div>
-          <h3>8+ LLM Providers</h3>
+      <div class="ax-grid ax-grid--3">
+        {{- range $h.capabilities }}
+        <div class="ax-card ax-iconcard">
+          <div class="ax-iconcard__head">
+            <span class="ax-iconcard__icon">{{ partial "icon.html" .icon }}</span>
+            <h3>{{ .title }}</h3>
+          </div>
+          <p>{{ .body }}</p>
         </div>
-        <p>OpenAI, Anthropic, Google Gemini, xAI, Vertex AI, HuggingFace, Ollama, and vLLM. Switch providers with a config change. Auto-detection by model name.</p>
-      </div>
-
-      <div class="feature-card-2">
-        <div class="feature-header">
-          <div class="feature-icon"><i data-lucide="activity"></i></div>
-          <h3>Full Observability Stack</h3>
-        </div>
-        <p>OpenTelemetry tracing, Langfuse integration, Prometheus metrics, automatic cost tracking. Kubernetes health probes included.</p>
-      </div>
-
-      <div class="feature-card-2">
-        <div class="feature-header">
-          <div class="feature-icon"><i data-lucide="shield"></i></div>
-          <h3>Enterprise Security</h3>
-        </div>
-        <p>4 auth modes, RBAC, SSRF protection, prompt injection defense, SIEM integration. Rate limiting and audit logging built-in.</p>
-      </div>
-
-      <div class="feature-card-2">
-        <div class="feature-header">
-          <div class="feature-icon"><i data-lucide="check-circle"></i></div>
-          <h3>Type-Safe Validation</h3>
-        </div>
-        <p>Pydantic AI-style validation with automatic retry. 40-70% improvement in structured output reliability. Compile-time type checking.</p>
-      </div>
-
-      <div class="feature-card-2">
-        <div class="feature-header">
-          <div class="feature-icon"><i data-lucide="trending-down"></i></div>
-          <h3>60-70% Lower Infra Costs</h3>
-        </div>
-        <p><20MB binaries, &lt;100ms cold starts, ~50MB memory. Router pattern saves 25-50% on LLM costs. Local inference with Ollama for zero API costs.</p>
+        {{- end }}
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- Roadmap Section -->
-<section class="roadmap-section">
-  <div class="container">
-    <h2 class="section-title">
-      What We're <span class="highlight">Building</span>
-    </h2>
+  <!-- ========================================================== 05 Releases -->
+  <section class="ax-section ax-section--alt" id="roadmap">
+    <div class="ax-wrap">
+      <div class="ax-section__intro">
+        <p class="ax-eyebrow"><span class="ax-eyebrow__num">05</span>Releases</p>
+        <h2>What shipped, and when.</h2>
+      </div>
 
-    {{ partial "milestone-cards.html" . }}
-  </div>
-</section>
-
-<!-- Sibling products. One band, driven by data/products.yaml — a second
-     one-off section with inline styles was the alternative, and there are two
-     products now with more coming. -->
-<section class="sibling-section">
-  <div class="container">
-    <p class="ax-microlabel sibling-kicker">Also from us</p>
-    <h2 class="section-title sibling-title">The rest of the toolkit</h2>
-    <p class="section-subtitle sibling-lead">Aixgo builds agents. Aixgate keeps them in their lane.</p>
-
-    <div class="sibling-grid">
-      {{ range .Site.Data.products }}
-      <a class="ax-card sibling-card" href="{{ .url }}">
-        <h3>{{ .name }}</h3>
-        <p>{{ .description }}</p>
-        <p class="ax-microlabel sibling-status">{{ .status }}</p>
-      </a>
-      {{ end }}
+      {{ partial "milestone-cards.html" . }}
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- CTA Section -->
-<section class="cta-section">
-  <div class="container">
-    <h2 class="cta-title">
-      Try <span class="highlight">{{ .Site.Data.version.current }}</span>
-    </h2>
-    <p class="cta-subtitle">
-      The AI infrastructure built on Python is reaching its limits. Aixgo is what comes next. Join us in building it.
-    </p>
-    <a href="{{ .Site.Data.version.cta_url }}" class="btn btn-cta">{{ .Site.Data.version.cta_text }} →</a>
-  </div>
-</section>
+  <!-- ==================================================== 06 Also from us -->
+  <section class="ax-section" id="products">
+    <div class="ax-wrap">
+      <div class="ax-section__intro">
+        <p class="ax-eyebrow"><span class="ax-eyebrow__num">06</span>Also from us</p>
+        <h2>Aixgo builds agents. The other two deal with what agents do next.</h2>
+      </div>
 
+      <div class="ax-grid ax-grid--2">
+        {{- range site.Data.products }}
+        <a class="ax-card sibling-card" href="{{ .url }}">
+          <h3>{{ .name }}</h3>
+          <p>{{ .description }}</p>
+          <p class="ax-microlabel sibling-status">{{ .status }}</p>
+        </a>
+        {{- end }}
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================== 07 Final CTA -->
+  <section class="ax-section ax-final" id="start">
+    <div class="ax-final__halo ax-halo" aria-hidden="true"></div>
+    <div class="ax-wrap">
+      <div class="ax-final__body">
+        <h2>Start with the quick start.</h2>
+        <span class="ax-rule" aria-hidden="true"></span>
+        <p>
+          Four steps, ending with a running multi-agent system you can read top to
+          bottom.
+        </p>
+        <div class="ax-btnrow">
+          <a class="ax-btn ax-btn--primary" href="{{ $v.cta_url }}">{{ $v.cta_text }} &rarr;</a>
+          <a class="ax-btn ax-btn--secondary" href="{{ $h.repo }}" target="_blank" rel="noopener">Read the source &rarr;<span class="sr-only"> (opens in a new tab)</span></a>
+        </div>
+        <p class="ax-microlabel">MIT &middot; issues and discussions welcome</p>
+      </div>
+    </div>
+  </section>
+
+</div>
 {{ end }}

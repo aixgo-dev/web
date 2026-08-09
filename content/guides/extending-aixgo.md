@@ -1091,6 +1091,6 @@ See [CONTRIBUTING.md](https://github.com/aixgo-dev/aixgo/blob/main/CONTRIBUTING.
 
 ## Next Steps
 
-- Try the [RAG Agent Example](../../examples/rag-agent)
+- Try the [RAG Agent Example](https://github.com/aixgo-dev/aixgo/tree/main/examples/rag-agent)
 - Read [Vector Databases Guide](./vector-databases.md)
 - Explore [Provider Integration](./provider-integration.md)

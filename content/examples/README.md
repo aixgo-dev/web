@@ -17,7 +17,7 @@ Comprehensive collection of YAML configuration examples for Aixgo agents, LLM pr
 
 Agent types define the behavior and capabilities of individual agents in your Aixgo deployment.
 
-### [Producer Agent](agents/producer.yaml)
+### [Producer Agent](https://github.com/aixgo-dev/aixgo/blob/main/examples/agents/producer.yaml)
 
 Generates messages at regular intervals for downstream processing.
 
@@ -30,7 +30,7 @@ Generates messages at regular intervals for downstream processing.
 - Synthetic data generation
 - Timestamp and ID tracking
 
-### [ReAct Agent](agents/react.yaml)
+### [ReAct Agent](https://github.com/aixgo-dev/aixgo/blob/main/examples/agents/react.yaml)
 
 Reasoning and Acting agent with tool use capabilities. Implements the ReAct pattern: Thought → Action → Observation.
 
@@ -44,7 +44,7 @@ Reasoning and Acting agent with tool use capabilities. Implements the ReAct patt
 - Multi-turn conversations
 - Supports all major LLM providers
 
-### [Logger Agent](agents/logger.yaml)
+### [Logger Agent](https://github.com/aixgo-dev/aixgo/blob/main/examples/agents/logger.yaml)
 
 Simple logging agent that outputs messages to stdout/logs.
 
@@ -57,7 +57,7 @@ Simple logging agent that outputs messages to stdout/logs.
 - Immediate output (no buffering)
 - Message type and payload logging
 
-### [Classifier Agent](agents/classifier.yaml)
+### [Classifier Agent](https://github.com/aixgo-dev/aixgo/blob/main/examples/agents/classifier.yaml)
 
 AI-powered content classification with semantic understanding.
 
@@ -72,7 +72,7 @@ AI-powered content classification with semantic understanding.
 - Performance metrics tracking
 - Alternative suggestions
 
-### [Aggregator Agent](agents/aggregator.yaml)
+### [Aggregator Agent](https://github.com/aixgo-dev/aixgo/blob/main/examples/agents/aggregator.yaml)
 
 AI-powered aggregation of multiple agent outputs.
 
@@ -95,7 +95,7 @@ AI-powered aggregation of multiple agent outputs.
 - **Hierarchical:** Multi-level aggregation
 - **RAG-based:** Retrieval-augmented generation
 
-### [Planner Agent](agents/planner.yaml)
+### [Planner Agent](https://github.com/aixgo-dev/aixgo/blob/main/examples/agents/planner.yaml)
 
 AI-powered Chain-of-Thought planning and reasoning.
 
@@ -126,7 +126,7 @@ AI-powered Chain-of-Thought planning and reasoning.
 
 Configuration examples for different LLM providers supported by aixgo.
 
-### [OpenAI](llm-providers/openai.yaml)
+### [OpenAI](https://github.com/aixgo-dev/aixgo/blob/main/examples/llm-providers/openai.yaml)
 
 GPT-3.5, GPT-4, and OpenAI-compatible endpoints.
 
@@ -144,7 +144,7 @@ GPT-3.5, GPT-4, and OpenAI-compatible endpoints.
 
 **Best For:** Production deployments, complex reasoning, high accuracy
 
-### [Anthropic Claude](llm-providers/anthropic.yaml)
+### [Anthropic Claude](https://github.com/aixgo-dev/aixgo/blob/main/examples/llm-providers/anthropic.yaml)
 
 Claude 3 family: Haiku, Sonnet, and Opus.
 
@@ -163,7 +163,7 @@ Claude 3 family: Haiku, Sonnet, and Opus.
 
 **Best For:** Long documents, complex reasoning, safety-critical applications
 
-### [Google Gemini](llm-providers/gemini.yaml)
+### [Google Gemini](https://github.com/aixgo-dev/aixgo/blob/main/examples/llm-providers/gemini.yaml)
 
 Gemini Pro and Gemini Pro Vision via Google AI Studio.
 
@@ -181,7 +181,7 @@ Gemini Pro and Gemini Pro Vision via Google AI Studio.
 
 **Best For:** Development, testing, image understanding
 
-### [Google Vertex AI](llm-providers/vertexai.yaml)
+### [Google Vertex AI](https://github.com/aixgo-dev/aixgo/blob/main/examples/llm-providers/vertexai.yaml)
 
 Enterprise Gemini and PaLM on Google Cloud Platform.
 
@@ -200,7 +200,7 @@ Enterprise Gemini and PaLM on Google Cloud Platform.
 
 **Best For:** Enterprise production, compliance requirements, GCP integration
 
-### [xAI Grok](llm-providers/xai.yaml)
+### [xAI Grok](https://github.com/aixgo-dev/aixgo/blob/main/examples/llm-providers/xai.yaml)
 
 Grok models from xAI (X.AI).
 
@@ -216,7 +216,7 @@ Grok models from xAI (X.AI).
 
 **Best For:** Current events, social media analysis, conversational interfaces
 
-### [HuggingFace](llm-providers/huggingface.yaml)
+### [HuggingFace](https://github.com/aixgo-dev/aixgo/blob/main/examples/llm-providers/huggingface.yaml)
 
 Open-source models via HuggingFace Inference API.
 
@@ -240,7 +240,7 @@ Open-source models via HuggingFace Inference API.
 
 Model Context Protocol (MCP) enables agents to use external tools and services.
 
-### [Local Transport](mcp/local-transport.yaml)
+### [Local Transport](https://github.com/aixgo-dev/aixgo/blob/main/examples/mcp/local-transport.yaml)
 
 In-process MCP server communication (same process).
 
@@ -255,7 +255,7 @@ In-process MCP server communication (same process).
 
 **Best For:** Development, single-process applications, performance-critical tools
 
-### [gRPC Transport](mcp/grpc-transport.yaml)
+### [gRPC Transport](https://github.com/aixgo-dev/aixgo/blob/main/examples/mcp/grpc-transport.yaml)
 
 Remote MCP server communication via gRPC.
 
@@ -271,7 +271,7 @@ Remote MCP server communication via gRPC.
 
 **Best For:** Production deployments, service isolation, distributed architectures
 
-### [Multiple Servers](mcp/multiple-servers.yaml)
+### [Multiple Servers](https://github.com/aixgo-dev/aixgo/blob/main/examples/mcp/multiple-servers.yaml)
 
 Connecting to multiple MCP servers simultaneously.
 
@@ -293,7 +293,7 @@ Connecting to multiple MCP servers simultaneously.
 
 Security modes for different deployment environments.
 
-### [Disabled (Development)](security/disabled-dev.yaml)
+### [Disabled (Development)](https://github.com/aixgo-dev/aixgo/blob/main/examples/security/disabled-dev.yaml)
 
 No authentication or authorization.
 
@@ -308,7 +308,7 @@ No authentication or authorization.
 - Minimal logging
 - Fast iteration
 
-### [Builtin API Key](security/builtin-api-key.yaml)
+### [Builtin API Key](https://github.com/aixgo-dev/aixgo/blob/main/examples/security/builtin-api-key.yaml)
 
 Application-level authentication using API keys.
 
@@ -324,7 +324,7 @@ Application-level authentication using API keys.
 
 **Best For:** Machine-to-machine authentication, CI/CD pipelines
 
-### [Delegated (IAP)](security/delegated-iap.yaml)
+### [Delegated (IAP)](https://github.com/aixgo-dev/aixgo/blob/main/examples/security/delegated-iap.yaml)
 
 Infrastructure-level authentication via Google Cloud IAP.
 
@@ -340,7 +340,7 @@ Infrastructure-level authentication via Google Cloud IAP.
 
 **Best For:** Cloud Run, GKE deployments with human users
 
-### [Hybrid](security/hybrid.yaml)
+### [Hybrid](https://github.com/aixgo-dev/aixgo/blob/main/examples/security/hybrid.yaml)
 
 Combines delegated (IAP) and builtin (API key) authentication.
 
@@ -362,7 +362,7 @@ Combines delegated (IAP) and builtin (API key) authentication.
 
 Multi-agent coordination patterns managed by supervisors.
 
-### [MapReduce](orchestration/mapreduce.yaml)
+### [MapReduce](https://github.com/aixgo-dev/aixgo/blob/main/examples/orchestration/mapreduce.yaml)
 
 Distribute work across agents, then aggregate results.
 
@@ -376,7 +376,7 @@ Distribute work across agents, then aggregate results.
 - Parallel processing
 - Result aggregation
 
-### [Parallel](orchestration/parallel.yaml)
+### [Parallel](https://github.com/aixgo-dev/aixgo/blob/main/examples/orchestration/parallel.yaml)
 
 Multiple agents work independently on the same input.
 
@@ -390,7 +390,7 @@ Multiple agents work independently on the same input.
 - Concurrent processing
 - Diverse viewpoints
 
-### [Sequential](orchestration/sequential.yaml)
+### [Sequential](https://github.com/aixgo-dev/aixgo/blob/main/examples/orchestration/sequential.yaml)
 
 Chain of agents in sequence, each building on previous output.
 
@@ -404,7 +404,7 @@ Chain of agents in sequence, each building on previous output.
 - Intermediate results
 - Step-by-step refinement
 
-### [Reflection](orchestration/reflection.yaml)
+### [Reflection](https://github.com/aixgo-dev/aixgo/blob/main/examples/orchestration/reflection.yaml)
 
 Agent critiques and improves its own output.
 
@@ -418,7 +418,7 @@ Agent critiques and improves its own output.
 - Self-critique
 - Quality enhancement
 
-### [Planning](orchestration/planning.yaml)
+### [Planning](https://github.com/aixgo-dev/aixgo/blob/main/examples/orchestration/planning.yaml)
 
 Plan the approach first, then execute the plan.
 
@@ -432,7 +432,7 @@ Plan the approach first, then execute the plan.
 - Structured execution
 - Clear strategy
 
-### [Classification](orchestration/classification.yaml)
+### [Classification](https://github.com/aixgo-dev/aixgo/blob/main/examples/orchestration/classification.yaml)
 
 Route requests based on content classification.
 
@@ -446,7 +446,7 @@ Route requests based on content classification.
 - Specialized agents
 - Efficient distribution
 
-### [Supervisor](orchestration/supervisor.yaml)
+### [Supervisor](https://github.com/aixgo-dev/aixgo/blob/main/examples/orchestration/supervisor.yaml)
 
 Hub-and-spoke coordination where supervisor delegates to specialists.
 
@@ -460,7 +460,7 @@ Hub-and-spoke coordination where supervisor delegates to specialists.
 - Simple reasoning
 - Easy debugging
 
-### [Router](orchestration/router.yaml)
+### [Router](https://github.com/aixgo-dev/aixgo/blob/main/examples/orchestration/router.yaml)
 
 Intelligent cost-optimized routing.
 
@@ -474,7 +474,7 @@ Intelligent cost-optimized routing.
 - Low latency
 - Cost-effective
 
-### [Swarm](orchestration/swarm.yaml)
+### [Swarm](https://github.com/aixgo-dev/aixgo/blob/main/examples/orchestration/swarm.yaml)
 
 Decentralized agent handoffs.
 
@@ -488,7 +488,7 @@ Decentralized agent handoffs.
 - Agent-driven routing
 - Dynamic delegation
 
-### [Hierarchical](orchestration/hierarchical.yaml)
+### [Hierarchical](https://github.com/aixgo-dev/aixgo/blob/main/examples/orchestration/hierarchical.yaml)
 
 Multi-level delegation.
 
@@ -502,7 +502,7 @@ Multi-level delegation.
 - Scalable coordination
 - Multi-level structure
 
-### [RAG](orchestration/rag.yaml)
+### [RAG](https://github.com/aixgo-dev/aixgo/blob/main/examples/orchestration/rag.yaml)
 
 Retrieval-Augmented Generation.
 
@@ -516,7 +516,7 @@ Retrieval-Augmented Generation.
 - Reduced hallucinations
 - Knowledge grounding
 
-### [Ensemble](orchestration/ensemble.yaml)
+### [Ensemble](https://github.com/aixgo-dev/aixgo/blob/main/examples/orchestration/ensemble.yaml)
 
 Multi-model voting.
 
@@ -530,7 +530,7 @@ Multi-model voting.
 - Parallel execution
 - Consensus-based
 
-### [Aggregation](orchestration/aggregation.yaml)
+### [Aggregation](https://github.com/aixgo-dev/aixgo/blob/main/examples/orchestration/aggregation.yaml)
 
 Multi-agent synthesis.
 
@@ -550,7 +550,7 @@ Multi-agent synthesis.
 
 Real-world application examples combining agents and patterns.
 
-### [Simple Chatbot](use-cases/simple-chatbot.yaml)
+### [Simple Chatbot](https://github.com/aixgo-dev/aixgo/blob/main/examples/use-cases/simple-chatbot.yaml)
 
 Basic conversational AI assistant.
 
@@ -566,7 +566,7 @@ Basic conversational AI assistant.
 - Information retrieval
 - General Q&A
 
-### [Content Classifier](use-cases/content-classifier.yaml)
+### [Content Classifier](https://github.com/aixgo-dev/aixgo/blob/main/examples/use-cases/content-classifier.yaml)
 
 Categorize and route incoming content.
 
@@ -582,7 +582,7 @@ Categorize and route incoming content.
 - Support ticket routing
 - Content moderation
 
-### [Multi-Expert Consensus](use-cases/multi-expert-consensus.yaml)
+### [Multi-Expert Consensus](https://github.com/aixgo-dev/aixgo/blob/main/examples/use-cases/multi-expert-consensus.yaml)
 
 Multiple expert agents reach consensus.
 
@@ -598,7 +598,7 @@ Multiple expert agents reach consensus.
 - Multi-perspective analysis
 - Quality assurance
 
-### [Task Planner](use-cases/task-planner.yaml)
+### [Task Planner](https://github.com/aixgo-dev/aixgo/blob/main/examples/use-cases/task-planner.yaml)
 
 Break down complex tasks into executable steps.
 

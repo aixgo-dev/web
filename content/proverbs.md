@@ -73,13 +73,13 @@ Python excels at research. Go excels at production. Pick the tool that matches t
 
 ## Further Reading
 
-Want to dive deeper? Read the full [Why Aixgo](/why-aixgo) for production principles, design trade-offs, and when to choose Aixgo vs. Python frameworks.
+Want to dive deeper? Read the full [Why Aixgo](/why-aixgo/) for production principles, design trade-offs, and when to choose Aixgo vs. Python frameworks.
 
 **Get Started:**
 
-- [Quick Start Guide](/guides/quick-start) - Running in 5 minutes
-- [Core Concepts](/guides/core-concepts) - Architecture deep dive
-- [Features](/features) - What's available today
+- [Quick Start Guide](/guides/quick-start/) - Running in 5 minutes
+- [Core Concepts](/guides/core-concepts/) - Architecture deep dive
+- [Features](/features/) - What's available today
 
 **Get Involved:**
 

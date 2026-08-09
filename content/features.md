@@ -1,6 +1,21 @@
 ---
 title: 'Aixgo Features'
-description: "Explore Aixgo's complete feature set across AI agents, LLM providers, security, observability, and infrastructure. Production-ready features for building scalable AI agent systems."
+layout: "marketing"
+eyebrow: "Aixgo · Feature catalogue"
+description: "What is implemented across agents, LLM providers, security, observability and infrastructure, with the numbers that go with each."
+stats:
+  - value: "<20MB"
+    label: "Binary size, with no interpreter alongside it"
+    accent: true
+  - value: "<100ms"
+    label: "Cold start"
+    accent: true
+  - value: "13"
+    label: "Orchestration patterns, all implemented"
+  - value: "60-70%"
+    label: "Lower infrastructure cost than a Python framework"
+cta_heading: "Pick a feature and use it."
+cta_sub: "The quick start wires a supervisor, a producer, a ReAct agent and a logger in four steps."
 ---
 
 > **Complete Technical Documentation:**
@@ -10,15 +25,15 @@ description: "Explore Aixgo's complete feature set across AI agents, LLM provide
 
 ---
 
-## At a Glance
+## At a glance
 
 | Category | Count | Status |
 |----------|-------|--------|
-| Agent Types | 6 specialized types | ✅ All implemented |
-| LLM Providers | 6+ cloud + local | ✅ All implemented |
-| Orchestration Patterns | 13 patterns | ✅ All implemented |
-| Security Modes | 4 auth modes | ✅ All implemented |
-| Observability Backends | 6+ backends | ✅ All implemented |
+| Agent Types | 6 specialized types | Implemented |
+| LLM Providers | 8 cloud + local | Implemented |
+| Orchestration Patterns | 13 patterns | Implemented |
+| Security Modes | 4 auth modes | Implemented |
+| Observability Backends | 6+ backends | Implemented |
 
 ### Performance
 
@@ -28,7 +43,7 @@ description: "Explore Aixgo's complete feature set across AI agents, LLM provide
 
 ---
 
-## Agent Types
+## Agent types
 
 Build specialized agents for different tasks:
 
@@ -43,24 +58,24 @@ Build specialized agents for different tasks:
 
 ---
 
-## LLM Providers
+## LLM providers
 
 Connect to any provider with a unified interface:
 
 | Provider | Models | Status |
 |----------|--------|--------|
-| **OpenAI** | GPT-4, GPT-3.5 Turbo | ✅ |
-| **Anthropic** | Claude 3.5 Sonnet, Opus, Haiku | ✅ |
-| **Google Gemini** | Gemini 1.5 Pro, Flash | ✅ |
-| **xAI** | Grok-beta | ✅ |
-| **Vertex AI** | Gemini on GCP | ✅ |
-| **HuggingFace** | Meta-Llama, Mistral, 100+ models | ✅ |
-| **Ollama** | phi, llama, mistral, gemma (local) | ✅ |
-| **vLLM** | Self-hosted inference | ✅ |
+| **OpenAI** | GPT-4, GPT-3.5 Turbo | Implemented |
+| **Anthropic** | Claude 3.5 Sonnet, Opus, Haiku | Implemented |
+| **Google Gemini** | Gemini 1.5 Pro, Flash | Implemented |
+| **xAI** | Grok-beta | Implemented |
+| **Vertex AI** | Gemini on GCP | Implemented |
+| **HuggingFace** | Meta-Llama, Mistral, 100+ models | Implemented |
+| **Ollama** | phi, llama, mistral, gemma (local) | Implemented |
+| **vLLM** | Self-hosted inference | Implemented |
 
 ---
 
-## Orchestration Patterns
+## Orchestration patterns
 
 All 13 patterns are production-ready:
 
@@ -80,7 +95,7 @@ All 13 patterns are production-ready:
 | **Planning** | Multi-step workflows |
 | **MapReduce** | Large dataset processing |
 
-[View Pattern Details →](/features-patterns)
+[View Pattern Details →](/features-patterns/)
 
 ---
 
@@ -119,7 +134,7 @@ Deploy anywhere with Go's simplicity:
 
 ---
 
-## Getting Started
+## Getting started
 
 ```bash
 go get github.com/aixgo-dev/aixgo
@@ -150,9 +165,10 @@ func main() {
 
 ---
 
-## Learn More
+## Where to read further
 
-- **[Quick Start Guide](/guides/quick-start)** - Get running in 5 minutes
-- **[Pattern Catalog](/features-patterns)** - All 13 orchestration patterns
+- **[Quick Start Guide](/guides/quick-start/)** - Get running in 5 minutes
+- **[Pattern Catalog](/features-patterns/)** - All 13 orchestration patterns
+- **[Configuration examples](/examples/readme/)** - Working YAML for every agent type, provider and pattern
 - **[GitHub Repository](https://github.com/aixgo-dev/aixgo)** - Source code and examples
 - **[Full Feature Reference](https://github.com/aixgo-dev/aixgo/blob/main/docs/FEATURES.md)** - Complete technical documentation

@@ -472,6 +472,6 @@ Type safety is not just a nice-to-have—it's a production necessity for reliabl
 
 ## Next Steps
 
-- **[Multi-Agent Orchestration](/guides/multi-agent-orchestration)** - Build complex type-safe workflows
-- **[Production Deployment](/guides/production-deployment)** - Deploy with confidence
-- **[Provider Integration](/guides/provider-integration)** - Integrate LLM providers with type safety
+- **[Multi-Agent Orchestration](/guides/multi-agent-orchestration/)** - Build complex type-safe workflows
+- **[Production Deployment](/guides/production-deployment/)** - Deploy with confidence
+- **[Provider Integration](/guides/provider-integration/)** - Integrate LLM providers with type safety

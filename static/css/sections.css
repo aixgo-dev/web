@@ -1,0 +1,993 @@
+/**
+ * Section primitives.
+ *
+ * The hero, the graded section bands, the eyebrow-led intro, the grid and
+ * split layouts, the stat rail, the numbered step, the callout, the roadmap
+ * checklist and the fit lists. /code was built from these first; every other
+ * marketing page on the site is now built from the same set, which is why they
+ * live here rather than in the /code stylesheet.
+ *
+ * Loaded on every page. Nothing in this file introduces a colour: it composes
+ * the tokens and the seven primitives declared in main.css.
+ *
+ * Applying them needs `.ax-page` on the wrapper. That class carries the anchor
+ * offset and the inline-code treatment, and it also keeps these layouts out of
+ * `article`, which the prose layer styles.
+ */
+
+/* ==========================================================================
+   Shared layout
+   ========================================================================== */
+
+.ax-page {
+  --ax-anchor-offset: 6rem;
+}
+
+.ax-page section[id] { scroll-margin-top: var(--ax-anchor-offset); }
+
+.ax-textured::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(rgba(148, 163, 184, 0.11) 1px, transparent 1.4px);
+  background-size: 24px 24px;
+  pointer-events: none;
+}
+
+/* The one deep band on the page keeps its texture quieter so the panel edges
+   inside it stay the loudest thing in the section. */
+.ax-section--deep.ax-textured::before { opacity: 0.4; }
+
+.ax-grid {
+  display: grid;
+  gap: var(--ax-card-gap);
+  margin-top: var(--ax-block-gap);
+}
+
+/* Grid and flex children default to min-width: auto, which refuses to shrink
+   below their content. One unbreakable `go install …@v0.5.0` line was enough to
+   stretch a whole column past the viewport. Every track on this page opts out. */
+.ax-grid > *,
+.ax-split > *,
+.ax-flow > *,
+.ax-trust > *,
+.ax-trust__foot > *,
+.ax-fit > *,
+.ax-install__lanes > *,
+.ax-statrail > *,
+.ax-lifecycle__row > *,
+.ax-keylist li > * { min-width: 0; }
+
+.ax-grid--2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.ax-grid--3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.ax-grid--4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+
+.ax-split {
+  display: grid;
+  grid-template-columns: 0.9fr 1.1fr;
+  gap: var(--ax-s-9);
+  align-items: start;
+}
+
+.ax-split__lead h2 {
+  margin-top: var(--ax-s-4);
+  font-family: var(--ax-font-display);
+  font-size: var(--ax-t-h2);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.12;
+  color: var(--ax-text);
+}
+
+.ax-split__body p {
+  font-size: var(--ax-t-body);
+  line-height: 1.65;
+  color: var(--ax-text-body);
+  max-width: var(--ax-measure);
+}
+
+.ax-split__body p + p { margin-top: var(--ax-s-4); }
+
+.ax-note {
+  margin-top: var(--ax-s-4);
+  font-size: var(--ax-t-sm);
+  line-height: 1.6;
+  color: var(--ax-text-dim);
+  max-width: var(--ax-measure-lead);
+}
+
+.ax-note a { color: var(--ax-text-muted); text-decoration: underline; text-underline-offset: 3px; }
+.ax-note a:hover { color: var(--ax-accent); }
+.ax-note a + a { margin-left: var(--ax-s-4); }
+
+/* Inline code. One rule, covering both the section layouts and the prose
+   column, which nest inside each other on the marketing and product pages. */
+:where(.ax-page, .content) :where(p, li, td, dd, summary, h2, h3, h4, .ax-lifecycle__means) > code {
+  font-family: var(--ax-font-mono);
+  font-size: var(--ax-t-code-inline);
+  font-weight: 500;
+  padding: 0.1em 0.36em;
+  border-radius: var(--ax-r-sm);
+  background: var(--ax-accent-soft);
+  color: var(--ax-accent);
+}
+
+/* ==========================================================================
+   00 Hero
+   ========================================================================== */
+
+.ax-hero {
+  padding-block: 9rem 4rem;
+  border-top: 0;
+  overflow: hidden;
+}
+
+.ax-hero__halo {
+  position: absolute;
+  inset-inline: 0;
+  top: 0;
+  height: 460px;
+  pointer-events: none;
+}
+
+.ax-hero__grid {
+  position: absolute;
+  inset: 0;
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.ax-hero__body {
+  max-width: 46rem;
+  padding-left: var(--ax-s-6);
+}
+
+.ax-hero__body.ax-edge--section::before { height: 190px; }
+
+.ax-hero__title {
+  margin-top: var(--ax-s-5);
+  font-family: var(--ax-font-display);
+  font-size: var(--ax-t-display);
+  font-weight: 800;
+  letter-spacing: -0.028em;
+  line-height: 1.04;
+  color: var(--ax-text);
+}
+
+.ax-hero .ax-rule { margin-top: 1.25rem; }
+
+.ax-hero__sub {
+  margin-top: var(--ax-s-5);
+  max-width: var(--ax-measure-lead);
+  font-size: var(--ax-t-lead);
+  line-height: 1.62;
+  color: var(--ax-text-muted);
+}
+
+.ax-statuscard {
+  margin-top: var(--ax-s-6);
+  max-width: var(--ax-measure-lead);
+  padding: 1.25rem 1.5rem;
+  background: var(--ax-bg-2);
+  border: 1px solid var(--ax-border);
+  border-radius: var(--ax-r-lg);
+}
+
+.ax-statuscard::before { border-radius: var(--ax-r-lg) 0 0 var(--ax-r-lg); }
+.ax-statuscard p:last-child { margin-top: var(--ax-s-2); color: var(--ax-text-body); font-size: var(--ax-t-sm); line-height: 1.6; }
+
+.ax-btnrow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--ax-s-3);
+  margin-top: var(--ax-s-6);
+}
+
+.ax-hero__subcta {
+  margin-top: var(--ax-s-4);
+  font-size: var(--ax-t-sm);
+  color: var(--ax-text-dim);
+}
+
+.ax-hero__foot { margin-top: var(--ax-s-6); }
+
+/* Trust rail. Hairline-divided, one row on desktop. */
+.ax-statrail {
+  display: grid;
+  gap: 1px;
+  margin-top: var(--ax-s-9);
+  background: var(--ax-border);
+  border: 1px solid var(--ax-border);
+  border-radius: var(--ax-r-xl);
+  overflow: hidden;
+  grid-template-columns: 1.15fr 1fr 1fr 1.2fr;
+}
+
+.ax-statrail > div {
+  display: flex;
+  flex-direction: column;
+  background: var(--ax-bg-2);
+  padding: 1.75rem 1.5rem;
+}
+
+.ax-statrail dd {
+  order: 1;
+  margin: 0;
+  font-family: var(--ax-font-display);
+  font-size: var(--ax-t-stat);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  font-variant-numeric: tabular-nums;
+  color: var(--ax-text);
+}
+
+.ax-statrail dd.is-accent { color: var(--ax-accent); }
+
+.ax-statrail dt {
+  order: 2;
+  margin-top: 0.375rem;
+  font-size: var(--ax-t-sm);
+  line-height: 1.45;
+  color: var(--ax-text-dim);
+}
+
+/* ==========================================================================
+   01 The blocker
+   ========================================================================== */
+
+.ax-pivot {
+  margin-top: var(--ax-s-8);
+  max-width: 52rem;
+  font-family: var(--ax-font-display);
+  font-size: var(--ax-t-h3);
+  font-weight: 700;
+  line-height: 1.4;
+  letter-spacing: -0.012em;
+  color: var(--ax-text);
+}
+
+/* ==========================================================================
+   02 What it is
+   ========================================================================== */
+
+.ax-subblock {
+  margin-top: var(--ax-s-6);
+  padding-top: var(--ax-s-5);
+  border-top: 1px solid var(--ax-hairline);
+}
+
+.ax-subblock p:not(.ax-microlabel) {
+  margin-top: var(--ax-s-3);
+  font-size: var(--ax-t-sm);
+  line-height: 1.6;
+  color: var(--ax-text-muted);
+}
+
+/* ==========================================================================
+   03 How it works
+   ========================================================================== */
+
+.ax-steps { list-style: none; padding: 0; }
+.ax-steps > li:nth-child(4) { grid-column: span 1; }
+
+.ax-step {
+  display: flex;
+  flex-direction: column;
+  background: var(--ax-bg-3);
+  border: 1px solid var(--ax-border);
+  border-radius: var(--ax-r-lg);
+  padding: 1.5rem;
+  box-shadow: var(--ax-e-1);
+}
+
+.ax-step__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--ax-s-3);
+}
+
+.ax-step__kicker {
+  font-family: var(--ax-font-mono);
+  font-size: var(--ax-t-microlabel);
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ax-accent);
+}
+
+/* Large, quiet, structural: a wayfinding artefact rather than content. */
+.ax-step__num {
+  font-family: var(--ax-font-display);
+  font-size: 1.5rem;
+  font-weight: 800;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  color: var(--ax-border-strong);
+}
+
+.ax-step h3 {
+  margin-top: 0.75rem;
+  font-family: var(--ax-font-display);
+  font-size: var(--ax-t-h3);
+  font-weight: 700;
+  line-height: 1.25;
+  letter-spacing: -0.012em;
+  color: var(--ax-text);
+}
+
+.ax-step p {
+  margin-top: 0.5rem;
+  font-size: var(--ax-t-sm);
+  line-height: 1.55;
+  color: var(--ax-text-muted);
+}
+
+.ax-callout {
+  margin-top: var(--ax-s-7);
+  padding: 1.75rem;
+  background: var(--ax-accent-soft);
+  border: 1px solid var(--ax-accent-line);
+  border-left: 4px solid var(--ax-accent);
+  border-radius: var(--ax-r-lg);
+}
+
+.ax-callout::before { display: none; }
+.ax-callout__label { color: var(--ax-accent); }
+
+.ax-callout__lead {
+  margin-top: var(--ax-s-3);
+  font-size: var(--ax-t-lead);
+  font-weight: 500;
+  line-height: 1.5;
+  color: var(--ax-text);
+}
+
+.ax-callout p:last-child {
+  margin-top: var(--ax-s-3);
+  font-size: var(--ax-t-body);
+  line-height: 1.6;
+  color: var(--ax-text-muted);
+  max-width: var(--ax-measure-lead);
+}
+
+.ax-callout a { color: var(--ax-accent); text-decoration: underline; text-underline-offset: 3px; }
+
+/* ==========================================================================
+   05 Built in the open
+   ========================================================================== */
+
+.ax-filecard {
+  display: block;
+  text-decoration: none;
+}
+
+.ax-filecard > code {
+  font-family: var(--ax-font-mono);
+  font-size: var(--ax-t-sm);
+  font-weight: 500;
+  color: var(--ax-accent);
+  word-break: break-all;
+}
+
+.ax-filecard p { color: var(--ax-text-muted); }
+
+/* ==========================================================================
+   07 Configuration
+   ========================================================================== */
+
+.ax-keylist {
+  list-style: none;
+  margin: var(--ax-block-gap) 0 0;
+  padding: 0;
+  border: 1px solid var(--ax-border);
+  border-radius: var(--ax-r-lg);
+  overflow: hidden;
+}
+
+.ax-keylist li {
+  display: grid;
+  grid-template-columns: 12rem 6rem 1fr;
+  gap: var(--ax-s-4);
+  align-items: baseline;
+  padding: 1rem 1.25rem;
+  background: var(--ax-bg-2);
+  border-top: 1px solid var(--ax-hairline);
+  font-size: var(--ax-t-sm);
+  line-height: 1.55;
+  color: var(--ax-text-body);
+}
+
+.ax-keylist li:first-child { border-top: 0; }
+
+/* The chip is a grid item, so it would otherwise stretch to the whole track
+   and the tint would read as a bar rather than a key. */
+.ax-keylist code {
+  justify-self: start;
+  font-family: var(--ax-font-mono);
+  font-size: var(--ax-t-xs);
+  color: var(--ax-accent);
+}
+
+.ax-req {
+  font-family: var(--ax-font-mono);
+  font-size: var(--ax-t-microlabel);
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ax-warn);
+}
+
+/* ==========================================================================
+   08 Status and roadmap
+   ========================================================================== */
+
+.ax-releasechip { margin-top: var(--ax-s-4); }
+
+.ax-releasechip code {
+  display: inline-block;
+  padding: 0.25rem 0.6rem;
+  border-radius: var(--ax-r-xs);
+  background: var(--ax-accent-soft);
+  border: 1px solid var(--ax-accent-line);
+  font-family: var(--ax-font-mono);
+  font-size: var(--ax-t-sm);
+  color: var(--ax-accent);
+}
+
+.ax-roadmap { list-style: none; margin: var(--ax-s-6) 0 0; padding: 0; }
+
+.ax-roadmap li {
+  display: grid;
+  grid-template-columns: 1.25rem 1fr auto;
+  gap: 0.75rem;
+  align-items: baseline;
+  padding: 0.75rem 0;
+  border-top: 1px solid var(--ax-hairline);
+  font-size: var(--ax-t-sm);
+  line-height: 1.55;
+}
+
+.ax-roadmap__glyph { font-family: var(--ax-font-mono); }
+.ax-roadmap li.is-done .ax-roadmap__glyph,
+.ax-roadmap li.is-done .ax-roadmap__tag { color: var(--ax-ok); }
+.ax-roadmap li.is-done .ax-roadmap__item { color: var(--ax-text-body); }
+.ax-roadmap li.is-progress .ax-roadmap__glyph,
+.ax-roadmap li.is-progress .ax-roadmap__tag { color: var(--ax-warn); }
+.ax-roadmap li.is-progress .ax-roadmap__item { color: var(--ax-text-muted); }
+.ax-roadmap li.is-todo .ax-roadmap__glyph { color: var(--ax-text-faint); }
+.ax-roadmap li.is-todo .ax-roadmap__item { color: var(--ax-text-dim); }
+
+/* ==========================================================================
+   09 Fit check
+   ========================================================================== */
+
+.ax-fit {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--ax-s-8);
+  margin-top: var(--ax-block-gap);
+}
+
+.ax-fit__for { color: var(--ax-ok); }
+.ax-fit__against { color: var(--ax-text-dim); }
+
+.ax-fitlist { list-style: none; margin: var(--ax-s-4) 0 0; padding: 0; }
+
+.ax-fitlist li {
+  position: relative;
+  padding: 0.75rem 0 0.75rem 1.75rem;
+  border-top: 1px solid var(--ax-hairline);
+  font-size: var(--ax-t-sm);
+  line-height: 1.6;
+  color: var(--ax-text-muted);
+}
+
+.ax-fitlist li::before {
+  position: absolute;
+  left: 0;
+  font-family: var(--ax-font-mono);
+  font-weight: 700;
+}
+
+.ax-fitlist--for li::before { content: "\2713"; color: var(--ax-ok); }
+.ax-fitlist--against li::before { content: "\2014"; color: var(--ax-text-faint); }
+
+/* ==========================================================================
+   10 FAQ
+   ========================================================================== */
+
+.ax-faq {
+  margin-top: var(--ax-block-gap);
+  border-top: 1px solid var(--ax-hairline);
+  max-width: 56rem;
+}
+
+.ax-faq details { border-bottom: 1px solid var(--ax-hairline); }
+
+.ax-faq summary {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--ax-s-4);
+  padding: 1.125rem 0;
+  cursor: pointer;
+  list-style: none;
+  font-family: var(--ax-font-display);
+  font-size: var(--ax-t-h4);
+  font-weight: 600;
+  color: var(--ax-text);
+}
+
+.ax-faq summary::-webkit-details-marker { display: none; }
+
+.ax-faq summary::after {
+  content: "+";
+  font-family: var(--ax-font-mono);
+  font-size: 1.125rem;
+  color: var(--ax-text-faint);
+  transition: color var(--ax-dur-1) var(--ax-ease);
+}
+
+.ax-faq summary:hover::after { color: var(--ax-accent); }
+.ax-faq details[open] summary::after { content: "\2212"; }
+
+.ax-faq details p {
+  padding: 0 0 1.25rem;
+  max-width: var(--ax-measure-lead);
+  font-size: var(--ax-t-body);
+  line-height: 1.65;
+  color: var(--ax-text-muted);
+}
+
+/* ==========================================================================
+   11 Final call
+   ========================================================================== */
+
+.ax-final { overflow: hidden; }
+
+.ax-final__halo {
+  position: absolute;
+  inset-inline: 0;
+  top: 0;
+  height: 420px;
+  pointer-events: none;
+}
+
+/* The only centred band on the page. That is what makes it read as a terminus. */
+.ax-final__body {
+  max-width: 44rem;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.ax-final__body h2 {
+  font-family: var(--ax-font-display);
+  font-size: var(--ax-t-h2);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.12;
+  color: var(--ax-text);
+}
+
+.ax-final__body .ax-rule { margin-inline: auto; }
+
+.ax-final__body > p {
+  margin-top: var(--ax-s-5);
+  font-size: var(--ax-t-lead);
+  line-height: 1.6;
+  color: var(--ax-text-muted);
+}
+
+.ax-final .ax-btnrow { justify-content: center; }
+
+.ax-final__cross {
+  margin-top: var(--ax-s-6);
+  font-size: var(--ax-t-sm);
+  color: var(--ax-text-dim);
+}
+
+.ax-final__cross a { color: var(--ax-text-muted); text-decoration: underline; text-underline-offset: 3px; }
+.ax-final__cross a:hover { color: var(--ax-accent); }
+
+.ax-final__body .ax-microlabel { display: block; margin-top: var(--ax-s-6); }
+
+
+/* ==========================================================================
+   Responsive
+   ========================================================================== */
+
+@media (max-width: 1023px) {
+  .ax-grid--3,
+  .ax-grid--4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .ax-grid--2 { grid-template-columns: 1fr; }
+
+  .ax-split,
+  .ax-fit { grid-template-columns: 1fr; gap: var(--ax-s-6); }
+}
+
+@media (max-width: 900px) {
+  .ax-statrail { grid-template-columns: 1fr 1fr; }
+}
+
+@media (max-width: 768px) {
+  .ax-hero { padding-block: 6rem 2.5rem; }
+  .ax-hero__body { padding-left: var(--ax-s-4); }
+  .ax-grid--3,
+  .ax-grid--4 { grid-template-columns: 1fr; }
+  .ax-btnrow > .ax-btn { width: 100%; }
+}
+
+@media (max-width: 520px) {
+  .ax-statrail { grid-template-columns: 1fr; }
+}
+
+/* ==========================================================================
+   Numbered step spine. Used for install and quick-start sequences.
+   ========================================================================== */
+
+.ax-install {
+  counter-reset: step;
+  list-style: none;
+  margin: var(--ax-s-4) 0 0;
+  padding: 0;
+}
+
+.ax-install > li {
+  position: relative;
+  padding: 0 0 2rem 3.25rem;
+}
+
+.ax-install > li::before {
+  content: counter(step);
+  counter-increment: step;
+  position: absolute;
+  left: 0;
+  top: -2px;
+  width: 2rem;
+  height: 2rem;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--ax-bg-2);
+  border: 1px solid var(--ax-border-strong);
+  font-family: var(--ax-font-mono);
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: var(--ax-accent);
+}
+
+.ax-install > li::after {
+  content: "";
+  position: absolute;
+  left: 1rem;
+  top: 2.25rem;
+  bottom: 0.25rem;
+  width: 1px;
+  background: var(--ax-hairline);
+}
+
+.ax-install > li:last-child { padding-bottom: 0; }
+.ax-install > li:last-child::after { display: none; }
+
+.ax-install h3 {
+  font-family: var(--ax-font-display);
+  font-size: var(--ax-t-h3);
+  font-weight: 700;
+  line-height: 1.25;
+  color: var(--ax-text);
+}
+
+.ax-install p {
+  margin-top: 0.5rem;
+  font-size: var(--ax-t-sm);
+  line-height: 1.6;
+  color: var(--ax-text-muted);
+  max-width: var(--ax-measure);
+}
+
+/* The steps a person performs, marked the same way everywhere on the page. */
+.ax-you {
+  display: inline-block;
+  vertical-align: middle;
+  margin-left: 0.4rem;
+  padding: 0.1rem 0.4rem;
+  border-radius: var(--ax-r-xs);
+  background: var(--ax-accent-soft);
+  border: 1px solid var(--ax-accent-line);
+  font-family: var(--ax-font-mono);
+  font-size: var(--ax-t-microlabel);
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ax-accent);
+}
+
+
+
+
+
+
+
+/* ==========================================================================
+   Comparison card. A definition list inside the site card: what the other
+   thing does, what this does, and what that buys you.
+   ========================================================================== */
+
+.ax-compare dl { margin-top: var(--ax-s-4); }
+
+.ax-compare dl > div {
+  padding: var(--ax-s-3) 0;
+  border-top: 1px solid var(--ax-hairline);
+}
+
+.ax-compare dl > div:first-child { border-top: 0; padding-top: 0; }
+
+.ax-compare dt { margin-bottom: 0.25rem; }
+
+.ax-compare dd {
+  margin: 0;
+  font-size: var(--ax-t-sm);
+  line-height: 1.5;
+  color: var(--ax-text-muted);
+}
+
+/* The section's one emphasis: the answer, not the problem. */
+.ax-compare dd.is-accent {
+  color: var(--ax-accent);
+  font-weight: 600;
+}
+
+/* ==========================================================================
+   Icon card. The icon is a wayfinding mark, so it sits at label size and
+   never competes with the title.
+   ========================================================================== */
+
+.ax-iconcard__head {
+  display: flex;
+  align-items: center;
+  gap: var(--ax-s-3);
+}
+
+.ax-iconcard__icon {
+  display: grid;
+  place-items: center;
+  flex: 0 0 auto;
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: var(--ax-r-sm);
+  background: var(--ax-bg-2);
+  border: 1px solid var(--ax-border);
+  color: var(--ax-text-muted);
+}
+
+.ax-iconcard__icon svg { width: 18px; height: 18px; }
+
+.ax-iconcard__head h3 { margin: 0; }
+
+.ax-iconcard p { margin-top: var(--ax-s-4); }
+
+/* ==========================================================================
+   Table. The same grammar the prose tables use: mono column heads, hairline
+   rows, no cyan header band. The wrapper scrolls and is focusable, so a
+   clipped table can be reached from the keyboard and reads as clipped.
+   ========================================================================== */
+
+.ax-tablewrap {
+  margin-top: var(--ax-block-gap);
+  overflow-x: auto;
+  scrollbar-width: thin;
+  border-radius: var(--ax-r-lg);
+}
+
+.ax-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  border: 1px solid var(--ax-border);
+  border-radius: var(--ax-r-lg);
+  overflow: hidden;
+  font-size: var(--ax-t-sm);
+}
+
+.ax-table thead th {
+  padding: 0.75rem 1rem;
+  text-align: left;
+  background: var(--ax-bg-2);
+  border-bottom: 1px solid var(--ax-border);
+  font-family: var(--ax-font-mono);
+  font-size: var(--ax-t-microlabel);
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ax-text-dim);
+  white-space: nowrap;
+}
+
+.ax-table tbody th,
+.ax-table tbody td {
+  padding: 0.875rem 1rem;
+  border-top: 1px solid var(--ax-hairline);
+  color: var(--ax-text-body);
+  line-height: 1.5;
+  text-align: left;
+  vertical-align: top;
+  font-weight: 400;
+}
+
+.ax-table tbody tr:first-child th,
+.ax-table tbody tr:first-child td { border-top: 0; }
+
+.ax-table tbody th { font-weight: 600; color: var(--ax-text); }
+
+.ax-table tbody tr:hover { background: rgba(255, 255, 255, 0.02); }
+
+/* The answer column reads as one object, so the accent goes on its heading
+   rather than on six cells competing for the same fixation. */
+.ax-table thead th:last-child { color: var(--ax-accent); }
+.ax-table td.is-accent { color: var(--ax-text); font-weight: 600; }
+
+/* ==========================================================================
+   Wide step spine. The default step column is a measure of prose; a step whose
+   body is a code block needs the full width instead.
+   ========================================================================== */
+
+.ax-install--wide > li { padding-left: 3.25rem; }
+.ax-install--wide h3 { margin-bottom: var(--ax-s-3); }
+.ax-install--wide .ax-codeblock { max-width: none; }
+
+@media (max-width: 768px) {
+  /* A number disc plus a code block does not fit beside each other on a
+     phone, so the spine flattens and the disc goes inline with the title. */
+  .ax-install--wide > li { padding-left: 0; padding-bottom: var(--ax-s-6); }
+  .ax-install--wide > li::before { position: static; display: inline-grid; margin-bottom: var(--ax-s-3); }
+  .ax-install--wide > li::after { display: none; }
+
+  .ax-compare dd { font-size: var(--ax-t-sm); }
+}
+
+/* ==========================================================================
+   Release card. The status is a property of the release, so it appears once,
+   as a dot and a word, rather than on every line inside.
+   ========================================================================== */
+
+.ax-release { display: flex; flex-direction: column; }
+
+.ax-release__head {
+  padding-bottom: var(--ax-s-4);
+  border-bottom: 1px solid var(--ax-hairline);
+}
+
+.ax-release__status {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: var(--ax-s-2);
+}
+
+.ax-release__dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: currentColor;
+  flex: 0 0 auto;
+}
+
+.ax-release.is-complete .ax-release__status { color: var(--ax-ok); }
+.ax-release.is-in-progress .ax-release__status { color: var(--ax-warn); }
+.ax-release.is-planned .ax-release__status { color: var(--ax-text-dim); }
+
+.ax-release__list {
+  list-style: none;
+  margin: var(--ax-s-4) 0 0;
+  padding: 0;
+}
+
+.ax-release__list li {
+  position: relative;
+  padding-left: 1rem;
+  margin-top: var(--ax-s-3);
+  font-size: var(--ax-t-sm);
+  line-height: 1.5;
+  color: var(--ax-text-muted);
+}
+
+.ax-release__list li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.6em;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--ax-text-faint);
+}
+
+/* The permission/path chip group, sitting under a pair of fit lists. */
+.ax-perms { margin-top: var(--ax-s-9); }
+.ax-perms .ax-grid { margin-top: var(--ax-s-4); }
+
+.ax-perms .ax-card > code {
+  font-family: var(--ax-font-mono);
+  font-size: var(--ax-t-sm);
+  font-weight: 500;
+  color: var(--ax-accent);
+  overflow-wrap: anywhere;
+}
+
+.ax-perms .ax-card p { margin-top: var(--ax-s-3); }
+
+/* ==========================================================================
+   Index and article pages
+   ========================================================================== */
+
+/* An index has no status card or button row under the headline, so the band
+   does not need the hero's full height. */
+.ax-hero--compact { padding-block: 7rem 3rem; }
+.ax-hero--compact .ax-hero__body { max-width: 52rem; }
+.ax-hero--compact.ax-edge--section::before,
+.ax-hero--compact .ax-hero__body.ax-edge--section::before { height: 150px; }
+
+.ax-eyebrow__back {
+  color: inherit;
+  text-decoration: none;
+}
+
+.ax-eyebrow__back:hover { text-decoration: underline; text-underline-offset: 3px; }
+
+.ax-postmeta { display: block; margin-top: var(--ax-s-5); }
+
+.ax-guidegroup + .ax-guidegroup { margin-top: var(--ax-s-9); }
+
+.ax-guidegroup__head {
+  font-family: var(--ax-font-display);
+  font-size: var(--ax-t-h3);
+  font-weight: 700;
+  letter-spacing: -0.012em;
+  color: var(--ax-text);
+  padding-bottom: var(--ax-s-3);
+  border-bottom: 1px solid var(--ax-hairline);
+}
+
+.ax-guidegroup .ax-grid { margin-top: var(--ax-s-5); }
+
+.ax-listcard {
+  display: block;
+  text-decoration: none;
+}
+
+.ax-listcard__meta { margin-bottom: var(--ax-s-3); }
+
+/* Tags are metadata, not the argument, so they take the border treatment
+   rather than the accent fill they used to have. Ten cyan pills on a card
+   made the tag list the loudest object in the list. */
+.ax-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.375rem;
+  margin-top: var(--ax-s-4);
+}
+
+.ax-tags--foot {
+  margin-top: var(--ax-s-9);
+  padding-top: var(--ax-s-5);
+  border-top: 1px solid var(--ax-hairline);
+}
+
+.ax-tag {
+  display: inline-block;
+  padding: 0.2rem 0.5rem;
+  border: 1px solid var(--ax-border);
+  border-radius: var(--ax-r-xs);
+  background: rgba(255, 255, 255, 0.02);
+  font-family: var(--ax-font-mono);
+  font-size: var(--ax-t-microlabel);
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  color: var(--ax-text-dim);
+}
+
+@media (max-width: 768px) {
+  .ax-hero--compact { padding-block: 5rem 2rem; }
+}

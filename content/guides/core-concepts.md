@@ -6,7 +6,7 @@ category: 'Getting Started'
 weight: 2
 ---
 
-Aixgo implements a message-based multi-agent architecture inspired by successful production patterns. This guide explains the core concepts you need to understand before building complex systems. These patterns reflect our [philosophy](/why-aixgo) of production-first design with Go-native patterns.
+Aixgo implements a message-based multi-agent architecture inspired by successful production patterns. This guide explains the core concepts you need to understand before building complex systems. These patterns reflect our [philosophy](/why-aixgo/) of production-first design with Go-native patterns.
 
 ## Agent Types
 
@@ -255,9 +255,9 @@ results, _ := docs.Query(ctx, query)
 
 ### Learn More
 
-- **[Vector Databases Guide](/guides/vector-databases)**: Complete guide to building RAG systems
-- **[Embeddings Guide](/guides/embeddings)**: Choosing and using embedding models
-- **[RAG Example](/examples/rag-agent)**: Production-ready RAG implementation
+- **[Vector Databases Guide](/guides/vector-databases/)**: Complete guide to building RAG systems
+- **[Embeddings Guide](/guides/embeddings/)**: Choosing and using embedding models
+- **[RAG Example](https://github.com/aixgo-dev/aixgo/tree/main/examples/rag-agent)**: Production-ready RAG implementation
 
 ## The Supervisor Pattern
 
@@ -445,6 +445,6 @@ The same code runs in:
 
 Now that you understand the core concepts, you can:
 
-- **[Multi-Agent Orchestration](/guides/multi-agent-orchestration)** - Build complex multi-agent workflows
-- **[Single Binary vs Distributed Mode](/guides/single-vs-distributed)** - Understand scaling patterns
-- **[Type Safety & LLM Integration](/guides/type-safety)** - Leverage compile-time guarantees
+- **[Multi-Agent Orchestration](/guides/multi-agent-orchestration/)** - Build complex multi-agent workflows
+- **[Single Binary vs Distributed Mode](/guides/single-vs-distributed/)** - Understand scaling patterns
+- **[Type Safety & LLM Integration](/guides/type-safety/)** - Leverage compile-time guarantees

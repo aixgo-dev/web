@@ -830,7 +830,7 @@ This pipeline demonstrates:
 
 ## Next Steps
 
-- **[Production Deployment](/guides/production-deployment)** - Deploy multi-agent systems to production
-- **[Observability & Monitoring](/guides/observability)** - Track and debug complex workflows
-- **[Type Safety & LLM Integration](/guides/type-safety)** - Build reliable agent interactions
+- **[Production Deployment](/guides/production-deployment/)** - Deploy multi-agent systems to production
+- **[Observability & Monitoring](/guides/observability/)** - Track and debug complex workflows
+- **[Type Safety & LLM Integration](/guides/type-safety/)** - Build reliable agent interactions
 - **[Examples Repository](https://github.com/aixgo-dev/aixgo/tree/main/examples)** - See working examples of all patterns

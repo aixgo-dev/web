@@ -552,6 +552,6 @@ Real-world production metrics:
 
 ## Next Steps
 
-- **[Observability & Monitoring](/guides/observability)** - Set up comprehensive monitoring
-- **[Building Docker Images](/guides/docker-from-scratch)** - Optimize container builds
-- **[Single Binary vs Distributed](/guides/single-vs-distributed)** - Understand scaling patterns
+- **[Observability & Monitoring](/guides/observability/)** - Set up comprehensive monitoring
+- **[Building Docker Images](/guides/docker-from-scratch/)** - Optimize container builds
+- **[Single Binary vs Distributed](/guides/single-vs-distributed/)** - Understand scaling patterns

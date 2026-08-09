@@ -18,7 +18,11 @@
       </label>
 
       <ul class="nav-menu">
+        {{- $here := .RelPermalink -}}
         {{ range .Site.Menus.main }}
+          {{/* Current section rather than current page, so a guide under
+               /guides/ still marks "Docs". */}}
+          {{- $active := and (not (hasPrefix .URL "http")) (hasPrefix $here .URL) -}}
           <li>
             {{ if eq .Name "GitHub" }}
               <a href="{{ .URL }}" target="_blank" rel="noopener noreferrer" class="nav-github-icon" aria-label="GitHub">
@@ -32,7 +36,7 @@
                 {{ .Name }}
               </a>
             {{ else }}
-              <a href="{{ .URL }}">{{ .Name }}</a>
+              <a href="{{ .URL }}"{{ if $active }} aria-current="page"{{ end }}>{{ .Name }}</a>
             {{ end }}
           </li>
         {{ end }}
@@ -40,8 +44,8 @@
              arriving on a product page from that product's README sees a
              persistent, high-contrast button pointing at a different product's
              tutorial — the framework quick start. */}}
-        {{- $ctaURL := .Site.Data.version.cta_url -}}
-        {{- $ctaText := .Site.Data.version.cta_text -}}
+        {{- $ctaURL := site.Data.version.cta_url -}}
+        {{- $ctaText := site.Data.version.cta_text -}}
         {{- if hasPrefix .RelPermalink "/code" -}}
           {{- $ctaURL = "/code/#install" -}}
           {{- $ctaText = "Install" -}}

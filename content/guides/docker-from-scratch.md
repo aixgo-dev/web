@@ -578,6 +578,6 @@ docker push my-registry/aixgo-agent:1.0.0
 
 ## Next Steps
 
-- **[Production Deployment](/guides/production-deployment)** - Deploy minimal containers to production
-- **[Single Binary vs Distributed](/guides/single-vs-distributed)** - Understand scaling patterns
-- **[Observability & Monitoring](/guides/observability)** - Monitor containerized agents
+- **[Production Deployment](/guides/production-deployment/)** - Deploy minimal containers to production
+- **[Single Binary vs Distributed](/guides/single-vs-distributed/)** - Understand scaling patterns
+- **[Observability & Monitoring](/guides/observability/)** - Monitor containerized agents

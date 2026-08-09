@@ -1182,8 +1182,8 @@ func main() {
 
 ### Learn More
 
-- **[Vector Databases Guide](/guides/vector-databases)** - Complete RAG implementation guide
-- **[Extending Aixgo](/guides/extending-aixgo)** - Add custom vector store providers
+- **[Vector Databases Guide](/guides/vector-databases/)** - Complete RAG implementation guide
+- **[Extending Aixgo](/guides/extending-aixgo/)** - Add custom vector store providers
 - **[RAG Agent Example](https://github.com/aixgo-dev/aixgo/tree/main/examples/rag-agent)** - Full working example
 
 ## API Key Management
@@ -1384,6 +1384,6 @@ agents:
 
 ## Next Steps
 
-- **[Type Safety & LLM Integration](/guides/type-safety)** - Type-safe provider usage
-- **[Observability & Monitoring](/guides/observability)** - Monitor provider performance
-- **[Production Deployment](/guides/production-deployment)** - Deploy with secrets management
+- **[Type Safety & LLM Integration](/guides/type-safety/)** - Type-safe provider usage
+- **[Observability & Monitoring](/guides/observability/)** - Monitor provider performance
+- **[Production Deployment](/guides/production-deployment/)** - Deploy with secrets management

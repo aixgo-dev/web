@@ -3,15 +3,13 @@ title: 'Aixgo v1 Compatibility Promise'
 description: 'Our commitment to API stability, upgrade paths, and long-term maintenance for Aixgo v1.0 and beyond.'
 ---
 
-# Aixgo v1 Compatibility Promise
-
 ## Introduction
 
 Aixgo v1.0 will establish a foundation for long-term stability. Code written against the v1 specification—whether YAML workflow configurations, Go SDK usage, or protocol
 integrations—will continue to work correctly with all future v1.x releases.
 
 This document defines what "compatibility" means, what is covered by our guarantee, and how Aixgo will evolve while honoring this commitment. This stability commitment reflects our
-[core philosophy](/why-aixgo) that production AI deserves production-grade tooling.
+[core philosophy](/why-aixgo/) that production AI deserves production-grade tooling.
 
 ## The Compatibility Promise
 

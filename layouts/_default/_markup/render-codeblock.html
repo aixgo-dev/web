@@ -1,9 +1,17 @@
-<div class="code-block-wrapper">
-  <button class="copy-button" aria-label="Copy code">
-    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
-      <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
-    </svg>
-  </button>
+{{/*
+  Fenced code blocks render as the site's one code-block component: a filename
+  strip carrying the language and the copy button, then the code.
+
+  Putting the button in the strip is what fixes the two old problems at once.
+  It used to be absolutely positioned over the first line of code, and its
+  positioning rules lived in a homepage-only block, so a block in a guide got a
+  bare icon floating above it.
+*/}}
+{{- $lang := .Type | default "code" -}}
+<div class="ax-codeblock">
+  <div class="ax-codeblock__bar">
+    <span>{{ $lang }}</span>
+    <button type="button" class="ax-codeblock__copy js-copy" aria-label="Copy code">Copy</button>
+  </div>
   <pre><code>{{ .Inner }}</code></pre>
 </div>

@@ -12,15 +12,9 @@
 
   {{ partial "footer.html" . }}
 
-  <!-- Lucide Icons (pinned version, deferred to keep parsing non-blocking) -->
-  <script src="https://unpkg.com/lucide@0.469.0/dist/umd/lucide.min.js" defer></script>
-  <script defer>
-    document.addEventListener('DOMContentLoaded', function () {
-      if (window.lucide && typeof window.lucide.createIcons === 'function') {
-        window.lucide.createIcons();
-      }
-    });
-  </script>
+  {{/* Icons are inlined by partials/icon.html. The Lucide bundle that used to
+       load here came from a third party CDN on every page to draw six shapes
+       that never changed. */}}
 
   <!-- JavaScript -->
   <script src="/js/main.js"></script>

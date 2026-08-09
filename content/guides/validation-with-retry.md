@@ -690,6 +690,6 @@ client := llm.NewClient(provider, llm.ClientConfig{
 
 ## See Also
 
-- [LLM Provider Integration](/guides/provider-integration)
-- [Type Safety](/guides/type-safety)
-- [Core Concepts](/guides/core-concepts)
+- [LLM Provider Integration](/guides/provider-integration/)
+- [Type Safety](/guides/type-safety/)
+- [Core Concepts](/guides/core-concepts/)

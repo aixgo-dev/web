@@ -1426,7 +1426,7 @@ result, _ := docs.Query(ctx, &vectorstore.Query{
 
 ## Next Steps
 
-- **Try the Example**: [RAG Agent Example](../../examples/rag-agent)
+- **Try the Example**: [RAG Agent Example](https://github.com/aixgo-dev/aixgo/tree/main/examples/rag-agent)
 - **API Reference**: [Vector Store Package](https://pkg.go.dev/github.com/aixgo-dev/aixgo/pkg/vectorstore)
 - **Extend Aixgo**: [Adding Custom Providers](./extending-aixgo.md)
 - **Production**: [Deployment Guide](./production-deployment.md)

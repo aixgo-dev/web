@@ -1,44 +1,33 @@
 {{- /*
-  Milestone Cards Partial
-  Renders development milestone cards from data/milestones.yaml
+  Release cards, from data/milestones.yaml.
 
-  Usage: {{ partial "milestone-cards.html" . }}
-
-  Status mapping: complete (✅), in_progress (🚧), planned (📋)
+  The status used to be an emoji repeated on every bullet, which put sixty
+  green ticks on the homepage and said the same thing sixty times. It is a
+  property of the release, so it is stated once per card: a coloured dot and a
+  word, in the same semantic tokens the roadmap and the status badges use.
 */ -}}
 
-{{- $statusLabels := dict "complete" "Complete" "in_progress" "In Progress" "planned" "Planned" -}}
-{{- $statusIcons := dict "complete" "✅" "in_progress" "🚧" "planned" "📋" -}}
+{{- $labels := dict "complete" "Shipped" "in_progress" "In progress" "planned" "Planned" -}}
 
 {{- with site.Data.milestones -}}
-  <div class="roadmap-grid">
-    {{- range $milestone := .milestones -}}
-      {{- $icon := "📋" -}}
-      {{- if eq $milestone.status "complete" -}}
-        {{- $icon = "✅" -}}
-      {{- else if eq $milestone.status "in_progress" -}}
-        {{- $icon = "🚧" -}}
-      {{- end -}}
-      <div class="roadmap-card">
-        <div class="version-badge">
-          {{ $milestone.version }}
-          {{- if eq $milestone.status "complete" }} - ✅{{ end -}}
+  <div class="ax-grid ax-grid--3">
+    {{- range $m := .milestones -}}
+      {{- $status := $m.status | default "planned" -}}
+      <div class="ax-card ax-release is-{{ replace $status "_" "-" }}">
+        <div class="ax-release__head">
+          <h3>{{ $m.version }}</h3>
+          <p class="ax-microlabel ax-release__status">
+            <span class="ax-release__dot" aria-hidden="true"></span>{{ index $labels $status }}{{ with $m.date }} &middot; {{ . }}{{ end }}
+          </p>
         </div>
-        {{- if $milestone.date }}
-          <div class="milestone-date">{{ $milestone.date }}</div>
-        {{- end }}
-        <ul>
-          {{- range $milestone.highlights -}}
-            <li>{{ $icon }} {{ . }}</li>
+        <ul class="ax-release__list">
+          {{- range $m.highlights -}}
+            <li>{{ . }}</li>
           {{- end -}}
         </ul>
       </div>
     {{- end -}}
   </div>
 
-  <div class="roadmap-cta">
-    <a href="/features/" class="btn btn-primary">
-      View Full Feature List →
-    </a>
-  </div>
+  <p class="ax-note"><a href="/features/">See the full feature list &rarr;</a></p>
 {{- end -}}

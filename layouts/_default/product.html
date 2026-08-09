@@ -1,0 +1,162 @@
+{{/*
+  A product page whose body is still markdown.
+
+  /code is the other shape: front matter only, every list in data/code.yaml,
+  every section a bespoke component in the template. That works because each of
+  its sections has exactly one instance on the site.
+
+  This template is for a product page that still carries prose. It reads the
+  same structured front matter and data file for the hero, the security band
+  and the roadmap, and renders `.Content` in between. A template that only did
+  one of those would render one of the two pages empty, which is the trap the
+  UX spec called out.
+
+  Front matter: `data` names the file under data/ this page draws from.
+*/}}
+{{ define "main" }}
+{{- $d := index site.Data (.Params.data | default (path.Base .File.ContentBaseName)) -}}
+
+<div class="ax-page">
+
+  <!-- ============================================================ 00 Hero -->
+  <section class="ax-section ax-hero" id="top">
+    <div class="ax-hero__halo ax-halo" aria-hidden="true"></div>
+    <div class="ax-hero__grid ax-dotgrid ax-dotgrid--fade" aria-hidden="true"></div>
+    <div class="ax-wrap">
+      <div class="ax-hero__body ax-edge ax-edge--section">
+        {{ with $d.hero.eyebrow }}
+        <p class="ax-eyebrow"><span class="ax-eyebrow__num">&rarr;</span>{{ . }}</p>
+        {{ end }}
+
+        <h1 class="ax-hero__title">{{ .Title }}</h1>
+        <span class="ax-rule ax-rule--wide" aria-hidden="true"></span>
+
+        {{ with .Description }}<p class="ax-hero__sub">{{ . }}</p>{{ end }}
+
+        {{ with $d.hero.status }}
+        <div class="ax-statuscard ax-edge">
+          <p class="ax-microlabel">Status</p>
+          <p>{{ . }}</p>
+        </div>
+        {{ end }}
+
+        <div class="ax-btnrow">
+          <a class="ax-btn ax-btn--primary" href="#install">Install it &rarr;</a>
+          <a class="ax-btn ax-btn--secondary" href="{{ $d.repo }}" target="_blank" rel="noopener">Read the source on GitHub &rarr;<span class="sr-only"> (opens in a new tab)</span></a>
+        </div>
+      </div>
+
+      {{ with $d.stats }}
+      <dl class="ax-statrail">
+        {{- range . }}
+        <div>
+          <dd{{ if .accent }} class="is-accent"{{ end }}>{{ .value }}</dd>
+          <dt>{{ .label }}</dt>
+        </div>
+        {{- end }}
+      </dl>
+      {{ end }}
+    </div>
+  </section>
+
+  <!-- ===================================================== 01 The prose -->
+  <section class="ax-section ax-section--alt ax-textured">
+    <div class="ax-wrap">
+      <div class="content ax-prose">
+        {{ .Content }}
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================================ 02 Security model -->
+  {{ if $d.defends }}
+  <section class="ax-section ax-section--deep ax-textured" id="security">
+    <div class="ax-wrap">
+      <div class="ax-section__intro">
+        <p class="ax-eyebrow"><span class="ax-eyebrow__num">&#9679;</span>Security model</p>
+        <h2>What it stops, and what it does not.</h2>
+        <p>
+          A boundary is only useful if its edges are written down. Both lists
+          below are on this page for the same reason: so a reviewer can read
+          them without opening an issue.
+        </p>
+      </div>
+
+      <div class="ax-fit">
+        <div>
+          <p class="ax-microlabel ax-fit__for">Defends against</p>
+          <ul class="ax-fitlist ax-fitlist--for">
+            {{- range $d.defends }}<li>{{ . }}</li>{{ end }}
+          </ul>
+        </div>
+        <div>
+          <p class="ax-microlabel ax-fit__against">Does not defend against</p>
+          <ul class="ax-fitlist ax-fitlist--against">
+            {{- range $d.cannot }}<li>{{ . }}</li>{{ end }}
+          </ul>
+        </div>
+      </div>
+
+      {{ with $d.protected }}
+      <div class="ax-perms">
+        <p class="ax-microlabel">The paths {{ $d.release }} protects, exactly</p>
+        <div class="ax-grid ax-grid--3">
+          {{- range . }}
+          <div class="ax-card">
+            <code>{{ .path }}</code>
+            <p>{{ .note }}</p>
+          </div>
+          {{- end }}
+        </div>
+      </div>
+      {{ end }}
+    </div>
+  </section>
+  {{ end }}
+
+  <!-- ========================================================= 03 Roadmap -->
+  {{ with $d.roadmap }}
+  <section class="ax-section" id="roadmap">
+    <div class="ax-wrap">
+      <div class="ax-section__intro">
+        <p class="ax-eyebrow"><span class="ax-eyebrow__num">&#9679;</span>Roadmap</p>
+        <h2>What is next, in order.</h2>
+        <p class="ax-releasechip"><code>{{ $d.release }}</code></p>
+      </div>
+
+      <ul class="ax-roadmap">
+        {{- range . }}
+        <li class="is-{{ .state }}">
+          <span class="ax-roadmap__glyph" aria-hidden="true">{{ if eq .state "done" }}&#10003;{{ else if eq .state "progress" }}&#9680;{{ else }}&#9675;{{ end }}</span>
+          <span class="ax-roadmap__item"><strong>{{ .version }}</strong> {{ .item }}</span>
+          <span class="ax-microlabel ax-roadmap__tag">{{ if eq .state "done" }}Shipped{{ else if eq .state "progress" }}Next{{ else }}Future{{ end }}</span>
+        </li>
+        {{- end }}
+      </ul>
+    </div>
+  </section>
+  {{ end }}
+
+  <!-- ======================================================== 04 Final CTA -->
+  <section class="ax-section ax-final">
+    <div class="ax-final__halo ax-halo" aria-hidden="true"></div>
+    <div class="ax-wrap">
+      <div class="ax-final__body">
+        <h2>Wrap your agent and try to read a secret.</h2>
+        <span class="ax-rule" aria-hidden="true"></span>
+        <p>That is the whole test, and it takes about a minute.</p>
+        <div class="ax-btnrow">
+          <a class="ax-btn ax-btn--primary" href="#install">Install it &rarr;</a>
+          <a class="ax-btn ax-btn--secondary" href="{{ $d.repo }}" target="_blank" rel="noopener">Read the source &rarr;<span class="sr-only"> (opens in a new tab)</span></a>
+        </div>
+        {{ with $d.links }}
+        <p class="ax-final__cross">
+          {{- range $i, $l := . }}{{ if $i }} &middot; {{ end }}<a href="{{ $l.url }}" target="_blank" rel="noopener">{{ $l.text }}<span class="sr-only"> (opens in a new tab)</span></a>{{ end -}}
+        </p>
+        {{ end }}
+      </div>
+    </div>
+  </section>
+
+</div>
+{{ end }}

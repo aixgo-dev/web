@@ -1,0 +1,18 @@
+# Cloudflare Pages redirects.
+#
+# These used to be Hugo `aliases`, which emit an HTML page carrying a
+# meta-refresh. That is slow, it breaks the back button, and crawlers treat it
+# as a soft redirect. A 301 here is the real thing.
+#
+# Reference: https://developers.cloudflare.com/pages/configuration/redirects/
+
+# /docs was never a page. It has always been the guides index under another
+# name, and the navigation, footer and 404 all point at /guides/ directly now.
+/docs             /guides/        301
+/docs/            /guides/        301
+
+# /philosophy-condensed was a near-duplicate of /why-aixgo written at a
+# different length. The one section it carried that /why-aixgo did not ("What
+# Aixgo is not") was folded in, and the page removed.
+/philosophy-condensed   /why-aixgo/   301
+/philosophy-condensed/  /why-aixgo/   301

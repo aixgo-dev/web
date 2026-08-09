@@ -4,13 +4,11 @@ description: "Production-proven agent orchestration patterns in Aixgo"
 weight: 30
 ---
 
-# Agent Orchestration Patterns
-
 Aixgo provides **13 production-proven orchestration patterns** for building AI agent systems. Each pattern solves specific problems and is backed by real-world usage from industry-leading frameworks.
 
 All patterns are **fully implemented and production-ready** in v0.2.0+.
 
-> 📖 **Complete Technical Documentation:**
+> **Complete technical documentation**
 > - **[PATTERNS.md on GitHub](https://github.com/aixgo-dev/aixgo/blob/main/docs/PATTERNS.md)** - **Complete pattern catalog** with detailed code examples, configuration templates, use cases, and implementation guides
 > - **[FEATURES.md on GitHub](https://github.com/aixgo-dev/aixgo/blob/main/docs/FEATURES.md)** - Authoritative feature reference with all capabilities
 > - **[GitHub Repository](https://github.com/aixgo-dev/aixgo)** - Source code and examples
@@ -21,7 +19,7 @@ All patterns are **fully implemented and production-ready** in v0.2.0+.
 
 <div class="pattern-grid">
 
-### ✅ Implemented (v0.2.0+)
+### Implemented (v0.2.0+)
 
 <div class="pattern-card implemented">
 
@@ -283,7 +281,7 @@ orchestration:
 
 </div>
 
-### 🔮 Future Patterns (Roadmap)
+### Future patterns (roadmap)
 
 <div class="pattern-card future">
 
@@ -343,8 +341,8 @@ Complex multi-agent workflows packaged as reusable components.
 | **Aggregation** | Medium | N× | Medium | High | ⭐⭐⭐⭐ High |
 | **Planning** | Medium | Optimized | Medium | High | ⭐⭐⭐⭐ High |
 | **MapReduce** | Medium | N× | Low | High | ⭐⭐⭐⭐⭐ Very High |
-| **Debate** (Roadmap) | High | 9× | Very High | Very High | 🔮 Future |
-| **Nested** (Roadmap) | High | Variable | Variable | Variable | 🔮 Future |
+| **Debate** (Roadmap) | High | 9× | Very High | Very High | Roadmap |
+| **Nested** (Roadmap) | High | Variable | Variable | Variable | Roadmap |
 
 ### Cost Legend
 - `1×` = Single agent execution
@@ -458,8 +456,8 @@ All 13 core patterns are **implemented and production-ready** in v0.2.0+.
 
 ### Future Patterns (v2.1+, 2025 H2)
 
-- 🔮 **Debate Pattern** - Adversarial collaboration for accuracy
-- 🔮 **Nested/Composite Pattern** - Encapsulate complex workflows as single agents
+- **Debate Pattern** - Adversarial collaboration for accuracy
+- **Nested/Composite Pattern** - Encapsulate complex workflows as single agents
 
 ## Getting Started
 

@@ -118,20 +118,20 @@ Now that you have your first agent running, explore Aixgo's powerful features:
 
 ### Build Production Systems
 
-- **[Vector Databases & RAG](/guides/vector-databases)** - Add semantic search and retrieval-augmented generation to eliminate hallucinations
-- **[Multi-Agent Orchestration](/guides/multi-agent-orchestration)** - Build complex workflows with multiple specialized agents
-- **[Production Deployment](/guides/production-deployment)** - Deploy your agents to production with monitoring and scaling
+- **[Vector Databases & RAG](/guides/vector-databases/)** - Add semantic search and retrieval-augmented generation to eliminate hallucinations
+- **[Multi-Agent Orchestration](/guides/multi-agent-orchestration/)** - Build complex workflows with multiple specialized agents
+- **[Production Deployment](/guides/production-deployment/)** - Deploy your agents to production with monitoring and scaling
 
 ### Advanced Features
 
-- **[Provider Integration](/guides/provider-integration)** - Connect to OpenAI, Anthropic, Google, and more
-- **[Observability](/guides/observability)** - Monitor your agents with OpenTelemetry and distributed tracing
-- **[Type Safety](/guides/type-safety)** - Leverage Go's type system for compile-time error detection
+- **[Provider Integration](/guides/provider-integration/)** - Connect to OpenAI, Anthropic, Google, and more
+- **[Observability](/guides/observability/)** - Monitor your agents with OpenTelemetry and distributed tracing
+- **[Type Safety](/guides/type-safety/)** - Leverage Go's type system for compile-time error detection
 
 ### Core Concepts
 
-- **[Core Concepts](/guides/core-concepts)** - Learn about agent types and supervisor patterns
-- **[Extending Aixgo](/guides/extending-aixgo)** - Add custom LLM providers, vector databases, and embeddings
+- **[Core Concepts](/guides/core-concepts/)** - Learn about agent types and supervisor patterns
+- **[Extending Aixgo](/guides/extending-aixgo/)** - Add custom LLM providers, vector databases, and embeddings
 
 ### Examples
 

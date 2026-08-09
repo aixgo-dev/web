@@ -501,6 +501,6 @@ rt.Register(reactAgent)
 
 ## Next Steps
 
-- [Core Concepts](/guides/core-concepts) - Understand agent fundamentals
-- [Multi-Agent Orchestration](/guides/multi-agent-orchestration) - Advanced coordination patterns
-- [Extending Aixgo](/guides/extending-aixgo) - Add custom LLM providers and vector stores
+- [Core Concepts](/guides/core-concepts/) - Understand agent fundamentals
+- [Multi-Agent Orchestration](/guides/multi-agent-orchestration/) - Advanced coordination patterns
+- [Extending Aixgo](/guides/extending-aixgo/) - Add custom LLM providers and vector stores
