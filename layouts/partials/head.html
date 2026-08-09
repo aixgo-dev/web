@@ -18,8 +18,11 @@
 <!-- SEO: canonical, OpenGraph, Twitter, JSON-LD -->
 {{ partial "seo.html" . }}
 
-<!-- CSS -->
+<!-- CSS. main: tokens, primitives, chrome. sections: the marketing section
+     layouts every landing and product page is assembled from. custom: prose.
+     alpha-notices: the status components behind the shortcodes. -->
 <link rel="stylesheet" href="/css/main.css">
+<link rel="stylesheet" href="/css/sections.css">
 <link rel="stylesheet" href="/css/custom.css">
 <link rel="stylesheet" href="/css/alpha-notices.css">
 {{ if eq .Layout "code" }}<link rel="stylesheet" href="/css/code.css">{{ end }}
