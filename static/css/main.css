@@ -515,6 +515,20 @@
   border-radius: var(--ax-r-sm);
 }
 
+/* Screen-reader-only text. Used for "(opens in a new tab)" and column heads
+   that are hidden visually on narrow viewports. */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
 /* Headline ragging. The cheapest typographic upgrade available. */
 :where(h1, h2, h3, h4) { text-wrap: balance; }
 p { text-wrap: pretty; }

@@ -1384,14 +1384,21 @@ article table strong,
   }
 }
 
-/* Code block improvements */
-pre {
-  margin: var(--space-8) 0 !important;
-  border-radius: 8px !important;
+/* Code block improvements. These were bare `pre` and `code` rules carrying
+   !important, so they reached inside any component that wraps a code block and
+   forced 4rem of margin into it. Scoped to prose, where they were meant to
+   apply, and the !important dropped. */
+.content pre,
+.prose pre,
+article pre {
+  margin: var(--space-6) 0;
+  border-radius: 8px;
 }
 
-code {
-  font-size: 0.95rem !important;
+.content code,
+.prose code,
+article code {
+  font-size: 0.95rem;
 }
 
 /* Lists improvements */
@@ -1727,3 +1734,53 @@ article pre {
   }
 }
 
+
+/* ==========================================================================
+   Sibling products band (homepage) — driven by data/products.yaml.
+   Replaces a one-off section that carried its styling in inline attributes.
+   ========================================================================== */
+
+.sibling-section {
+  padding: 6rem 0;
+  border-top: 1px solid var(--ax-hairline);
+  background: var(--ax-bg-1);
+}
+
+.sibling-kicker { display: block; text-align: center; }
+
+.sibling-title { margin-top: 0.75rem; }
+
+.sibling-lead {
+  font-style: italic;
+  color: var(--ax-text-muted);
+  margin-bottom: 0;
+}
+
+.sibling-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--ax-card-gap);
+  max-width: 60rem;
+  margin: 3rem auto 0;
+}
+
+.sibling-card {
+  display: block;
+  text-decoration: none;
+  text-align: left;
+}
+
+.sibling-card h3 { color: var(--ax-text); }
+.sibling-card p { color: var(--ax-text-muted); }
+.sibling-status { display: block; margin-top: 1rem; }
+
+@media (max-width: 768px) {
+  .sibling-section { padding: 4rem 0; }
+  .sibling-grid { grid-template-columns: 1fr; }
+}
+
+/* Footer: the parenthetical after a product name. Was an inline style. */
+.footer-note {
+  opacity: 0.6;
+  font-size: 0.85em;
+}
