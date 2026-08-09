@@ -1,7 +1,6 @@
 ---
 title: 'Type Safety & LLM Integration'
 description: "Leverage Go's type system for compile-time guarantees in LLM interactions and tool definitions."
-breadcrumb: 'Core Concepts'
 category: 'Core Concepts'
 weight: 6
 ---

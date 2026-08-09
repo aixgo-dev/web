@@ -1,7 +1,6 @@
 ---
 title: 'Observability & Monitoring'
 description: 'Instrument Aixgo agents with OpenTelemetry, distributed tracing, and structured logging for production visibility.'
-breadcrumb: 'Deployment'
 category: 'Deployment'
 weight: 9
 ---

@@ -1,7 +1,6 @@
 ---
 title: 'Quick Start Guide'
 description: 'Get started with Aixgo in under 5 minutes. Build your first multi-agent system.'
-breadcrumb: 'Getting Started'
 category: 'Getting Started'
 weight: 1
 ---

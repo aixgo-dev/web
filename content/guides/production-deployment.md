@@ -1,7 +1,6 @@
 ---
 title: 'Production Deployment'
 description: 'Deploy Aixgo agents to production with best practices for scaling and monitoring.'
-breadcrumb: 'Deployment'
 category: 'Deployment'
 weight: 8
 ---

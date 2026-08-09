@@ -1,7 +1,6 @@
 ---
 title: 'Cost Optimization Strategies'
 description: 'Optimize LLM costs using caching, monitoring, intelligent routing, and deterministic aggregation'
-breadcrumb: 'Cost Optimization'
 category: 'Production'
 weight: 25
 ---

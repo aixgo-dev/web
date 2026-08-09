@@ -1,7 +1,6 @@
 ---
 title: 'Building Docker Images from Scratch'
 description: "Create minimal <20MB production containers leveraging Aixgo's single binary advantage."
-breadcrumb: 'Deployment'
 category: 'Deployment'
 weight: 7
 ---

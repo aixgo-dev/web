@@ -1,7 +1,6 @@
 ---
 title: 'Validation with Automatic Retry'
 description: 'Pydantic AI-style automatic validation retry for 40-70% improved structured output reliability'
-breadcrumb: 'Validation Retry'
 category: 'LLM Integration'
 weight: 15
 ---
