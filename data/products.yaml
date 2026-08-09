@@ -2,7 +2,7 @@
 # footer's Products column. Add an entry here rather than building another
 # one-off section in layouts/index.html.
 
-- name: "Aixgo Code"
+- name: "Code"
   url: "/code/"
   description: >-
     An autonomous coding agent in your own GitHub. Issue in, pull request out,

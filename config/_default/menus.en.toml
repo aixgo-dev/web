@@ -4,11 +4,12 @@
 # THIRD product lands, stop adding entries here: build /products/ as a hub page
 # and collapse these two into one item. That is the trigger condition.
 #
-# "Aixgo Code", not "Code" — a bare "Code" sitting next to "Docs" and a GitHub
-# icon reads as "source code", which is the one thing it is not.
+# "Code", not "Aixgo Code" — decided 2026-08-10: with the Aixgo wordmark on
+# every page, the short label reads fine, and the product page and footer
+# note carry the disambiguation.
 
 [[main]]
-  name = "Aixgo Code"
+  name = "Code"
   url = "/code/"
   weight = 5
 
