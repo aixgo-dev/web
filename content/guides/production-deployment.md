@@ -9,9 +9,9 @@ weight: 8
 Aixgo is built for production deployment. This guide covers deployment patterns, best practices, and strategies for running AI agents at scale with enterprise security and full
 observability.
 
-## Deployment Patterns
+## Deployment patterns
 
-### Pattern 1: Single Binary on Cloud Run / Lambda
+### Pattern 1: single binary on Cloud Run / Lambda
 
 The simplest production deployment: compile to a single binary and deploy to serverless platforms.
 
@@ -67,7 +67,7 @@ supervisor:
   max_rounds: 10
 ```
 
-### Pattern 2: Container on Kubernetes
+### Pattern 2: container on Kubernetes
 
 For higher control and customization, deploy as containers on Kubernetes.
 
@@ -84,7 +84,7 @@ For higher control and customization, deploy as containers on Kubernetes.
 - Stateful workflows
 - Complex networking requirements
 
-#### Example: Kubernetes Deployment
+#### Example: Kubernetes deployment
 
 ```yaml
 # deployment.yaml
@@ -145,7 +145,7 @@ spec:
   type: LoadBalancer
 ```
 
-### Pattern 3: Edge Deployment
+### Pattern 3: edge deployment
 
 Deploy to edge devices, IoT gateways, or resource-constrained environments.
 
@@ -163,7 +163,7 @@ Deploy to edge devices, IoT gateways, or resource-constrained environments.
 - Offline-first applications
 - Latency-sensitive workloads
 
-#### Example: Raspberry Pi Deployment
+#### Example: Raspberry Pi deployment
 
 ```bash
 # Cross-compile for ARM
@@ -197,9 +197,9 @@ RestartSec=10
 WantedBy=multi-user.target
 ```
 
-## Configuration Management
+## Configuration management
 
-### Environment-Based Configs
+### Environment-based configs
 
 Use different configs for different environments:
 
@@ -233,7 +233,7 @@ func main() {
 - `config/agents-staging.yaml` - Staging
 - `config/agents-prod.yaml` - Production
 
-### Secrets Management
+### Secrets management
 
 Never hardcode API keys or secrets. Use environment variables or secret managers.
 
@@ -268,9 +268,9 @@ env:
       key: GROK_API_KEY
 ```
 
-## Health Checks & Monitoring
+## Health checks & monitoring
 
-### Health Endpoints
+### Health endpoints
 
 Implement health check endpoints for orchestration platforms:
 
@@ -311,7 +311,7 @@ func main() {
 }
 ```
 
-### Metrics & Logging
+### Metrics & logging
 
 Use structured logging and metrics for observability:
 
@@ -334,9 +334,9 @@ func main() {
 }
 ```
 
-## Scaling Strategies
+## Scaling strategies
 
-### Vertical Scaling
+### Vertical scaling
 
 Increase resources for a single instance:
 
@@ -357,7 +357,7 @@ resources:
 - Memory-intensive LLM operations
 - Before horizontal scaling
 
-### Horizontal Scaling
+### Horizontal scaling
 
 Add more instances:
 
@@ -389,9 +389,9 @@ spec:
 - Redundancy requirements
 - Multi-region deployment
 
-## Best Practices
+## Best practices
 
-### 1. Use Minimal Base Images
+### 1. Use minimal base images
 
 Prefer `FROM scratch` or `alpine` for smallest attack surface:
 
@@ -401,7 +401,7 @@ FROM scratch  # 0MB base
 FROM alpine:latest  # ~5MB base
 ```
 
-### 2. Enable Observability from Day One
+### 2. Enable observability from day one
 
 Configure OpenTelemetry before deploying:
 
@@ -414,7 +414,7 @@ observability:
   endpoint: 'otel-collector:4317'
 ```
 
-### 3. Set Resource Limits
+### 3. Set resource limits
 
 Always define resource requests and limits:
 
@@ -428,7 +428,7 @@ resources:
     cpu: '500m'
 ```
 
-### 4. Use Rolling Updates
+### 4. Use rolling updates
 
 Deploy with zero downtime:
 
@@ -441,7 +441,7 @@ strategy:
     maxUnavailable: 0
 ```
 
-### 5. Implement Graceful Shutdown
+### 5. Implement graceful shutdown
 
 Handle termination signals properly:
 
@@ -475,7 +475,7 @@ func main() {
 }
 ```
 
-### 6. Monitor Cold Start Times
+### 6. Monitor cold start times
 
 Track startup performance:
 
@@ -495,7 +495,7 @@ func main() {
 
 Target: <100ms for serverless, <1s for containers
 
-### 7. Use Configuration Validation
+### 7. Use configuration validation
 
 Validate configs before deployment:
 
@@ -504,7 +504,7 @@ Validate configs before deployment:
 go run main.go --validate-config config/agents-prod.yaml
 ```
 
-## Performance Benchmarks
+## Performance benchmarks
 
 Real-world production metrics:
 
@@ -517,7 +517,7 @@ Real-world production metrics:
 
 ## Troubleshooting
 
-### High Memory Usage
+### High memory usage
 
 **Symptom:** OOM kills, high memory consumption
 
@@ -528,7 +528,7 @@ Real-world production metrics:
 - Increase memory limits
 - Use pagination for large datasets
 
-### Slow Response Times
+### Slow response times
 
 **Symptom:** High P99 latency
 
@@ -539,7 +539,7 @@ Real-world production metrics:
 - Use faster models (gpt-3.5-turbo vs gpt-4)
 - Add caching layer for repeated queries
 
-### Failed Health Checks
+### Failed health checks
 
 **Symptom:** Pods restarting, traffic not routing
 
@@ -550,7 +550,7 @@ Real-world production metrics:
 - Verify configuration is valid
 - Review logs for startup errors
 
-## Next Steps
+## Next steps
 
 - **[Observability & Monitoring](/guides/observability/)** - Set up comprehensive monitoring
 - **[Building Docker Images](/guides/docker-from-scratch/)** - Optimize container builds

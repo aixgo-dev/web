@@ -11,7 +11,7 @@ This guide provides a comprehensive reference for working with embeddings in Aix
 
 ## Overview
 
-### What Are Embeddings?
+### What are embeddings?
 
 Embeddings are dense numerical representations that capture the semantic meaning of text. Similar texts produce similar vectors, enabling powerful AI applications:
 
@@ -28,7 +28,7 @@ Embeddings are dense numerical representations that capture the semantic meaning
 "cooking recipe"   → [0.89, 0.12, 0.05, ...] (different vector)
 ```
 
-### Why Embeddings Matter
+### Why embeddings matter
 
 Embeddings bridge the gap between human language and machine computation, enabling:
 
@@ -38,7 +38,7 @@ Embeddings bridge the gap between human language and machine computation, enabli
 4. **Fast Similarity Computation**: Use cosine similarity for quick comparisons
 5. **Knowledge Retrieval**: Power RAG systems with relevant context
 
-### Quick Comparison
+### Quick comparison
 
 | Provider | Cost | Quality | Speed | Best For |
 |----------|------|---------|-------|----------|
@@ -46,9 +46,9 @@ Embeddings bridge the gap between human language and machine computation, enabli
 | **HuggingFace TEI** | Free (self-host) | Good-Excellent | Very Fast | High-volume production |
 | **OpenAI** | $0.02-0.13/1M tokens | Excellent | Fast | Production quality |
 
-## Provider Comparison
+## Provider comparison
 
-### HuggingFace Inference API
+### HuggingFace inference API
 
 The HuggingFace Inference API provides free access to thousands of embedding models, perfect for development and prototyping.
 
@@ -129,7 +129,7 @@ func main() {
 - Small-scale applications
 - Evaluating different models
 
-### HuggingFace TEI (Self-Hosted)
+### HuggingFace TEI (self-hosted)
 
 Text Embeddings Inference (TEI) is a high-performance embedding server optimized for production workloads.
 
@@ -344,9 +344,9 @@ fmt.Printf("Estimated cost: $%.4f\n", cost)
 - When consistency and reliability are critical
 - Multi-language support requirements
 
-## Choosing the Right Provider
+## Choosing the right provider
 
-### Decision Matrix
+### Decision matrix
 
 Use this matrix to select the optimal provider based on your requirements:
 
@@ -367,7 +367,7 @@ Use this matrix to select the optimal provider based on your requirements:
 | **Infrastructure: Docker** | ❌ | ✅ | ❌ |
 | **Data Privacy** | ❌ | ✅ Best | ❌ |
 
-### Practical Recommendations
+### Practical recommendations
 
 **For Development:**
 ```go
@@ -422,11 +422,11 @@ func (e *EmbeddingServiceWithFallback) Embed(ctx context.Context, text string) (
 }
 ```
 
-## Integration with Vectorstore
+## Integration with vectorstore
 
 Embeddings seamlessly integrate with Aixgo's vectorstore for building RAG systems and semantic search.
 
-### Matching Dimensions
+### Matching dimensions
 
 Ensure your vectorstore and embeddings use compatible dimensions:
 
@@ -495,7 +495,7 @@ func main() {
 }
 ```
 
-### Batch Processing for Efficiency
+### Batch processing for efficiency
 
 Process multiple documents efficiently:
 
@@ -546,7 +546,7 @@ func batchIndexDocuments(
 }
 ```
 
-### Caching Strategies
+### Caching strategies
 
 Implement embedding cache to reduce API calls and costs:
 
@@ -685,7 +685,7 @@ func main() {
 }
 ```
 
-### Error Handling
+### Error handling
 
 Implement robust error handling for production:
 
@@ -732,9 +732,9 @@ func isRetryableError(err error) bool {
 }
 ```
 
-## Best Practices
+## Best practices
 
-### Performance Optimization
+### Performance optimization
 
 **Use Batch Operations:**
 ```go
@@ -789,7 +789,7 @@ batchSizes := map[string]int{
 }
 ```
 
-### Quality Considerations
+### Quality considerations
 
 **Pick Models Matching Your Domain:**
 
@@ -869,7 +869,7 @@ func (m *EmbeddingMonitor) CheckDrift(text string, current []float32) bool {
 }
 ```
 
-### Cost Optimization
+### Cost optimization
 
 **Use HuggingFace for Development:**
 ```go
@@ -959,9 +959,9 @@ config := embeddings.Config{
 }
 ```
 
-## Model Selection Guide
+## Model selection guide
 
-### By Use Case
+### By use case
 
 | Use Case | Recommended Models | Dimensions | Provider |
 |----------|-------------------|------------|----------|
@@ -973,7 +973,7 @@ config := embeddings.Config{
 | **Low Latency** | all-MiniLM-L6-v2 | 384 | HF TEI |
 | **Budget** | all-MiniLM-L6-v2 | 384 | HF API |
 
-### By Dimensions
+### By dimensions
 
 **384 Dimensions (Fast, Good Quality):**
 ```go
@@ -1010,7 +1010,7 @@ Model: "text-embedding-3-large"
 // Best for critical applications
 ```
 
-### Performance Benchmarks
+### Performance benchmarks
 
 ```go
 // Benchmark different models
@@ -1056,9 +1056,9 @@ func benchmarkModels() {
 }
 ```
 
-## Common Issues & Troubleshooting
+## Common issues & troubleshooting
 
-### Dimension Mismatches
+### Dimension mismatches
 
 **Problem:**
 ```text
@@ -1081,7 +1081,7 @@ store, _ := memory.New(
 //   --field-config=field-path=embedding.vector,vector-config='{"dimension":"384","flat":{}}'
 ```
 
-### Rate Limits
+### Rate limits
 
 **Problem:**
 ```text
@@ -1116,7 +1116,7 @@ func (r *RateLimitedEmbedding) Embed(ctx context.Context, text string) ([]float3
 // See TEI deployment section above
 ```
 
-### Model Loading Errors
+### Model loading errors
 
 **Problem:**
 ```text
@@ -1135,7 +1135,7 @@ config := embeddings.Config{
 }
 ```
 
-### Embedding Quality Issues
+### Embedding quality issues
 
 **Problem:** Poor search results or similarity scores
 
@@ -1181,7 +1181,7 @@ func debugEmbeddingQuality(svc embeddings.EmbeddingService) {
 3. Adjust text preprocessing
 4. Use hybrid search (semantic + keyword)
 
-### Memory Issues with Large Batches
+### Memory issues with large batches
 
 **Problem:**
 ```text
@@ -1232,9 +1232,9 @@ func processLargeDataset(
 }
 ```
 
-## Production Deployment
+## Production deployment
 
-### HuggingFace TEI Setup
+### HuggingFace TEI setup
 
 **Full Production Setup:**
 
@@ -1348,7 +1348,7 @@ func (s *TEIAutoScaler) CheckScaling(avgLatency time.Duration, currentInstances 
 }
 ```
 
-### OpenAI Best Practices
+### OpenAI best practices
 
 **Rate Limit Handling:**
 ```go
@@ -1489,9 +1489,9 @@ fallbackSvc := &FallbackEmbeddingService{
 }
 ```
 
-## Complete Examples
+## Complete examples
 
-### Building a Semantic Search System
+### Building a semantic search system
 
 ```go
 package main
@@ -1667,7 +1667,7 @@ func main() {
 }
 ```
 
-### Multi-Provider Embedding Pipeline
+### Multi-provider embedding pipeline
 
 ```go
 package main
@@ -1855,7 +1855,7 @@ func main() {
 }
 ```
 
-## Next Steps
+## Next steps
 
 - **Vector Databases**: [Build RAG systems with embeddings](./vector-databases.md)
 - **Provider Integration**: [Configure LLM and embedding providers](./provider-integration.md)

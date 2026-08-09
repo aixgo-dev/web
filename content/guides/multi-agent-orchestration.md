@@ -12,7 +12,7 @@ Multi-agent systems unlock powerful capabilities: divide complex tasks across sp
 
 Aixgo supports **13 production-proven orchestration patterns** for building AI agent systems. Each pattern solves specific coordination challenges and is backed by real-world production usage.
 
-### Pattern Status
+### Pattern status
 
 | Pattern | Status | Production Usage | Key Benefit |
 |---------|--------|-----------------|-------------|
@@ -32,11 +32,11 @@ Aixgo supports **13 production-proven orchestration patterns** for building AI a
 
 All 13 patterns are production-ready and actively used in real-world applications.
 
-## Pattern Catalog
+## Pattern catalog
 
 For comprehensive pattern details, see [PATTERNS.md](https://github.com/aixgo-dev/aixgo/blob/main/docs/PATTERNS.md).
 
-### 1. Supervisor Pattern
+### 1. Supervisor pattern
 
 The supervisor coordinates agent lifecycle, message routing, and execution constraints. It's the foundational layer for all multi-agent systems.
 
@@ -58,7 +58,7 @@ agents:
 
 **See**: [Supervisor Pattern Details](https://github.com/aixgo-dev/aixgo/blob/main/docs/PATTERNS.md#1-supervisor-pattern)
 
-### 2. Sequential Pattern
+### 2. Sequential pattern
 
 Execute agents in order where each step depends on the previous output. Ideal for ETL pipelines and multi-stage workflows.
 
@@ -79,7 +79,7 @@ agents:
 
 **See**: [Sequential Pattern Details](https://github.com/aixgo-dev/aixgo/blob/main/docs/PATTERNS.md#2-sequential-pattern)
 
-### 3. Parallel Pattern
+### 3. Parallel pattern
 
 Execute multiple agents concurrently for independent tasks. Reduces latency through parallelism.
 
@@ -101,7 +101,7 @@ agents:
 
 **See**: [Parallel Pattern Details](https://github.com/aixgo-dev/aixgo/blob/main/docs/PATTERNS.md#3-parallel-pattern)
 
-### 4. Router Pattern
+### 4. Router pattern
 
 Intelligently route messages to appropriate agents based on classification or routing logic. Achieves 60-80% cost savings in production.
 
@@ -123,7 +123,7 @@ agents:
 
 **See**: [Router Pattern Details](https://github.com/aixgo-dev/aixgo/blob/main/docs/PATTERNS.md#4-router-pattern)
 
-### 5. Swarm Pattern
+### 5. Swarm pattern
 
 Autonomous peer-to-peer agent collaboration without central coordination. Agents self-organize and communicate directly.
 
@@ -146,7 +146,7 @@ agents:
 
 **See**: [Swarm Pattern Details](https://github.com/aixgo-dev/aixgo/blob/main/docs/PATTERNS.md#5-swarm-pattern)
 
-### 6. Hierarchical Pattern
+### 6. Hierarchical pattern
 
 Tree structure with managers delegating to workers. Enables multi-level task decomposition and scalable coordination.
 
@@ -167,7 +167,7 @@ agents:
 
 **See**: [Hierarchical Pattern Details](https://github.com/aixgo-dev/aixgo/blob/main/docs/PATTERNS.md#6-hierarchical-pattern)
 
-### 7. RAG Pattern
+### 7. RAG pattern
 
 Combines knowledge retrieval with generation to ground responses in factual data. Essential for question answering over documents.
 
@@ -189,7 +189,7 @@ agents:
 
 **See**: [RAG Pattern Details](https://github.com/aixgo-dev/aixgo/blob/main/docs/PATTERNS.md#7-rag-pattern)
 
-### 8. Reflection Pattern
+### 8. Reflection pattern
 
 Agents critique and improve their outputs through iterative self-review. Improves quality through self-correction.
 
@@ -210,7 +210,7 @@ agents:
 
 **See**: [Reflection Pattern Details](https://github.com/aixgo-dev/aixgo/blob/main/docs/PATTERNS.md#8-reflection-pattern)
 
-### 9. Ensemble Pattern
+### 9. Ensemble pattern
 
 Combine outputs from multiple models to improve accuracy and reduce variance through voting.
 
@@ -234,7 +234,7 @@ agents:
 
 **See**: [Ensemble Pattern Details](https://github.com/aixgo-dev/aixgo/blob/main/docs/PATTERNS.md#9-ensemble-pattern)
 
-### 10. Classifier Pattern
+### 10. Classifier pattern
 
 Categorize inputs into predefined categories for intelligent routing. Achieves 95%+ accuracy in production.
 
@@ -254,7 +254,7 @@ agents:
 
 **See**: [Classifier Pattern Details](https://github.com/aixgo-dev/aixgo/blob/main/docs/PATTERNS.md#10-classifier-pattern)
 
-### 11. Aggregation Pattern
+### 11. Aggregation pattern
 
 Combine multiple inputs into coherent synthesis. Supports consensus, weighted, and semantic aggregation strategies.
 
@@ -274,7 +274,7 @@ agents:
 
 **See**: [Aggregation Pattern Details](https://github.com/aixgo-dev/aixgo/blob/main/docs/PATTERNS.md#11-aggregation-pattern)
 
-### 12. Planning Pattern
+### 12. Planning pattern
 
 Decompose complex tasks into executable steps for strategic problem solving.
 
@@ -295,7 +295,7 @@ agents:
 
 **See**: [Planning Pattern Details](https://github.com/aixgo-dev/aixgo/blob/main/docs/PATTERNS.md#12-planning-pattern)
 
-### 13. MapReduce Pattern
+### 13. MapReduce pattern
 
 Distribute processing across workers (map) and aggregate results (reduce) for large-scale data processing.
 
@@ -318,7 +318,7 @@ agents:
 
 **See**: [MapReduce Pattern Details](https://github.com/aixgo-dev/aixgo/blob/main/docs/PATTERNS.md#13-mapreduce-pattern)
 
-## Pattern Comparison Matrix
+## Pattern comparison matrix
 
 | Pattern | Complexity | Latency | Cost | Accuracy | Use When |
 |---------|-----------|---------|------|----------|----------|
@@ -336,9 +336,9 @@ agents:
 | Planning | Medium | Medium | Medium | Medium | Complex task decomposition |
 | MapReduce | Medium | Low | Medium | Medium | Large-scale processing |
 
-## Pattern Selection Guide
+## Pattern selection guide
 
-### By Use Case
+### By use case
 
 **Cost Optimization**
 
@@ -370,7 +370,7 @@ agents:
 - Sequential: Ordered multi-stage processing
 - Planning: Strategic task breakdown
 
-### Decision Tree
+### Decision tree
 
 ```text
 Start: What's your primary goal?
@@ -401,7 +401,7 @@ Start: What's your primary goal?
    └─ Large team? → Hierarchical Pattern
 ```
 
-## Combining Patterns
+## Combining patterns
 
 Patterns can be composed to create sophisticated systems. Common combinations:
 
@@ -415,7 +415,7 @@ Patterns can be composed to create sophisticated systems. Common combinations:
 
 **Ensemble + Aggregation**: Multiple models with sophisticated aggregation strategies.
 
-## Implementation Status
+## Implementation status
 
 **Production Ready (13 patterns)**
 
@@ -433,15 +433,15 @@ Under research and development:
 - Tool-Use Pattern: Agents with function calling capabilities
 - Memory Pattern: Long-term memory and context retention
 
-## Phased Agent Startup with Dependencies
+## Phased agent startup with dependencies
 
 **New in v0.2.3**: Aixgo now provides dependency-aware agent startup that eliminates race conditions and ensures agents initialize in the correct order.
 
-### The Problem: Startup Race Conditions
+### The problem: startup race conditions
 
 In multi-agent systems, orchestrator agents often need to verify their dependencies are ready during startup. When all agents start concurrently, race conditions can occur where orchestrators try to use dependencies that haven't finished initializing.
 
-### The Solution: depends_on Field
+### The solution: depends_on field
 
 Declare explicit startup dependencies using the `depends_on` field:
 
@@ -462,7 +462,7 @@ agents:
     depends_on: [database, cache]
 ```
 
-### How It Works
+### How it works
 
 1. **Topological Sort**: Aixgo uses Kahn's algorithm to compute startup order
 1. **Phase Grouping**: Agents are grouped into phases (0, 1, 2, ...) based on dependencies
@@ -515,7 +515,7 @@ agent startup failed: agent 'database' not ready after 30s timeout
 
 ### Configuration
 
-#### Startup Timeout
+#### Startup timeout
 
 Control how long to wait for agents to become ready:
 
@@ -524,7 +524,7 @@ config:
   agent_start_timeout: 45s  # Default: 30s
 ```
 
-#### Complex Dependencies
+#### Complex dependencies
 
 Build multi-tier systems with complex dependency graphs:
 
@@ -568,21 +568,21 @@ agents:
 1. Phase 2: `user-service`, `order-service` (concurrent, after Phase 1)
 1. Phase 3: `api-gateway` (after Phase 2)
 
-### Backward Compatibility
+### Backward compatibility
 
 Phased startup is **opt-in and backward compatible**:
 
 - **Without `depends_on`**: All agents start concurrently (v0.2.2 behavior)
 - **With `depends_on`**: Agents start in phases based on dependencies
 
-### Best Practices
+### Best practices
 
 1. **Declare True Dependencies**: Only use `depends_on` for agents that must be ready before others start
 1. **Minimize Phases**: Group independent agents at the same tier for faster startup
 1. **Fast Ready() Checks**: Keep `Ready()` implementations lightweight (simple boolean checks)
 1. **Set Appropriate Timeouts**: Increase `agent_start_timeout` if agents need time to initialize
 
-### Cycle Detection
+### Cycle detection
 
 Aixgo automatically detects circular dependencies and fails fast with a clear error:
 
@@ -601,7 +601,7 @@ Error message:
 circular dependency detected: agent-a -> agent-b -> agent-a
 ```
 
-### Runtime Support
+### Runtime support
 
 Phased startup works across all runtime implementations:
 
@@ -609,7 +609,7 @@ Phased startup works across all runtime implementations:
 - **Runtime**: Lightweight runtime
 - **DistributedRuntime**: Multi-node gRPC-based deployments
 
-### Message-Based Dependencies (Legacy)
+### Message-based dependencies (legacy)
 
 Before v0.2.3, dependencies were implicit through inputs/outputs. This still works but doesn't guarantee startup order:
 
@@ -624,9 +624,9 @@ agents:
 
 **Recommendation**: Use `depends_on` for startup dependencies, keep `inputs`/`outputs` for message routing.
 
-## Execution Constraints
+## Execution constraints
 
-### Max Rounds
+### Max rounds
 
 Limits the total number of workflow iterations:
 
@@ -637,7 +637,7 @@ supervisor:
 
 This prevents runaway workflows and ensures predictable resource usage.
 
-### Agent-Level Timeouts
+### Agent-level timeouts
 
 Set timeouts per agent for long-running operations:
 
@@ -649,11 +649,11 @@ agents:
     timeout: 30s # Fail if processing takes >30s
 ```
 
-## Error Handling
+## Error handling
 
 The supervisor provides built-in error handling:
 
-### Automatic Retry
+### Automatic retry
 
 Configure retry behavior for transient failures:
 
@@ -667,7 +667,7 @@ agents:
       initial_interval: 1s
 ```
 
-### Graceful Degradation
+### Graceful degradation
 
 Agents can fail without crashing the entire system:
 
@@ -676,9 +676,9 @@ supervisor:
   failure_mode: continue # or 'stop' to halt on first error
 ```
 
-## Best Practices
+## Best practices
 
-### 1. Keep Workflows Acyclic
+### 1. Keep workflows acyclic
 
 Avoid circular dependencies—messages should flow in one direction:
 
@@ -706,7 +706,7 @@ agents:
     inputs: [{ source: B }]
 ```
 
-### 2. Use Descriptive Names
+### 2. Use descriptive names
 
 Agent names should describe their role:
 
@@ -716,7 +716,7 @@ agents:
   - name: agent-1 # Unclear
 ```
 
-### 3. Set Reasonable max_rounds
+### 3. Set reasonable max_rounds
 
 Too high = wasted resources, too low = incomplete workflows:
 
@@ -725,7 +725,7 @@ supervisor:
   max_rounds: 10 # Typical: 5-20 rounds
 ```
 
-### 4. Monitor Performance
+### 4. Monitor performance
 
 Use observability to track:
 
@@ -734,7 +734,7 @@ Use observability to track:
 - Bottlenecks in the workflow
 - Pattern-specific metrics
 
-## Real-World Example: Content Moderation Pipeline
+## Real-world example: content moderation pipeline
 
 This example combines multiple patterns (Classifier, Parallel, Aggregation, Planning):
 
@@ -828,7 +828,7 @@ This pipeline demonstrates:
 5. Plans actions with chain-of-thought reasoning (Planning Pattern)
 6. Executes appropriate action
 
-## Next Steps
+## Next steps
 
 - **[Production Deployment](/guides/production-deployment/)** - Deploy multi-agent systems to production
 - **[Observability & Monitoring](/guides/observability/)** - Track and debug complex workflows

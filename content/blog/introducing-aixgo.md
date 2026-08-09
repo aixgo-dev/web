@@ -27,9 +27,9 @@ Python excels at AI research and prototyping, but production deployments reveal 
 
 Aixgo exists because **production AI deserves production tooling.** Go developers shouldn't abandon their stack's strengths just to build AI agents.
 
-## Core Principles
+## Core principles
 
-### 1. Single Binary Simplicity
+### 1. Single binary simplicity
 
 Deploy AI agents in <20MB binaries with zero runtime dependencies.
 
@@ -47,7 +47,7 @@ COPY aixgo-agent /
 CMD ["/aixgo-agent"]  # <20MB total
 ```
 
-### 2. Type-Safe Architecture
+### 2. Type-safe architecture
 
 Catch errors at compile time. Go's type system enforces contracts between agents, tools, and workflows.
 
@@ -59,7 +59,7 @@ agent := aixgo.NewAgent(
 )
 ```
 
-### 3. Seamless Scaling
+### 3. Scaling without a rewrite
 
 Start with Go channels locally. Scale to distributed agents with gRPC. **Same code, zero changes.**
 
@@ -71,7 +71,7 @@ supervisor.AddAgent(analyzer)
 supervisor.Run()  // Local: channels, Distributed: gRPC
 ```
 
-## Quick Example
+## Quick example
 
 ```go
 package main
@@ -90,7 +90,7 @@ func main() {
 
 Configure agents declaratively in YAML. See the [Quick Start Guide](/guides/quick-start/) for details.
 
-## Production Performance
+## Production performance
 
 <div class="advantage-table-wrapper">
 
@@ -106,7 +106,7 @@ Configure agents declaratively in YAML. See the [Quick Start Guide](/guides/quic
 
 </div>
 
-## Production Features
+## Production features
 
 **Observability:** OpenTelemetry integration, Langfuse, Prometheus, distributed tracing, health checks, structured logging.
 
@@ -133,7 +133,7 @@ security:
     requests_per_minute: 1000
 ```
 
-## Supported Integrations
+## Supported integrations
 
 **LLM Providers:** OpenAI, Anthropic (Claude), Google (Vertex AI, Gemini), xAI (Grok), HuggingFace
 
@@ -141,7 +141,7 @@ security:
 
 **Observability:** OpenTelemetry, Langfuse, Prometheus, Grafana, Datadog, New Relic
 
-## Use Cases
+## Use cases
 
 - **Data Pipelines** - High-throughput ETL with inline AI classification and enrichment
 - **Production APIs** - Sub-millisecond P99 latency AI endpoints
@@ -149,7 +149,7 @@ security:
 - **Multi-Agent Research** - Coordinate complex workflows with supervisor orchestration
 - **Distributed Networks** - Scale from single instance to multi-region deployment
 
-## Current Status: Alpha
+## Current status: alpha
 
 **What's ready today:**
 
@@ -172,7 +172,7 @@ security:
 
 Expect breaking changes as we evolve the API based on feedback.
 
-## When to Choose Aixgo
+## When to choose Aixgo
 
 Choose Aixgo when:
 
@@ -190,21 +190,21 @@ Choose Python frameworks when:
 - Your team doesn't have Go experience
 - You need features Aixgo doesn't support yet
 
-## Getting Started
+## Getting started
 
 Follow our [Quick Start Guide](/guides/quick-start/) to get running in 5 minutes. Explore the [Features](/features/) and join
 [GitHub Discussions](https://github.com/aixgo-dev/aixgo/discussions).
 
 ## Roadmap
 
-### Beta Release (Q4 2025)
+### Beta release (Q4 2025)
 
 - Complete vector database integrations (Qdrant, pgvector)
 - Long-term memory and personalization
 - Enhanced error handling and validation
 - Production battle-testing
 
-### v1.0 Production Release (Q1 2026)
+### v1.0 production release (Q1 2026)
 
 - API stability guarantees with semantic versioning
 - Kubernetes operator
@@ -216,7 +216,7 @@ Follow our [Quick Start Guide](/guides/quick-start/) to get running in 5 minutes
 
 See our [v1.0 Compatibility Guarantee](/v1-compatibility/) for API stability details.
 
-## Our Philosophy
+## Our philosophy
 
 Aixgo is built on a simple belief: **production AI deserves production tooling.**
 
@@ -225,7 +225,7 @@ open source (MIT licensed).
 
 Read our complete [Philosophy](/why-aixgo/) for design principles and decision criteria.
 
-## Join Us
+## Join us
 
 **Links:**
 

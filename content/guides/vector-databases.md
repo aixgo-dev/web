@@ -14,7 +14,7 @@ This guide covers everything you need to build production-ready Retrieval-Augmen
 Vector databases enable semantic search by storing high-dimensional embeddings alongside your data. Combined with LLMs, they power RAG systems that reduce hallucinations and
 provide domain-specific knowledge.
 
-### What You'll Learn
+### What you'll learn
 
 - Vector database fundamentals and the Collection-based architecture
 - Choosing the right embedding provider
@@ -25,9 +25,9 @@ provide domain-specific knowledge.
 - Migrating from the old API
 - Troubleshooting common issues
 
-## Understanding Vector Databases
+## Understanding vector databases
 
-### What are Embeddings?
+### What are embeddings?
 
 Embeddings are numerical representations of text that capture semantic meaning. Similar texts produce similar vectors, enabling:
 
@@ -44,7 +44,7 @@ Embeddings are numerical representations of text that capture semantic meaning. 
 "car" → [0.9, 0.1, 0.05, ...] (different vector)
 ```
 
-### How RAG Works
+### How RAG works
 
 ```text
 ┌──────────────────────────────────────────────────┐
@@ -67,9 +67,9 @@ Embeddings are numerical representations of text that capture semantic meaning. 
 └──────────────────────────────────────────────────┘
 ```
 
-## Quick Start
+## Quick start
 
-### Minimal Example
+### Minimal example
 
 ```go
 package main
@@ -137,12 +137,12 @@ func main() {
 }
 ```
 
-## Collection-Based Architecture
+## Collection-based architecture
 
 Aixgo's vector store uses a **Collection-based architecture** that provides logical isolation for different use cases. Each collection can have its own configuration for TTL,
 deduplication, scoping, and capacity limits.
 
-### Core Concepts
+### Core concepts
 
 **Collections**: Logical containers for related documents with shared configuration.
 
@@ -196,9 +196,9 @@ result, _ := docs.Query(ctx, &vectorstore.Query{
 })
 ```
 
-## 10 Powerful Use Cases
+## 10 use cases
 
-### 1. Semantic Caching
+### 1. Semantic caching
 
 Cache LLM responses to reduce costs and latency.
 
@@ -238,7 +238,7 @@ if result.HasMatches() {
 }
 ```
 
-### 2. Agent Memory with Scope Isolation
+### 2. Agent memory with scope isolation
 
 Store agent memories with multi-tenant isolation.
 
@@ -271,7 +271,7 @@ result, _ := memory.Query(ctx, &vectorstore.Query{
 })
 ```
 
-### 3. Conversation History
+### 3. Conversation history
 
 Track conversation context across sessions.
 
@@ -312,7 +312,7 @@ result, _ := conversations.Query(ctx, &vectorstore.Query{
 })
 ```
 
-### 4. Content Deduplication
+### 4. Content deduplication
 
 Prevent duplicate content in your knowledge base.
 
@@ -339,7 +339,7 @@ result, _ := docs.UpsertBatch(ctx, documents)
 fmt.Printf("Inserted: %d, Deduplicated: %d\n", result.Inserted, result.Deduplicated)
 ```
 
-### 5. Multi-Modal Support
+### 5. Multi-modal support
 
 Store and search images, URLs, and text.
 
@@ -363,7 +363,7 @@ result, _ := media.Query(ctx, &vectorstore.Query{
 })
 ```
 
-### 6. Temporal Data with Expiration
+### 6. Temporal data with expiration
 
 Manage time-based data with automatic cleanup.
 
@@ -395,7 +395,7 @@ result, _ := events.Query(ctx, &vectorstore.Query{
 })
 ```
 
-### 7. Multi-Tenancy via Scope
+### 7. Multi-tenancy via scope
 
 Isolate data across tenants, users, and sessions.
 
@@ -419,7 +419,7 @@ result, _ := docs.Query(ctx, &vectorstore.Query{
 })
 ```
 
-### 8. Batch Operations
+### 8. Batch operations
 
 Efficiently process large datasets with progress tracking.
 
@@ -447,7 +447,7 @@ result, _ := docs.UpsertBatch(ctx, documents,
 fmt.Printf("Inserted: %d, Failed: %d\n", result.Inserted, result.Failed)
 ```
 
-### 9. Streaming Queries
+### 9. Streaming queries
 
 Process large result sets efficiently.
 
@@ -475,7 +475,7 @@ if err := iter.Err(); err != nil {
 }
 ```
 
-### 10. Advanced Filtering
+### 10. Advanced filtering
 
 Complex queries with boolean logic.
 
@@ -501,11 +501,11 @@ result, _ := docs.Query(ctx, &vectorstore.Query{
 })
 ```
 
-## Choosing Components
+## Choosing components
 
-### Embedding Providers
+### Embedding providers
 
-#### Embedding Provider Decision Matrix
+#### Embedding provider decision matrix
 
 | Provider            | Cost             | Setup   | Quality        | Speed     | Best For    |
 | ------------------- | ---------------- | ------- | -------------- | --------- | ----------- |
@@ -513,7 +513,7 @@ result, _ := docs.Query(ctx, &vectorstore.Query{
 | **HuggingFace TEI** | Free (self-host) | Docker  | Good-Excellent | Very Fast | Production  |
 | **OpenAI**          | $0.02-0.13/1M    | API Key | Excellent      | Fast      | Production  |
 
-#### HuggingFace Models
+#### HuggingFace models
 
 **Popular choices:**
 
@@ -542,7 +542,7 @@ config := embeddings.Config{
 }
 ```
 
-#### OpenAI Models
+#### OpenAI models
 
 **Available models:**
 
@@ -569,9 +569,9 @@ config := embeddings.Config{
 }
 ```
 
-### Vector Store Providers
+### Vector store providers
 
-#### Decision Matrix
+#### Decision matrix
 
 | Provider              | Persistence | Scalability    | Setup  | Best For                 |
 | --------------------- | ----------- | -------------- | ------ | ------------------------ |
@@ -580,7 +580,7 @@ config := embeddings.Config{
 | **Qdrant** (future)   | Yes         | Very High      | Medium | High-performance search  |
 | **pgvector** (future) | Yes         | High           | Medium | Existing PostgreSQL apps |
 
-#### Memory Store
+#### Memory store
 
 **Configuration:**
 
@@ -626,11 +626,11 @@ docs := store.Collection("documents")
 - Firebase-based apps
 - Auto-scaling workloads
 
-## Production Setup
+## Production setup
 
-### Firestore Configuration
+### Firestore configuration
 
-#### 1. Create GCP Project
+#### 1. Create GCP project
 
 ```bash
 # Create project
@@ -654,7 +654,7 @@ gcloud firestore databases create \
   --type=firestore-native
 ```
 
-#### 3. Create Vector Index
+#### 3. Create vector index
 
 **Critical:** Firestore requires vector indexes for similarity search.
 
@@ -680,7 +680,7 @@ gcloud firestore indexes composite create \
 gcloud firestore indexes composite list --format=table
 ```
 
-#### 4. Setup Authentication
+#### 4. Setup authentication
 
 ```bash
 # Create service account
@@ -700,11 +700,11 @@ gcloud iam service-accounts keys create key.json \
 export GOOGLE_APPLICATION_CREDENTIALS=$(pwd)/key.json
 ```
 
-### HuggingFace TEI (Self-Hosted)
+### HuggingFace TEI (self-hosted)
 
 For high-throughput production deployments:
 
-#### Docker Deployment
+#### Docker deployment
 
 ```bash
 # Run TEI server
@@ -732,9 +732,9 @@ config := embeddings.Config{
 }
 ```
 
-## Building RAG Systems
+## Building RAG systems
 
-### Complete RAG Implementation
+### Complete RAG implementation
 
 ```go
 package main
@@ -886,7 +886,7 @@ func (r *RAGSystem) Close() error {
 }
 ```
 
-### Usage Example
+### Usage example
 
 ```go
 func main() {
@@ -925,9 +925,9 @@ func main() {
 }
 ```
 
-## Best Practices
+## Best practices
 
-### 1. Document Chunking
+### 1. Document chunking
 
 Break large documents into optimal chunks:
 
@@ -976,7 +976,7 @@ for i, chunk := range chunks {
 - 10-20% overlap between chunks
 - Preserve sentence boundaries
 
-### 2. Metadata and Tags Strategy
+### 2. Metadata and tags strategy
 
 Use metadata and tags for hybrid search:
 
@@ -1008,7 +1008,7 @@ result, _ := docs.Query(ctx, &vectorstore.Query{
 })
 ```
 
-### 3. Batch Processing
+### 3. Batch processing
 
 Index efficiently with batch operations:
 
@@ -1052,7 +1052,7 @@ func indexDocuments(collection vectorstore.Collection, embSvc embeddings.Embeddi
 }
 ```
 
-### 4. Error Handling and Retries
+### 4. Error handling and retries
 
 Implement robust error handling:
 
@@ -1090,7 +1090,7 @@ func isRetryable(err error) bool {
 }
 ```
 
-### 5. Caching Strategies
+### 5. Caching strategies
 
 Implement multi-level caching for frequently accessed content:
 
@@ -1118,9 +1118,9 @@ func (ce *CachedEmbeddings) Embed(ctx context.Context, text string) ([]float32, 
 }
 ```
 
-## Performance Optimization
+## Performance optimization
 
-### Latency Optimization
+### Latency optimization
 
 **Target latencies:**
 
@@ -1137,7 +1137,7 @@ func (ce *CachedEmbeddings) Embed(ctx context.Context, text string) ([]float32, 
 5. **Cache embeddings** for repeated queries
 6. **Use streaming** for large result sets
 
-### Cost Optimization
+### Cost optimization
 
 **For OpenAI embeddings:**
 
@@ -1162,7 +1162,7 @@ fmt.Printf("Indexing cost: $%.2f\n", totalCost)
 4. Use batch operations (no rate limit overhead)
 5. Implement semantic caching to reduce LLM calls
 
-### Firestore Costs
+### Firestore costs
 
 **Pricing (as of 2025):**
 
@@ -1176,13 +1176,13 @@ fmt.Printf("Indexing cost: $%.2f\n", totalCost)
 - 1M searches/month: ~$600
 - 10GB storage: ~$1.80/month
 
-## Migration Guide
+## Migration guide
 
-### From Old API to Collection-Based API
+### From old API to collection-based API
 
 The vector store API was redesigned with Collections. Here's how to migrate:
 
-#### Old API (Before)
+#### Old API (before)
 
 ```go
 // Old: Config-based initialization
@@ -1209,7 +1209,7 @@ results, _ := store.Search(ctx, vectorstore.SearchQuery{
 })
 ```
 
-#### New API (After)
+#### New API (after)
 
 ```go
 // New: Provider-specific constructors
@@ -1238,7 +1238,7 @@ result, _ := docs.Query(ctx, &vectorstore.Query{
 })
 ```
 
-#### Key Changes
+#### Key changes
 
 1. **Provider Initialization**: Use provider-specific packages (`memory.New()`, `firestore.New()`)
 2. **Collections**: Always work through collections for logical isolation
@@ -1250,9 +1250,9 @@ result, _ := docs.Query(ctx, &vectorstore.Query{
 
 ## Troubleshooting
 
-### Common Issues
+### Common issues
 
-#### 1. Embedding Dimension Mismatch
+#### 1. Embedding dimension mismatch
 
 ```text
 Error: embedding dimension mismatch: expected 384, got 1536
@@ -1272,7 +1272,7 @@ store, _ := memory.New()
 // See "Create Vector Index" section above
 ```
 
-#### 2. Firestore Index Not Ready
+#### 2. Firestore index not ready
 
 ```text
 Error: index not found or not ready
@@ -1286,7 +1286,7 @@ gcloud firestore indexes composite list
 
 **Note:** The index field path changed to `embedding.vector` in the new API.
 
-#### 3. HuggingFace Rate Limit
+#### 3. HuggingFace rate limit
 
 ```text
 Error: rate limit exceeded
@@ -1298,7 +1298,7 @@ Error: rate limit exceeded
 2. Use batch operations (`EmbedBatch`)
 3. Deploy TEI locally for unlimited requests
 
-#### 4. Low Search Quality
+#### 4. Low search quality
 
 **Debugging steps:**
 
@@ -1325,7 +1325,7 @@ query.Limit = 20 // see more candidates
 3. Add reranking step with cross-encoder
 4. Implement hybrid search (semantic + keyword)
 
-#### 5. Collection Not Found
+#### 5. Collection not found
 
 ```text
 Error: collection does not exist
@@ -1342,9 +1342,9 @@ collections, _ := store.ListCollections(ctx)
 fmt.Println("Available collections:", collections)
 ```
 
-## Advanced Topics
+## Advanced topics
 
-### Hybrid Search
+### Hybrid search
 
 Combine vector similarity with filters:
 
@@ -1424,7 +1424,7 @@ result, _ := docs.Query(ctx, &vectorstore.Query{
 })
 ```
 
-## Next Steps
+## Next steps
 
 - **Try the Example**: [RAG Agent Example](https://github.com/aixgo-dev/aixgo/tree/main/examples/rag-agent)
 - **API Reference**: [Vector Store Package](https://pkg.go.dev/github.com/aixgo-dev/aixgo/pkg/vectorstore)

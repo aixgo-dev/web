@@ -7,7 +7,7 @@ weight: 9
 
 Choosing the right combination of vectorstore and embedding provider is critical for performance, cost, and developer experience. This guide helps you make informed decisions based on your requirements.
 
-## Why Provider Choice Matters
+## Why provider choice matters
 
 Your choice of vectorstore and embedding provider affects:
 
@@ -18,9 +18,9 @@ Your choice of vectorstore and embedding provider affects:
 
 The good news: Aixgo's abstraction layer lets you start simple and upgrade later without code changes.
 
-## Vector Store Providers
+## Vector store providers
 
-### Detailed Comparison
+### Detailed comparison
 
 | Feature | Memory | Firestore | Qdrant | pgvector |
 |---------|--------|-----------|--------|----------|
@@ -205,9 +205,9 @@ collection := store.Collection("my-data")
 - Hybrid relational/vector queries
 - Want to avoid additional infrastructure
 
-## Embedding Providers
+## Embedding providers
 
-### Detailed Comparison
+### Detailed comparison
 
 | Provider | Quality | Speed | Cost | Dimensions | Best For |
 |----------|---------|-------|------|------------|----------|
@@ -265,7 +265,7 @@ embedding, err := embedder.EmbedText(ctx, "Hello world")
 - Budget-conscious projects
 - Testing different models
 
-### HuggingFace TEI (Text Embeddings Inference)
+### HuggingFace TEI (text embeddings inference)
 
 **Ideal for**: Production, high-throughput, cost-sensitive deployments
 
@@ -369,9 +369,9 @@ if err != nil {
 - Moderate to high volume
 - When you want reliable, managed service
 
-## Recommended Stacks
+## Recommended stacks
 
-### Development Stack
+### Development stack
 
 **Best for**: Local development, prototyping, learning
 
@@ -404,7 +404,7 @@ collection := store.Collection("dev-data")
 **Performance**: Fast (local storage, API network latency)
 **Best for**: Getting started quickly
 
-### Production Stack (Managed)
+### Production stack (managed)
 
 **Best for**: Production applications on GCP, serverless deployments
 
@@ -438,7 +438,7 @@ collection := store.Collection("prod-data")
 **Performance**: Fast, globally distributed
 **Best for**: Most production applications
 
-### Production Stack (Self-Hosted)
+### Production stack (self-hosted)
 
 **Best for**: High-volume, cost-sensitive, maximum performance
 
@@ -495,7 +495,7 @@ collection := store.Collection("prod-data")
 **Performance**: Extremely fast
 **Best for**: High-volume applications, cost optimization
 
-### Budget Stack
+### Budget stack
 
 **Best for**: Bootstrapped startups, side projects, MVPs
 
@@ -510,7 +510,7 @@ Vectorstore: Firestore (free tier)
 **Performance**: Good for low-moderate volume
 **Best for**: Getting to market fast with minimal costs
 
-### High-Volume Stack
+### High-volume stack
 
 **Best for**: Large-scale applications, millions of queries/day
 
@@ -523,9 +523,9 @@ Vectorstore: Qdrant cluster
 **Performance**: Maximum throughput and minimal latency
 **Best for**: Applications with millions of users
 
-## Cost Calculator
+## Cost calculator
 
-### Scenario 1: Small Application
+### Scenario 1: small application
 
 **Volume**: 10K documents, 100K queries/month
 
@@ -538,7 +538,7 @@ Vectorstore: Qdrant cluster
 
 **Recommendation**: Budget stack (HF API + Firestore)
 
-### Scenario 2: Medium Application
+### Scenario 2: medium application
 
 **Volume**: 100K documents, 1M queries/month
 
@@ -550,7 +550,7 @@ Vectorstore: Qdrant cluster
 
 **Recommendation**: Managed stack (OpenAI + Firestore)
 
-### Scenario 3: Large Application
+### Scenario 3: large application
 
 **Volume**: 1M documents, 10M queries/month
 
@@ -561,7 +561,7 @@ Vectorstore: Qdrant cluster
 
 **Recommendation**: Self-hosted stack becomes cost-effective at this scale
 
-### Scenario 4: Enterprise Application
+### Scenario 4: enterprise application
 
 **Volume**: 10M documents, 100M queries/month
 
@@ -572,9 +572,9 @@ Vectorstore: Qdrant cluster
 
 **Recommendation**: Self-hosted with dedicated infrastructure
 
-## Performance Benchmarks
+## Performance benchmarks
 
-### Query Latency (p95)
+### Query latency (p95)
 
 | Provider | Single Vector | Batch (10) | Batch (100) |
 |----------|---------------|------------|-------------|
@@ -590,7 +590,7 @@ Vectorstore: Qdrant cluster
 - Qdrant local is nearly as fast as memory
 - All tested with 100K documents, 384-dimensional vectors
 
-### Embedding Generation
+### Embedding generation
 
 | Provider | Single Text | Batch (10) | Batch (100) |
 |----------|-------------|------------|-------------|
@@ -620,7 +620,7 @@ Vectorstore: Qdrant cluster
 - Firestore throughput limited by API quotas
 - Qdrant scales well with parallelism
 
-## Migration Paths
+## Migration paths
 
 ### Memory to Firestore
 
@@ -725,9 +725,9 @@ store, _ := qdrant.New(ctx, qdrant.Config{
 
 **Important**: Different embedding models are NOT compatible. You must re-index all data.
 
-## Decision Framework
+## Decision framework
 
-### Start Here
+### Start here
 
 Ask yourself these questions:
 
@@ -755,7 +755,7 @@ Ask yourself these questions:
    - <500ms p95 → Managed solutions work
    - >500ms p95 → Any solution works
 
-### Quick Decision Tree
+### Quick decision tree
 
 ```text
 Are you in production?
@@ -769,14 +769,14 @@ Are you in production?
             └─ No → OpenAI + Firestore
 ```
 
-## Next Steps
+## Next steps
 
 1. **Start with the Development Stack**: Get familiar with the APIs
 2. **Benchmark your use case**: Real performance depends on your data
 3. **Plan for migration**: Design with future scaling in mind
 4. **Monitor costs**: Set up billing alerts early
 
-## Additional Resources
+## Additional resources
 
 - **[Vector Databases Guide](/guides/vector-databases/)**: Deep dive into vector search
 - **[Production Deployment](/guides/production-deployment/)**: Best practices for production

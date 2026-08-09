@@ -18,13 +18,13 @@ Phase 1 (Parallel) → Validate → Phase 2 (Aggregate) → Validate → Phase 3
 
 Each phase uses an existing pattern. Validation gates ensure quality between phases.
 
-### The Composition Principle
+### The composition principle
 
 **Don't create new patterns when you can compose existing ones.**
 
 Aixgo's 13 patterns are building blocks. Most complex workflows are compositions of these patterns, not new patterns entirely.
 
-### Benefits of Composition
+### Benefits of composition
 
 - **Faster development**: Reuse proven patterns instead of building from scratch
 - **Better reliability**: Each pattern is battle-tested in production
@@ -32,9 +32,9 @@ Aixgo's 13 patterns are building blocks. Most complex workflows are compositions
 - **Natural validation points**: Phase boundaries provide natural validation gates
 - **Flexibility**: Reconfigure by swapping phases, not rewriting logic
 
-## Composing Patterns Programmatically
+## Composing patterns programmatically
 
-### Example: Policy Analysis Workflow
+### Example: policy analysis workflow
 
 This three-phase workflow demonstrates pattern composition:
 
@@ -146,9 +146,9 @@ func validatePhase1(result *patterns.PatternResult) error {
 }
 ```
 
-## Common Composition Patterns
+## Common composition patterns
 
-### 1. Extract-Transform-Load (ETL)
+### 1. Extract-transform-load (ETL)
 
 Classic data pipeline pattern using three sequential phases.
 
@@ -215,7 +215,7 @@ agents:
       - source: validator
 ```
 
-### 2. Multi-Expert Analysis
+### 2. Multi-expert analysis
 
 Combine parallel expert agents with consensus aggregation and sequential reporting.
 
@@ -294,7 +294,7 @@ agents:
       - target: final-output
 ```
 
-### 3. Iterative Refinement
+### 3. Iterative refinement
 
 Use reflection pattern within each phase for quality improvement.
 
@@ -354,7 +354,7 @@ agents:
       - source: refiner
 ```
 
-### 4. Hierarchical Processing
+### 4. Hierarchical processing
 
 Multi-level delegation with aggregation at each level.
 
@@ -440,11 +440,11 @@ agents:
       aggregation_strategy: hierarchical
 ```
 
-## Validation Between Phases
+## Validation between phases
 
 Use the `Validatable` interface for type-safe phase validation.
 
-### Phase Output Structs
+### Phase output structs
 
 Define clear contracts between phases:
 
@@ -496,7 +496,7 @@ func (r RiskAssessmentOutput) Validate() error {
 }
 ```
 
-### Validation Gates
+### Validation gates
 
 Implement validation between each phase:
 
@@ -526,7 +526,7 @@ func validateRiskAssessmentPhase(result *patterns.PatternResult) error {
 }
 ```
 
-### Error Handling Between Phases
+### Error handling between phases
 
 Handle phase failures gracefully:
 
@@ -586,9 +586,9 @@ func (e *ValidationError) Error() string {
 }
 ```
 
-## When to Compose vs. Create New Pattern
+## When to compose vs. create new pattern
 
-### Compose Existing Patterns When
+### Compose existing patterns when
 
 - Workflow is sequential phases
 - Each phase uses existing pattern logic
@@ -598,7 +598,7 @@ func (e *ValidationError) Error() string {
 
 **Example:** ETL pipeline, multi-expert analysis, hierarchical review
 
-### Create New Pattern When
+### Create new pattern when
 
 - Fundamentally new execution model needed
 - Custom state management across agents required
@@ -608,7 +608,7 @@ func (e *ValidationError) Error() string {
 
 **Example:** Custom negotiation protocol, domain-specific coordination
 
-### Decision Matrix
+### Decision matrix
 
 | Scenario | Compose | New Pattern |
 |----------|---------|-------------|
@@ -620,9 +620,9 @@ func (e *ValidationError) Error() string {
 | ETL with validation gates | ✅ | ❌ |
 | Custom distributed consensus algorithm | ❌ | ✅ |
 
-## Performance Optimization
+## Performance optimization
 
-### Minimize Phase Transitions
+### Minimize phase transitions
 
 Each phase transition adds overhead. Combine phases when possible:
 
@@ -638,7 +638,7 @@ Extract → Validate → Transform → Validate → Load
 Extract + Validate → Transform + Validate + Load
 ```
 
-### Parallel Phase Execution
+### Parallel phase execution
 
 When phases are independent, run them in parallel:
 
@@ -667,7 +667,7 @@ if phase1Err != nil || phase2Err != nil {
 }
 ```
 
-### Cache Phase Results
+### Cache phase results
 
 For repeated workflows, cache phase results:
 
@@ -702,7 +702,7 @@ if err == nil {
 }
 ```
 
-## Real-World Example: Document Processing Pipeline
+## Real-world example: document processing pipeline
 
 Complete example combining multiple patterns for document processing.
 
@@ -814,7 +814,7 @@ func processDocument(ctx context.Context, doc Document) (*Report, error) {
 }
 ```
 
-## Best Practices
+## Best practices
 
 1. **Define clear phase boundaries**: Each phase should have well-defined inputs and outputs
 2. **Validate between phases**: Use `Validatable` interface for type-safe validation
@@ -825,7 +825,7 @@ func processDocument(ctx context.Context, doc Document) (*Report, error) {
 7. **Use appropriate patterns**: Match pattern to phase requirements (parallel vs sequential)
 8. **Consider cost**: LLM-powered patterns vs deterministic patterns based on needs
 
-## See Also
+## See also
 
 - [Multi-Agent Orchestration Guide](./multi-agent-orchestration/) - All 13 orchestration patterns
 - [Sequential Pattern](./multi-agent-orchestration/#sequential-pattern) - Ordered execution

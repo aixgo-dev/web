@@ -8,14 +8,14 @@ author: "Aixgo Team"
 
 We're excited to announce **Aixgo v0.5.0**, bringing two major improvements that expand Aixgo's capabilities: a public LLM provider API that enables external projects to leverage Aixgo's multi-provider infrastructure, and guided ReAct workflows that execute all tools per iteration with optional LLM verification for more reliable agent execution.
 
-## What's New in v0.5.0
+## What's new in v0.5.0
 
 **Quick Links:**
 
 1. [Public Provider API](#1-public-provider-api) - Import LLM providers in your projects
 1. [Guided ReAct Workflows](#2-guided-react-workflows) - Step-by-step execution with verification
 
-### 1. Public Provider API
+### 1. Public provider API
 
 The LLM provider and cost calculation packages have moved from `internal/` to `pkg/llm/`, making them available for external use. External projects can now import Aixgo's provider infrastructure without running full agent orchestration.
 
@@ -64,7 +64,7 @@ fmt.Printf("Request cost: $%.4f\n", totalCost)
 - **Cost Analysis** - Track LLM expenses across different models and providers
 - **Prototyping** - Quickly integrate LLMs without building provider clients from scratch
 
-### 2. Guided ReAct Workflows
+### 2. Guided ReAct workflows
 
 ReAct agents now support guided execution mode, which executes all tool calls in each iteration and optionally verifies results with the LLM before proceeding. This improves reliability for multi-step workflows requiring quality control.
 
@@ -142,7 +142,7 @@ Final Output: {sender: "john@example.com", subject: "Project Update", ...}
 - **Explicit Quality Gates** - Custom verification prompts enforce domain requirements
 - **Debugging** - Clear iteration history shows exactly what the agent did
 
-## Performance Impact
+## Performance impact
 
 **Provider API:**
 
@@ -160,9 +160,9 @@ Final Output: {sender: "john@example.com", subject: "Project Update", ...}
 | Standard       | 3-5            | 6-10          | 60-70%      |
 | Guided         | 2-3            | 4-6           | 90-95%      |
 
-## Migration Guide
+## Migration guide
 
-### Using Public Provider API
+### Using public provider API
 
 No breaking changes for existing Aixgo users. To use providers externally:
 
@@ -174,7 +174,7 @@ go get github.com/aixgo-dev/aixgo@v0.5.0
 import "github.com/aixgo-dev/aixgo/pkg/llm/provider"
 ```
 
-### Enabling Guided Workflows
+### Enabling guided workflows
 
 Add `guided_config` to existing ReAct agent definitions:
 
@@ -197,7 +197,7 @@ agents:
 - Existing agents continue using standard execution by default
 - No code changes required for current deployments
 
-## What's Next
+## What's next
 
 Looking ahead to v0.6.0 (Q2 2026):
 
@@ -226,7 +226,7 @@ Looking ahead to v0.6.0 (Q2 2026):
 - **Feature Catalog**: [docs/FEATURES.md](https://github.com/aixgo-dev/aixgo/blob/main/docs/FEATURES.md)
 - **Examples**: [examples/](https://github.com/aixgo-dev/aixgo/tree/main/examples)
 
-## Get Involved
+## Get involved
 
 We'd love to hear how you use the new provider API and guided workflows:
 

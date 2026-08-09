@@ -10,7 +10,7 @@ We're excited to announce **Aixgo v0.6.0**, introducing an interactive coding as
 multi-agent AI to your command line. This release transforms Aixgo from purely an orchestration framework into a
 complete AI development toolkit with the new `aixgo chat` command.
 
-## What's New in v0.6.0
+## What's new in v0.6.0
 
 **Quick Links:**
 
@@ -19,7 +19,7 @@ complete AI development toolkit with the new `aixgo chat` command.
 1. [Session Management](#3-session-management) - Persistent conversations
 1. [Assistant Tools](#4-assistant-tools) - File, git, and terminal operations
 
-### 1. Interactive Coding Assistant
+### 1. Interactive coding assistant
 
 The centerpiece of v0.6.0 is `aixgo chat` - an interactive coding assistant that combines conversational AI
 with practical development tools, all in a lightweight Go binary.
@@ -88,7 +88,7 @@ ok      github.com/example/pkg    0.123s
 - `/help` - Command reference
 - `/quit` - Save and exit
 
-### 2. CLI Modernization
+### 2. CLI modernization
 
 The entire CLI has been refactored from flag-based commands to a modern Cobra framework with clear subcommands.
 
@@ -123,7 +123,7 @@ aixgo session delete <id>
 - **Future Extensibility** - Easy to add new commands
 - **Consistent UX** - Follows standard CLI conventions
 
-### 3. Session Management
+### 3. Session management
 
 Sessions provide persistent conversation history with automatic cost tracking and easy resumption.
 
@@ -178,7 +178,7 @@ aixgo session delete e5f6g7h8
 }
 ```
 
-### 4. Assistant Tools
+### 4. Assistant tools
 
 The assistant comes equipped with practical development tools accessible through natural language.
 
@@ -249,7 +249,7 @@ go version go1.26.0 darwin/arm64
 - **Confirmation Prompts** - User approval required
 - **Output Sanitization** - Removes sensitive information
 
-## Model Information
+## Model information
 
 View all available models and their pricing with a single command.
 
@@ -282,7 +282,7 @@ Provider: xAI
 
 This helps you choose the right model for your budget and use case.
 
-## Performance & Efficiency
+## Performance & efficiency
 
 **Binary Size & Startup:**
 
@@ -319,9 +319,9 @@ Switched to model: claude-3-5-sonnet
 | Offline-First | Yes | No | Varies |
 | Self-Hosted | Yes | No | Yes |
 
-## Migration Guide
+## Migration guide
 
-### Existing Users
+### Existing users
 
 **No breaking changes** - The orchestrator functionality remains unchanged:
 
@@ -335,7 +335,7 @@ aixgo run -config agents.yaml
 
 **New capabilities** are purely additive via new subcommands.
 
-### Getting Started
+### Getting started
 
 **Fresh Install:**
 
@@ -365,9 +365,9 @@ export XAI_API_KEY=xai-...          # For Grok models
 aixgo chat
 ```
 
-## Use Cases
+## Use cases
 
-### 1. Code Review Assistant
+### 1. Code review assistant
 
 ```text
 > Review this pull request for security issues
@@ -377,7 +377,7 @@ aixgo chat
 [Creates structured PR description with changes categorized]
 ```
 
-### 2. Refactoring Helper
+### 2. Refactoring helper
 
 ```text
 > Find all instances of the old API pattern
@@ -390,7 +390,7 @@ aixgo chat
 [Displays git diff for review]
 ```
 
-### 3. Documentation Generator
+### 3. Documentation generator
 
 ```text
 > Read all exported functions in pkg/
@@ -400,7 +400,7 @@ aixgo chat
 [Creates comprehensive documentation]
 ```
 
-### 4. Multi-Model Experimentation
+### 4. Multi-model experimentation
 
 ```text
 > /model gpt-4o
@@ -413,7 +413,7 @@ Explain this algorithm
 [Compare responses across models]
 ```
 
-## What's Next
+## What's next
 
 Looking ahead to v0.7.0 (Q2 2026):
 
@@ -436,7 +436,7 @@ Looking ahead to v0.7.0 (Q2 2026):
 - Web UI for session management
 - Docker-based assistant deployment
 
-## Technical Implementation
+## Technical implementation
 
 For those interested in the architecture:
 
@@ -469,7 +469,7 @@ pkg/assistant/
 - **Feature Catalog**: [docs/FEATURES.md](https://github.com/aixgo-dev/aixgo/blob/main/docs/FEATURES.md)
 - **API Documentation**: [pkg.go.dev/github.com/aixgo-dev/aixgo](https://pkg.go.dev/github.com/aixgo-dev/aixgo)
 
-## Get Involved
+## Get involved
 
 We'd love to hear how you use the new interactive assistant:
 

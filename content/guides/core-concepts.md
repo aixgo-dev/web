@@ -8,11 +8,11 @@ weight: 2
 
 Aixgo implements a message-based multi-agent architecture inspired by successful production patterns. This guide explains the core concepts you need to understand before building complex systems. These patterns reflect our [philosophy](/why-aixgo/) of production-first design with Go-native patterns.
 
-## Agent Types
+## Agent types
 
 Aixgo provides six foundational agent types, each designed for specific roles in your system:
 
-### Producer Agents
+### Producer agents
 
 Producer agents generate periodic messages for downstream processing. They're ideal for data ingestion, event generation, or any scenario where you need to create messages on a
 schedule.
@@ -33,7 +33,7 @@ agents:
 - Periodic health checks
 - Time-based event triggers
 
-### ReAct Agents
+### ReAct agents
 
 ReAct (Reasoning + Acting) agents combine LLM-powered reasoning with tool calling capabilities. They receive messages, reason about them using an LLM, and can execute tools to
 perform actions.
@@ -61,7 +61,7 @@ agents:
 - Natural language processing
 - Complex business logic with LLM reasoning
 
-### Logger Agents
+### Logger agents
 
 Logger agents consume and persist messages for observability, debugging, and audit trails. They're the endpoints of your data flows.
 
@@ -80,7 +80,7 @@ agents:
 - Data persistence
 - Monitoring and alerting
 
-### Classifier Agents
+### Classifier agents
 
 Classifier agents categorize content or documents using LLM-powered classification with multiple strategies. They excel at organizing, tagging, and routing data based on
 intelligent analysis.
@@ -113,7 +113,7 @@ agents:
 - Document organization
 - Sentiment analysis and topic detection
 
-### Aggregator Agents
+### Aggregator agents
 
 Aggregator agents combine outputs from multiple agents using sophisticated strategies. They synthesize information, build consensus, and create unified results from diverse inputs.
 
@@ -145,7 +145,7 @@ agents:
 - Decision-making with diverse inputs
 - Knowledge base construction
 
-### Planner Agents
+### Planner agents
 
 Planner agents create sophisticated reasoning chains and execution strategies. They break down complex problems into steps and coordinate multi-stage workflows.
 
@@ -174,11 +174,11 @@ agents:
 - Strategic decision-making
 - Research and analysis pipelines
 
-## Vector Stores & RAG
+## Vector stores & RAG
 
 Aixgo includes first-class support for vector databases and Retrieval-Augmented Generation (RAG), enabling your agents to access and search large knowledge bases with semantic understanding.
 
-### What are Vector Stores?
+### What are vector stores?
 
 Vector stores are databases optimized for similarity search using high-dimensional embeddings. They enable:
 
@@ -187,7 +187,7 @@ Vector stores are databases optimized for similarity search using high-dimension
 - **Knowledge Grounding**: Reduce hallucinations by grounding responses in real data
 - **Context Retrieval**: Provide relevant context for more accurate responses
 
-### Collection-Based Architecture
+### Collection-based architecture
 
 Aixgo's vectorstore uses a Collection-based architecture for logical isolation:
 
@@ -211,7 +211,7 @@ docs := store.Collection("knowledge-base",
 )
 ```
 
-### 10 Powerful Use Cases
+### 10 use cases
 
 1. **Semantic Caching**: Cache LLM responses by meaning, not exact text
 2. **Agent Memory**: Give agents persistent, scoped memory
@@ -224,14 +224,14 @@ docs := store.Collection("knowledge-base",
 9. **Streaming Queries**: Handle large result sets efficiently
 10. **Advanced Filtering**: Complex boolean queries with metadata filters
 
-### Supported Providers
+### Supported providers
 
 - **Memory**: In-memory store for development and testing
 - **Firestore**: Production-ready, serverless vector database
 - **Qdrant** (coming soon): High-performance vector search
 - **pgvector** (coming soon): PostgreSQL extension for vector search
 
-### Quick Example
+### Quick example
 
 ```go
 // Index documents
@@ -253,23 +253,23 @@ query := &vectorstore.Query{
 results, _ := docs.Query(ctx, query)
 ```
 
-### Learn More
+### Learn more
 
 - **[Vector Databases Guide](/guides/vector-databases/)**: Complete guide to building RAG systems
 - **[Embeddings Guide](/guides/embeddings/)**: Choosing and using embedding models
 - **[RAG Example](https://github.com/aixgo-dev/aixgo/tree/main/examples/rag-agent)**: Production-ready RAG implementation
 
-## The Supervisor Pattern
+## The supervisor pattern
 
 The supervisor is the orchestration layer that manages agent lifecycle and message routing. It provides the following capabilities:
 
-### Lifecycle Management
+### Lifecycle management
 
 - **Dependency-aware startup** - Starts agents in the correct order based on their input/output relationships
 - **Graceful shutdown** - Ensures clean termination of all agents
 - **Health monitoring** - Tracks agent status and handles failures
 
-### Message Routing
+### Message routing
 
 The supervisor routes messages between agents based on configured inputs and outputs:
 
@@ -298,13 +298,13 @@ agents:
       - source: analyzer # Receives from analyzer
 ```
 
-### Execution Constraints
+### Execution constraints
 
 - **Max rounds** - Limits total iterations to prevent runaway workflows
 - **Timeouts** - Prevents agents from running indefinitely
 - **Error handling** - Manages agent failures gracefully
 
-### Observability Hooks
+### Observability hooks
 
 The supervisor provides distributed tracing integration, allowing you to:
 
@@ -313,11 +313,11 @@ The supervisor provides distributed tracing integration, allowing you to:
 - Debug complex workflows
 - Monitor system health
 
-## Communication Abstraction
+## Communication abstraction
 
 One of Aixgo's most powerful features is its runtime abstraction layer that handles message transport automatically.
 
-### Local Mode (Development)
+### Local mode (development)
 
 Uses Go channels for in-process communication:
 
@@ -335,7 +335,7 @@ supervisor.Run()  // Uses Go channels internally
 - No infrastructure required
 - Perfect for prototyping
 
-### Distributed Mode (Production)
+### Distributed mode (production)
 
 Uses gRPC with protobuf for multi-node orchestration:
 
@@ -354,7 +354,7 @@ supervisor.Run()  // Uses gRPC when configured
 - Fault isolation
 - Production-grade reliability
 
-### Automatic Selection
+### Automatic selection
 
 The runtime automatically selects the appropriate transport based on configuration. This means:
 
@@ -362,7 +362,7 @@ The runtime automatically selects the appropriate transport based on configurati
 2. **Deploy to single instance** - Run on Cloud Run/Lambda with same code
 3. **Scale to distributed** - Add configuration, no code changes needed
 
-## Message Flow Example
+## Message flow example
 
 Here's how messages flow through a typical Aixgo system:
 
@@ -406,9 +406,9 @@ agents:
 7. Process repeats for max_rounds (5 iterations)
 8. Supervisor initiates graceful shutdown
 
-## Key Principles
+## Key principles
 
-### 1. Declarative Configuration
+### 1. Declarative configuration
 
 Agents and workflows are defined in YAML, making them:
 
@@ -417,7 +417,7 @@ Agents and workflows are defined in YAML, making them:
 - Platform-independent
 - Testable
 
-### 2. Type Safety
+### 2. Type safety
 
 Go's type system ensures:
 
@@ -425,7 +425,7 @@ Go's type system ensures:
 - Tool interfaces are type-checked
 - Refactoring is safe across large systems
 
-### 3. Observable by Default
+### 3. Observable by default
 
 Every agent interaction is:
 
@@ -433,7 +433,7 @@ Every agent interaction is:
 - Logged with structured context
 - Measurable with metrics
 
-### 4. Production-Ready from Day One
+### 4. Production-ready from day one
 
 The same code runs in:
 
@@ -441,7 +441,7 @@ The same code runs in:
 - Single-instance deployments
 - Distributed production systems
 
-## Next Steps
+## Next steps
 
 Now that you understand the core concepts, you can:
 

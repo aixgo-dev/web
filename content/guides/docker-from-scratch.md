@@ -9,7 +9,7 @@ weight: 7
 One of Aixgo's most compelling advantages is deployment size. While Python AI frameworks produce 1GB+ containers, Aixgo agents compile to <20MB binaries. This guide shows how to
 build minimal production containers.
 
-## The Container Size Problem
+## The container size problem
 
 Python-based AI frameworks create massive containers:
 
@@ -32,7 +32,7 @@ RUN pip install -r requirements.txt
 - Large attack surface
 - Slow cold starts (30-45 seconds)
 
-## Aixgo's Solution: FROM scratch
+## Aixgo's solution: FROM scratch
 
 Go compiles to static binaries with zero runtime dependencies:
 
@@ -55,7 +55,7 @@ CMD ["/aixgo-agent"]
 - Tiny attack surface
 - Instant cold starts (<100ms)
 
-## Basic Dockerfile: Single Binary
+## Basic Dockerfile: single binary
 
 The simplest production Dockerfile:
 
@@ -95,7 +95,7 @@ docker run aixgo-agent:latest
 
 **Result:** ~18MB container
 
-## Optimized Dockerfile: Smallest Possible Image
+## Optimized Dockerfile: smallest possible image
 
 Further optimization with build flags:
 
@@ -140,9 +140,9 @@ CMD ["/agent"]
 - `-trimpath` - Remove file system paths from binary
 - Result: ~15-20MB container
 
-## Multi-Stage Build Best Practices
+## Multi-stage build best practices
 
-### Stage 1: Builder (golang:alpine)
+### Stage 1: builder (golang:alpine)
 
 Use Alpine for smaller build stage:
 
@@ -165,7 +165,7 @@ COPY . .
 RUN CGO_ENABLED=0 go build -ldflags="-w -s" -o agent main.go
 ```
 
-### Stage 2: Runtime (scratch)
+### Stage 2: runtime (scratch)
 
 Minimal runtime with only essentials:
 
@@ -190,9 +190,9 @@ USER 65534:65534
 CMD ["/agent"]
 ```
 
-## Handling External Dependencies
+## Handling external dependencies
 
-### CA Certificates (for HTTPS)
+### CA certificates (for HTTPS)
 
 If your agent calls external APIs:
 
@@ -206,7 +206,7 @@ COPY --from=builder /app/agent /agent
 CMD ["/agent"]
 ```
 
-### Timezone Data
+### Timezone data
 
 If your agent uses timezone-aware date/time:
 
@@ -221,7 +221,7 @@ COPY --from=builder /app/agent /agent
 CMD ["/agent"]
 ```
 
-### Configuration Files
+### Configuration files
 
 Mount configs as volumes or copy at build time:
 
@@ -233,7 +233,7 @@ COPY config/agents.yaml /config/agents.yaml
 # docker run -v ./config:/config aixgo-agent
 ```
 
-## Size Comparison: Python vs Aixgo
+## Size comparison: Python vs Aixgo
 
 Real-world example: data analysis agent
 
@@ -289,9 +289,9 @@ CMD ["/agent"]
 
 **Improvement: 150x smaller**
 
-## Security Hardening
+## Security hardening
 
-### Run as Non-Root User
+### Run as non-root user
 
 ```dockerfile
 FROM scratch
@@ -308,7 +308,7 @@ USER 65534:65534
 CMD ["/agent"]
 ```
 
-### Read-Only Filesystem
+### Read-only filesystem
 
 ```dockerfile
 # Dockerfile
@@ -323,7 +323,7 @@ CMD ["/agent"]
 docker run --read-only aixgo-agent:latest
 ```
 
-### Minimal Attack Surface
+### Minimal attack surface
 
 `FROM scratch` has:
 
@@ -334,7 +334,7 @@ docker run --read-only aixgo-agent:latest
 
 Only your binary exists. Nothing else to exploit.
 
-## Cloud-Specific Optimizations
+## Cloud-specific optimizations
 
 ### Google Cloud Run
 
@@ -390,9 +390,9 @@ aws lambda create-function \
   --zip-file fileb://function.zip
 ```
 
-## Build Optimization Techniques
+## Build optimization techniques
 
-### Layer Caching
+### Layer caching
 
 Order Dockerfile commands from least to most frequently changed:
 
@@ -409,7 +409,7 @@ COPY . .
 RUN CGO_ENABLED=0 go build -ldflags="-w -s" -o agent main.go
 ```
 
-### Multi-Platform Builds
+### Multi-platform builds
 
 Build for multiple architectures:
 
@@ -422,7 +422,7 @@ docker buildx build \
   .
 ```
 
-### Build-Time Variables
+### Build-time variables
 
 Inject version info at build time:
 
@@ -444,9 +444,9 @@ docker build \
   .
 ```
 
-## Debugging Minimal Containers
+## Debugging minimal containers
 
-### Problem: No Shell in scratch
+### Problem: no shell in scratch
 
 You can't `docker exec` into a `scratch` container (no shell).
 
@@ -493,7 +493,7 @@ View logs:
 docker logs -f <container-id>
 ```
 
-## Performance Impact
+## Performance impact
 
 Container size affects:
 
@@ -504,7 +504,7 @@ Container size affects:
 | **Storage cost**     | $0.10/GB/month     | $0.001/GB/month   | 100x cheaper    |
 | **Deploy frequency** | Slow (discouraged) | Fast (encouraged) | Higher velocity |
 
-## Real-World Example: Minimal Production Dockerfile
+## Real-world example: minimal production Dockerfile
 
 Complete production-ready Dockerfile:
 
@@ -567,7 +567,7 @@ docker build -t my-registry/aixgo-agent:1.0.0 .
 docker push my-registry/aixgo-agent:1.0.0
 ```
 
-## Key Takeaways
+## Key takeaways
 
 1. **FROM scratch** - Smallest possible base (0MB)
 2. **Multi-stage builds** - Keep builder separate from runtime
@@ -576,7 +576,7 @@ docker push my-registry/aixgo-agent:1.0.0
 5. **Layer caching** - Dependencies before source code
 6. **60x smaller** - <20MB vs 1.2GB Python containers
 
-## Next Steps
+## Next steps
 
 - **[Production Deployment](/guides/production-deployment/)** - Deploy minimal containers to production
 - **[Single Binary vs Distributed](/guides/single-vs-distributed/)** - Understand scaling patterns

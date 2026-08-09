@@ -7,7 +7,7 @@ weight: 3
 
 The `aixgo chat` command provides an interactive coding assistant that combines conversational AI with practical development tools. It runs as a single lightweight binary with no external runtime dependencies.
 
-## Table of Contents
+## Table of contents
 
 - [Prerequisites](#prerequisites)
 - [Installation](#installation)
@@ -54,7 +54,7 @@ aixgo --version
 
 ---
 
-## API Key Setup
+## API key setup
 
 The assistant auto-detects which providers are available based on environment variables. Set at least one before starting a session.
 
@@ -69,7 +69,7 @@ To see which models are available with your configured keys, run `aixgo models` 
 
 ---
 
-## Starting a Session
+## Starting a session
 
 **Start with default model (`claude-sonnet-4-6`):**
 
@@ -112,7 +112,7 @@ To exit at any time, type `/quit` or press `Ctrl+C`. The session is saved automa
 
 ---
 
-## CLI Flags
+## CLI flags
 
 | Flag | Short | Default | Description |
 |------|-------|---------|-------------|
@@ -129,7 +129,7 @@ aixgo chat   # starts with gpt-4o
 
 ---
 
-## In-Session Commands
+## In-session commands
 
 Commands are prefixed with `/` and interpreted directly rather than sent to the model.
 
@@ -164,11 +164,11 @@ Session Cost Summary:
 
 ---
 
-## Built-in Tools
+## Built-in tools
 
 The assistant has access to three categories of tools that the model can invoke automatically in response to natural language requests. You do not call these tools directly.
 
-### File Operations
+### File operations
 
 | Tool | Description |
 |------|-------------|
@@ -188,7 +188,7 @@ The assistant has access to three categories of tools that the model can invoke 
 
 File tools validate paths before operating on them to prevent directory traversal. See [Security Model](#security-model) for details.
 
-### Git Operations
+### Git operations
 
 | Tool | Description |
 |------|-------------|
@@ -208,7 +208,7 @@ File tools validate paths before operating on them to prevent directory traversa
 
 `git_commit` analyzes the staged changes, generates a commit message, and presents it for confirmation before committing.
 
-### Terminal Execution
+### Terminal execution
 
 The assistant can execute shell commands through the `exec` tool. All executions require explicit user confirmation before running.
 
@@ -234,11 +234,11 @@ See [Security Model](#security-model) for the full list of allowed commands and 
 
 ---
 
-## Session Management
+## Session management
 
 Sessions are stored as JSON files at `~/.aixgo/sessions/`. Every message exchange is automatically saved after completion. Manual saves are available with `/save`.
 
-### Listing Sessions
+### Listing sessions
 
 ```bash
 aixgo session list
@@ -258,7 +258,7 @@ Resume a session with: aixgo chat --session <id>
 Or: aixgo session resume <id>
 ```
 
-### Resuming a Session
+### Resuming a session
 
 ```bash
 aixgo session resume a1b2c3d4e5f6
@@ -268,7 +268,7 @@ aixgo chat --session a1b2c3d4e5f6
 
 Resuming a session restores the full message history to the model's context window. The model retains awareness of prior exchanges.
 
-### Deleting a Session
+### Deleting a session
 
 ```bash
 aixgo session delete e5f6g7h8i9j0
@@ -276,7 +276,7 @@ aixgo session delete e5f6g7h8i9j0
 
 This removes the session file from `~/.aixgo/sessions/`. The operation is not reversible.
 
-### Session File Format
+### Session file format
 
 Each session is stored as a human-readable JSON file:
 
@@ -308,9 +308,9 @@ Session files can be read, copied, or backed up with standard file tools.
 
 ---
 
-## Model Selection
+## Model selection
 
-### Dynamic Model Discovery
+### Dynamic model discovery
 
 Models are **fetched dynamically** from each provider's API, ensuring you always have access to the latest models available to your API key. Run `aixgo models` to view all available models:
 
@@ -337,7 +337,7 @@ gemini-2.5-flash              gemini      Fast Gemini model                 $0.0
 Total: 12 models from 3 providers
 ```
 
-### Force Refresh
+### Force refresh
 
 Model lists are cached for 5 minutes. To force a refresh from provider APIs:
 
@@ -345,7 +345,7 @@ Model lists are cached for 5 minutes. To force a refresh from provider APIs:
 aixgo models --refresh
 ```
 
-### Switching Models Mid-Conversation
+### Switching models mid-conversation
 
 Use `/model` inside a session to switch without losing history:
 
@@ -356,7 +356,7 @@ Switched to model: claude-haiku-4-5-20251001
 
 The conversation history carries over. Subsequent messages are sent to the new model. This is useful for routing straightforward tasks to lower-cost models and complex analysis to higher-capability models.
 
-### Cost Tracking
+### Cost tracking
 
 The assistant displays per-message cost after each response when the cost exceeds $0.001:
 
@@ -370,9 +370,9 @@ Use `/cost` for a full session summary at any time.
 
 ---
 
-## Security Model
+## Security model
 
-### Command Allowlist
+### Command allowlist
 
 The terminal tool (`exec`) only runs commands from an explicit allowlist. Commands not on this list are rejected before any confirmation prompt is shown.
 
@@ -390,7 +390,7 @@ The terminal tool (`exec`) only runs commands from an explicit allowlist. Comman
 | Containers | `docker` |
 | Cloud CLIs | `gcloud`, `aws`, `az`, `kubectl` |
 
-### Blocked Subcommands
+### Blocked subcommands
 
 Certain subcommands are blocked even for allowed base commands:
 
@@ -400,7 +400,7 @@ Certain subcommands are blocked even for allowed base commands:
 | `rm` | `-rf`, `-r`, `--recursive` |
 | `docker` | `rm`, `rmi`, `prune`, `system prune` |
 
-### Shell Operator Restrictions
+### Shell operator restrictions
 
 The following shell operators are blocked to prevent bypass through chaining:
 
@@ -412,19 +412,19 @@ Pipe (`|`) is permitted only when the pipe target is one of: `grep`, `head`, `ta
 
 Output redirection (`>`) is permitted only to `/dev/null` or with `2>&1`.
 
-### Path Validation
+### Path validation
 
 File tools reject paths containing `..` components to prevent directory traversal outside the working directory.
 
-### Confirmation Requirement
+### Confirmation requirement
 
 The terminal tool always requires explicit user confirmation before executing a command. There is no way to pre-approve commands or disable this prompt.
 
 ---
 
-## Example Workflows
+## Example workflows
 
-### Code Review
+### Code review
 
 ```text
 > Read all Go files in the pkg/security directory
@@ -456,7 +456,7 @@ The terminal tool always requires explicit user confirmation before executing a 
 [Generates message, prompts for confirmation, creates commit]
 ```
 
-### Documentation Generation
+### Documentation generation
 
 ```text
 > Read all exported functions in pkg/mcp
@@ -469,7 +469,7 @@ The terminal tool always requires explicit user confirmation before executing a 
 [Executes linter command after confirmation]
 ```
 
-### Cost-Aware Multi-Model Workflow
+### Cost-aware multi-model workflow
 
 ```text
 > /model claude-haiku-4-5-20251001
@@ -526,7 +526,7 @@ Long conversation histories are sent with every request, accumulating token usag
 
 ---
 
-## Next Steps
+## Next steps
 
 - [Session Persistence](/guides/sessions/) - Detailed session API for programmatic access
 - [Provider Integration](/guides/provider-integration/) - Configure additional LLM providers

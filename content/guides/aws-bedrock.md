@@ -21,7 +21,7 @@ Bedrock offers access to foundation models from Anthropic (Claude), Amazon (Nova
 - **Cost Management** - Consolidated billing, cost allocation tags, AWS Cost Explorer integration
 - **Guardrails** - Built-in content filtering, PII detection, topic blocking
 
-### Benefits for Go Applications
+### Benefits for Go applications
 
 Integrating Bedrock with Aixgo unlocks powerful advantages:
 
@@ -33,7 +33,7 @@ Integrating Bedrock with Aixgo unlocks powerful advantages:
 
 **Cost Optimization** - Use AWS Cost Explorer to track model usage by project, environment, or agent. Set up billing alarms to prevent runaway costs.
 
-### When to Use Bedrock vs Direct Provider APIs
+### When to use Bedrock vs direct provider APIs
 
 **Choose Bedrock when you:**
 
@@ -52,7 +52,7 @@ Integrating Bedrock with Aixgo unlocks powerful advantages:
 
 ## Prerequisites
 
-### AWS Account Setup
+### AWS account setup
 
 1. **Create AWS Account** (if not already created):
    - Visit https://aws.amazon.com
@@ -64,7 +64,7 @@ Integrating Bedrock with Aixgo unlocks powerful advantages:
    - Select your preferred region (e.g., us-east-1, us-west-2, eu-west-1)
    - Bedrock automatically provisions in enabled regions
 
-### IAM Permissions
+### IAM permissions
 
 Create an IAM policy with the minimum required permissions:
 
@@ -94,7 +94,7 @@ Attach this policy to:
 - An IAM user (for development)
 - An IAM role (for production EC2/ECS/EKS deployments)
 
-### Model Access Requests
+### Model access requests
 
 Before using models, request access in the Bedrock console:
 
@@ -108,7 +108,7 @@ Before using models, request access in the Bedrock console:
 1. Click **Request model access**
 1. Wait for approval (usually instant for most models)
 
-### Go and Aixgo Installation
+### Go and Aixgo installation
 
 **Install Go 1.26+**:
 
@@ -125,9 +125,9 @@ go version  # Should show 1.26 or higher
 go get github.com/aixgo-dev/aixgo
 ```
 
-## Quick Start
+## Quick start
 
-### Environment Setup
+### Environment setup
 
 Configure AWS credentials using one of these methods:
 
@@ -150,7 +150,7 @@ aws configure
 
 When running on EC2, ECS, or EKS, attach an IAM role with Bedrock permissions. No credentials needed in code.
 
-### First API Call Example
+### First API call example
 
 Create a simple agent using Claude 3.5 Sonnet via Bedrock:
 
@@ -200,7 +200,7 @@ export AWS_REGION=us-east-1
 go run main.go
 ```
 
-### Model Selection Guidance
+### Model selection guidance
 
 Choose models based on your use case:
 
@@ -214,9 +214,9 @@ Choose models based on your use case:
 
 **For code generation**: `meta.llama3-70b-instruct-v1:0` or `anthropic.claude-3-5-sonnet-20240620-v1:0`
 
-## Configuration Options
+## Configuration options
 
-### YAML Configuration
+### YAML configuration
 
 **Basic agent configuration**:
 
@@ -257,7 +257,7 @@ agents:
     fallback_strategy: cascade
 ```
 
-### Go SDK Programmatic Usage
+### Go SDK programmatic usage
 
 **Direct agent creation**:
 
@@ -308,7 +308,7 @@ agent := aixgo.NewAgent(
 )
 ```
 
-### Multi-Region Deployment
+### Multi-region deployment
 
 Deploy agents across multiple regions for resilience:
 
@@ -338,7 +338,7 @@ agents:
 
 ## Authentication
 
-### Environment Variables
+### Environment variables
 
 **Standard AWS credentials**:
 
@@ -357,7 +357,7 @@ export AWS_SESSION_TOKEN=<your-session-token>
 export AWS_REGION=us-east-1
 ```
 
-### IAM Roles for EC2/ECS/EKS
+### IAM roles for EC2/ECS/EKS
 
 **Recommended for production deployments**. Attach an IAM role to your compute instance:
 
@@ -410,7 +410,7 @@ spec:
           value: us-east-1
 ```
 
-### AWS Profiles
+### AWS profiles
 
 Use named profiles for development:
 
@@ -431,7 +431,7 @@ export AWS_PROFILE=production
 go run main.go
 ```
 
-### Cross-Account Access
+### Cross-account access
 
 Access Bedrock in another AWS account using role assumption:
 
@@ -453,9 +453,9 @@ cfg, err = config.LoadDefaultConfig(ctx,
 )
 ```
 
-## Available Models
+## Available models
 
-### Model ID Reference Table
+### Model ID reference table
 
 | Provider | Model Name | Model ID | Context Length | Features |
 |----------|-----------|----------|----------------|----------|
@@ -477,7 +477,7 @@ cfg, err = config.LoadDefaultConfig(ctx,
 | **Amazon** | Titan Text Express | `amazon.titan-text-express-v1` | 8K tokens | AWS-native, summarization |
 | **Amazon** | Titan Text Lite | `amazon.titan-text-lite-v1` | 4K tokens | Ultra-low cost |
 
-### Regional Availability
+### Regional availability
 
 Model availability varies by region. Check current availability:
 
@@ -487,9 +487,9 @@ aws bedrock list-foundation-models --region us-east-1
 
 **Generally available in**: us-east-1, us-west-2, eu-west-1, eu-central-1, ap-southeast-1, ap-northeast-1
 
-## Advanced Features
+## Advanced features
 
-### Tool Calling
+### Tool calling
 
 Enable agents to call functions using Bedrock's tool use API:
 
@@ -541,7 +541,7 @@ func (t *WeatherTool) Execute(ctx context.Context, args map[string]any) (any, er
 }
 ```
 
-### Structured Output
+### Structured output
 
 Use JSON schema to enforce response structure:
 
@@ -570,7 +570,7 @@ agents:
 
 Aixgo validates responses against schema with automatic retry on validation failures (40-70% improved reliability).
 
-### Streaming Responses
+### Streaming responses
 
 Stream model outputs for real-time user experiences:
 
@@ -587,7 +587,7 @@ for chunk := range stream {
 }
 ```
 
-### Guardrails Integration
+### Guardrails integration
 
 Apply AWS Bedrock Guardrails for content filtering:
 
@@ -610,9 +610,9 @@ Guardrails provide:
 - **Topic blocking** - Prevent discussion of specific topics
 - **Word filtering** - Block profanity and custom word lists
 
-## Production Deployment
+## Production deployment
 
-### VPC Endpoints
+### VPC endpoints
 
 Use VPC endpoints to keep Bedrock traffic within your VPC:
 
@@ -650,7 +650,7 @@ Allow HTTPS (port 443) from your application subnets.
 
 **Benefit**: Traffic never leaves AWS network, improving security and reducing latency.
 
-### CloudTrail Logging
+### CloudTrail logging
 
 Enable CloudTrail to audit all Bedrock API calls:
 
@@ -671,7 +671,7 @@ CloudTrail logs capture:
 
 Use for compliance auditing, security analysis, and debugging.
 
-### Cost Management
+### Cost management
 
 **Set up billing alarms**:
 
@@ -703,7 +703,7 @@ Tag Bedrock invocations using IAM role tags or application tags:
 - Cost by project or environment
 - Trend analysis and forecasting
 
-### Multi-Region Failover
+### Multi-region failover
 
 Implement automatic failover across regions:
 
@@ -738,9 +738,9 @@ agents:
 
 Aixgo automatically tries each region in order if the primary fails.
 
-## Cost Optimization
+## Cost optimization
 
-### Model Selection by Use Case
+### Model selection by use case
 
 **Choose the right model for each task to optimize costs**:
 
@@ -762,7 +762,7 @@ Aixgo automatically tries each region in order if the primary fails.
 - Llama 3.1 70B: $0.99 input / $0.99 output
 - Claude 3.5 Sonnet: $3.00 input / $15.00 output
 
-### Token Usage Monitoring
+### Token usage monitoring
 
 **Enable token tracking in Aixgo**:
 
@@ -795,7 +795,7 @@ Create CloudWatch dashboard to monitor:
 
 ## Troubleshooting
 
-### Common Errors
+### Common errors
 
 #### AccessDenied
 
@@ -875,7 +875,7 @@ Could not resolve the foundation model from the model identifier: anthropic.clau
 aws bedrock list-foundation-models --region us-east-1 | grep modelId
 ```
 
-### Debug Logging
+### Debug logging
 
 Enable debug logging for detailed request/response information:
 
@@ -893,7 +893,7 @@ Debug logs include:
 - Retry attempts and backoff timing
 - AWS SDK debug output
 
-### AWS Support Resources
+### AWS support resources
 
 **AWS Support Plans**:
 
@@ -909,7 +909,7 @@ Debug logs include:
 
 **Open Support Case**: https://console.aws.amazon.com/support/
 
-## Next Steps
+## Next steps
 
 Now that you have Bedrock integration configured, explore advanced Aixgo capabilities:
 
