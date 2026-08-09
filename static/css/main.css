@@ -601,17 +601,28 @@ header {
   align-items: center;
 }
 
-.logo a {
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: var(--color-cyan);
-  text-decoration: none;
-  transition: color 0.2s;
+.logo {
+  display: flex;
+  align-items: center;
+  margin-right: 1.5rem;
 }
 
-.logo a:hover {
-  color: var(--color-cyan-dark);
+.logo a {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  line-height: 1;
 }
+
+.logo img {
+  height: 2rem;
+  width: auto;
+  max-width: 200px;
+  display: block;
+  transition: opacity var(--ax-dur-1) var(--ax-ease);
+}
+
+.logo a:hover img { opacity: 0.85; }
 
 .nav-menu {
   display: flex;
@@ -730,10 +741,24 @@ footer {
 }
 
 .footer-logo {
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: var(--color-cyan);
-  margin-bottom: 0.25rem;
+  margin-bottom: 0.75rem;
+}
+
+.footer-logo img {
+  height: 1.75rem;
+  width: auto;
+  max-width: 170px;
+  display: block;
+  opacity: 0.8;
+  transition: opacity var(--ax-dur-1) var(--ax-ease);
+}
+
+.footer-logo img:hover { opacity: 1; }
+
+/* The parenthetical after a product name in the Products column. */
+.footer-note {
+  opacity: 0.6;
+  font-size: 0.85em;
 }
 
 .footer-tagline {
@@ -1262,6 +1287,29 @@ h1, h2, h3, h4, h5, h6 {
   margin-top: 2.5rem;
 }
 
+/* Sibling products band (homepage), driven by data/products.yaml. */
+.sibling-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--ax-card-gap);
+  margin-top: var(--ax-block-gap);
+}
+
+.sibling-grid > * { min-width: 0; }
+
+.sibling-card {
+  display: block;
+  text-decoration: none;
+}
+
+.sibling-card h3 { color: var(--ax-text); }
+.sibling-card p { color: var(--ax-text-muted); }
+.sibling-status { display: block; margin-top: var(--ax-s-4); }
+
+@media (max-width: 768px) {
+  .sibling-grid { grid-template-columns: 1fr; }
+}
+
 /* CTA Section */
 .cta-section {
   padding: 6rem 0;
@@ -1477,71 +1525,9 @@ h1, h2, h3, h4, h5, h6 {
   line-height: 1.6;
 }
 
-.content {
-  color: var(--color-text-muted);
-  line-height: 1.8;
-}
-
-.content h2 {
-  color: var(--color-text);
-  margin-top: 2.5rem;
-  margin-bottom: 1rem;
-  font-size: 1.75rem;
-}
-
-.content h3 {
-  color: var(--color-text);
-  margin-top: 2rem;
-  margin-bottom: 0.75rem;
-  font-size: 1.4rem;
-}
-
-.content p {
-  margin-bottom: 1.25rem;
-}
-
-.content ul,
-.content ol {
-  margin-bottom: 1.25rem;
-  padding-left: 1.5rem;
-}
-
-.content li {
-  margin-bottom: 0.5rem;
-}
-
-.content a {
-  color: var(--color-cyan);
-  text-decoration: none;
-}
-
-.content a:hover {
-  text-decoration: underline;
-}
-
-.content code {
-  font-family: var(--font-mono);
-  background-color: var(--color-bg-card);
-  padding: 0.2rem 0.4rem;
-  border-radius: 0.25rem;
-  font-size: 0.9em;
-}
-
-.content pre {
-  background-color: var(--color-bg-card);
-  border: 1px solid var(--color-border);
-  border-radius: 0.5rem;
-  padding: 1.5rem;
-  overflow-x: auto;
-  margin-bottom: 1.25rem;
-}
-
-.content pre code {
-  background: none;
-  padding: 0;
-  font-size: 0.9rem;
-  line-height: 1.6;
-}
+/* Everything inside `.content` is styled in custom.css, the prose layer. It
+   used to be styled here as well, with different sizes, colours and spacing,
+   and custom.css loads second, so this copy only ever half-applied. */
 
 .tags {
   display: flex;
@@ -1552,75 +1538,9 @@ h1, h2, h3, h4, h5, h6 {
   border-top: 1px solid var(--color-border);
 }
 
-/* Table Styling - Professional design with visible borders */
-.content table {
-  width: 100%;
-  margin: 3rem auto;
-  border-collapse: separate;
-  border-spacing: 0;
-  background: rgba(255, 255, 255, 0.02);
-  border: 2px solid rgba(255, 255, 255, 0.2);
-  border-radius: 12px;
-  overflow: visible;  /* Changed from hidden to allow tooltips to display */
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-  font-size: 1rem;
-}
-
-.content table thead {
-  background: rgba(34, 211, 238, 0.1);
-  border-bottom: 2px solid rgba(34, 211, 238, 0.3);
-}
-
-.content table thead th {
-  padding: 0.875rem 1.25rem;
-  text-align: left;
-  font-weight: 700;
-  font-size: 1.05rem;
-  color: rgba(255, 255, 255, 0.95);
-  border-right: 1px solid rgba(255, 255, 255, 0.15);
-}
-
-.content table thead th:last-child {
-  border-right: none;
-}
-
-.content table tbody tr {
-  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
-  transition: background-color 0.2s;
-}
-
-.content table tbody tr:last-child {
-  border-bottom: none;
-}
-
-.content table tbody tr:hover {
-  background: rgba(34, 211, 238, 0.05);
-}
-
-.content table tbody td {
-  padding: 0.875rem 1.25rem;
-  color: var(--color-text-muted);
-  line-height: 1.5;
-  border-right: 1px solid rgba(255, 255, 255, 0.12);
-  position: relative;  /* Allow absolute positioning of tooltips */
-  overflow: visible;   /* Allow tooltips to overflow cell boundaries */
-}
-
-.content table tbody td:last-child {
-  border-right: none;
-}
-
-.content table tbody td:first-child {
-  font-weight: 600;
-  color: var(--color-text);
-  background: rgba(255, 255, 255, 0.03);
-  border-right: 2px solid rgba(255, 255, 255, 0.2);
-}
-
-.content table strong {
-  font-weight: 700;
-  color: var(--color-text);
-}
+/* Prose tables live in custom.css as a single implementation shared with
+   `.ax-table`. The rules that used to sit here drew a second, heavier table
+   with a cyan header band and 2px white borders. */
 
 /* ==========================================================================
    Hamburger Menu Base Styles
@@ -1799,6 +1719,9 @@ h1, h2, h3, h4, h5, h6 {
 /* Responsive - Mobile */
 @media (max-width: 768px) {
   /* .hero-title sizes itself: --ax-t-h1 is a clamp, so no mobile override. */
+
+  .logo img { height: 1.75rem; max-width: 160px; }
+  .footer-logo img { height: 1.5rem; max-width: 140px; }
 
   .section-title {
     font-size: var(--text-3xl);  /* 30px on mobile */
@@ -2244,153 +2167,92 @@ h1, h2, h3, h4, h5, h6 {
   }
 }
 
-/* ============================================
-   Philosophy Page Enhancements
-   ============================================ */
+/* ==========================================================================
+   /why-aixgo blocks. The markdown wraps three regions in divs; these give
+   those regions a panel, a section rule and a card grid built from the same
+   tokens as the rest of the site. They introduce no list, table or card
+   implementation of their own.
+   ========================================================================== */
 
-/* Production Reality Metrics Table */
 .philosophy-metrics {
-  margin: 3rem 0;
-  padding: 2rem;
-  background: linear-gradient(135deg, rgba(34, 211, 238, 0.05) 0%, rgba(6, 182, 212, 0.05) 100%);
-  border: 1px solid var(--color-border);
-  border-radius: 12px;
+  margin: var(--ax-s-8) 0;
+  padding: var(--ax-s-6);
+  background: var(--ax-bg-1);
+  border: 1px solid var(--ax-border);
+  border-radius: var(--ax-r-xl);
+  overflow-x: auto;
 }
 
 .philosophy-metrics h2 {
-  text-align: center;
-  margin-bottom: 1.5rem;
-  color: var(--color-cyan);
+  margin-top: 0;
+  margin-bottom: var(--ax-s-5);
+  color: var(--ax-text);
 }
 
-.philosophy-metrics table {
-  width: 100%;
-  margin: 0;
-}
+.philosophy-metrics table { margin-top: 0; }
 
-.philosophy-metrics table th {
-  background: var(--color-bg-card);
-  padding: 1rem;
-  font-weight: var(--weight-semibold);
-}
-
-.philosophy-metrics table td {
-  padding: 0.875rem 1rem;
-}
-
+/* The Aixgo column is the comparison's answer, so it carries the emphasis. */
 .philosophy-metrics table td:nth-child(3) {
-  color: var(--color-cyan);
-  font-weight: var(--weight-bold);
+  color: var(--ax-text);
+  font-weight: 700;
 }
 
-.philosophy-metrics table td:nth-child(4) {
-  color: var(--color-text-muted);
-  font-style: italic;
-}
+.philosophy-metrics table td:nth-child(4) { color: var(--ax-text-dim); }
 
-/* Decision Section */
-.decision-section {
-  margin: 3rem 0;
-}
+.decision-section { margin: var(--ax-s-8) 0; }
 
 .decision-section h3 {
-  margin-top: 2.5rem;
-  margin-bottom: 1rem;
-  padding-bottom: 0.5rem;
-  border-bottom: 2px solid var(--color-cyan);
+  padding-bottom: var(--ax-s-3);
+  border-bottom: 1px solid var(--ax-border);
 }
 
-.decision-section > div {
-  margin: 2rem 0;
-}
+.decision-section > div { margin-top: var(--ax-s-6); }
 
 .decision-section strong {
   display: block;
-  color: var(--color-cyan);
-  margin-top: 1.5rem;
-  margin-bottom: 0.5rem;
-  font-size: 1.125rem;
+  margin-top: var(--ax-s-5);
+  margin-bottom: var(--ax-s-2);
+  font-family: var(--ax-font-mono);
+  font-size: var(--ax-t-microlabel);
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ax-text-dim);
 }
 
-.decision-section ul {
-  list-style: none;
-  padding-left: 0;
-}
-
-.decision-section ul li {
-  padding: 0.5rem 0 0.5rem 1.75rem;
-  position: relative;
-}
-
-.decision-section ul li::before {
-  content: '→';
-  position: absolute;
-  left: 0.5rem;
-  color: var(--color-cyan);
-  font-weight: bold;
-}
-
-/* Philosophy CTA Grid */
 .philosophy-cta-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 3rem;
-  margin: 2.5rem 0;
-  padding: 2.5rem;
-  background: var(--color-bg-card);
-  border-radius: 12px;
-  border: 1px solid var(--color-border);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--ax-card-gap);
+  margin: var(--ax-s-7) 0;
+}
+
+.philosophy-cta-grid > * { min-width: 0; }
+
+.philosophy-cta-grid > div {
+  padding: var(--ax-s-5);
+  background: var(--ax-bg-3);
+  border: 1px solid var(--ax-border);
+  border-radius: var(--ax-r-lg);
+  box-shadow: var(--ax-e-1);
 }
 
 .philosophy-cta-grid strong {
   display: block;
-  font-size: 1.25rem;
-  color: var(--color-cyan);
-  margin-bottom: 1rem;
+  margin-bottom: var(--ax-s-3);
+  font-family: var(--ax-font-display);
+  font-size: var(--ax-t-h3);
+  color: var(--ax-text);
 }
 
-.philosophy-cta-grid ul {
-  list-style: none;
-  padding-left: 0;
-}
-
-.philosophy-cta-grid ul li {
-  padding: 0.5rem 0;
-}
-
-.philosophy-cta-grid ul li a {
-  color: var(--color-text);
-  text-decoration: none;
-  transition: color 0.2s;
-}
-
-.philosophy-cta-grid ul li a:hover {
-  color: var(--color-cyan);
-}
-
-/* Mobile Responsive */
 @media (max-width: 768px) {
-  .philosophy-metrics {
-    padding: 1.5rem;
-    margin: 2rem 0;
-  }
+  .philosophy-metrics { padding: var(--ax-s-4); margin: var(--ax-s-6) 0; }
+  .philosophy-cta-grid { grid-template-columns: 1fr; }
+}
 
-  .philosophy-metrics table {
-    font-size: 0.875rem;
-  }
-
-  .philosophy-metrics table th,
-  .philosophy-metrics table td {
-    padding: 0.75rem 0.5rem;
-  }
-
-  .philosophy-cta-grid {
-    grid-template-columns: 1fr;
-    gap: 2rem;
-    padding: 2rem 1.5rem;
-  }
-
-  .decision-section strong {
-    font-size: 1rem;
-  }
+/* Very narrow phones: the wordmark is the first thing to give up width. */
+@media (max-width: 480px) {
+  .logo { margin-right: 1rem; }
+  .logo img { height: 1.5rem; max-width: 140px; }
+  .footer-logo img { height: 1.5rem; max-width: 140px; }
 }
