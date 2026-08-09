@@ -1,0 +1,160 @@
+# Homepage lists. The prose lives in layouts/index.html; anything that is a
+# list of like-shaped things lives here, the same split /code uses.
+#
+# Every number below already appeared on the page before this file existed.
+# Changing one is a product claim, not a design change.
+
+repo: "https://github.com/aixgo-dev/aixgo"
+
+# The four figures the hero argument rests on. `accent` marks the two that do
+# the work; the accent budget allows one emphasis per section, and these two
+# are a pair, so nothing else in the band is cyan.
+stats:
+  - value: "<20MB"
+    label: "Single binary, no interpreter and no dependencies to ship"
+    accent: true
+  - value: "<100ms"
+    label: "Cold start, which is what makes serverless viable"
+    accent: true
+  - value: "13"
+    label: "Orchestration patterns, all implemented"
+  - value: "8+"
+    label: "LLM providers behind one interface"
+
+# Quick start. Each step is one code block; `bar` is its filename strip.
+quickstart:
+  - title: "Install the module"
+    bar: "terminal"
+    code: |
+      go get github.com/aixgo-dev/aixgo
+  - title: "Describe the agents"
+    bar: "config/agents.yaml"
+    code: |
+      supervisor:
+        name: coordinator
+        model: gpt-4o-mini  # OpenAI - fast orchestration
+        max_rounds: 10
+
+      agents:
+        - name: data-producer
+          role: producer
+          interval: 1s
+          outputs:
+            - target: analyzer
+
+        - name: analyzer
+          role: react
+          model: claude-3-5-haiku  # Anthropic - strong reasoning
+          prompt: |
+            You are a data analyst. Analyze incoming data and provide insights.
+          inputs:
+            - source: data-producer
+          outputs:
+            - target: logger
+
+        - name: logger
+          role: logger
+          inputs:
+            - source: analyzer
+  - title: "Point main at the config"
+    bar: "main.go"
+    code: |
+      package main
+
+      import (
+          "github.com/aixgo-dev/aixgo"
+          _ "github.com/aixgo-dev/aixgo/agents"
+      )
+
+      func main() {
+          if err := aixgo.Run("config/agents.yaml"); err != nil {
+              panic(err)
+          }
+      }
+  - title: "Build it and run it anywhere"
+    bar: "terminal"
+    code: |
+      # Local development
+      go run main.go
+
+      # Production - single <20MB binary
+      go build -o agent
+      ./agent
+
+      # Edge, Lambda, Cloud Run, Kubernetes - one binary, zero configuration
+
+# Four comparisons. `them` is what a Python framework does, `us` is what Aixgo
+# does, `impact` is what changes as a result.
+comparisons:
+  - title: "Container size"
+    them: "1.2GB with dependencies"
+    us: "<20MB single binary"
+    impact: "Deploy to edge devices, serverless, anywhere"
+  - title: "Startup performance"
+    them: "30-45s cold start"
+    us: "<100ms instant startup"
+    impact: "True serverless viability, real-time response"
+  - title: "Runtime safety"
+    them: "Runtime - discover errors in production"
+    us: "Compile-time - compiler catches errors before deploy"
+    impact: "Ship with confidence, sleep at night"
+  - title: "LLM data validation"
+    them: "Runtime only - type changes found in production"
+    us: "Compile-time - type changes caught before deploy, auto-retry"
+    impact: "Refactor with confidence, LLM errors auto-recover"
+
+# The side-by-side table.
+advantage:
+  - what: "Deploy anywhere"
+    them: "1GB+ containers, complex deps"
+    us: "<20MB binary, zero deps"
+  - what: "Cold start speed"
+    them: "10-45 seconds"
+    us: "<100ms"
+  - what: "Type safety"
+    them: "Runtime discovery"
+    us: "Compile-time guarantees"
+  - what: "Concurrency"
+    them: "GIL bottleneck"
+    us: "Native parallelism"
+  - what: "Scaling pattern"
+    them: "Rewrite for distribution"
+    us: "Same code, local to distributed"
+  - what: "Operational cost"
+    them: "High compute overhead"
+    us: "60-70% infrastructure savings"
+
+# What ships in the binary.
+capabilities:
+  - icon: "network"
+    title: "13 orchestration patterns"
+    body: >-
+      Supervisor, Sequential, Parallel, Router, Swarm, RAG, Reflection,
+      Ensemble and more, all production-ready. Go channels locally, gRPC when
+      the same code runs distributed.
+  - icon: "boxes"
+    title: "8+ LLM providers"
+    body: >-
+      OpenAI, Anthropic, Google Gemini, xAI, Vertex AI, HuggingFace, Ollama and
+      vLLM behind one interface. Switching provider is a config change, and the
+      model name selects it.
+  - icon: "activity"
+    title: "Observability that is already wired"
+    body: >-
+      OpenTelemetry tracing, Langfuse, Prometheus metrics and automatic cost
+      tracking. Kubernetes health probes are included.
+  - icon: "shield"
+    title: "Security controls in the framework"
+    body: >-
+      4 auth modes, RBAC, SSRF protection, prompt injection defense and SIEM
+      integration. Rate limiting and audit logging are built in.
+  - icon: "check-circle"
+    title: "Type-safe validation"
+    body: >-
+      Pydantic AI-style validation with automatic retry, worth a 40-70%
+      improvement in structured output reliability, checked at compile time.
+  - icon: "trending-down"
+    title: "60-70% lower infrastructure cost"
+    body: >-
+      <20MB binaries, <100ms cold starts and roughly 50MB of memory. The Router
+      pattern saves 25-50% on LLM spend; Ollama runs inference locally for none.

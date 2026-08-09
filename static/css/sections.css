@@ -621,3 +621,284 @@
 @media (max-width: 520px) {
   .ax-statrail { grid-template-columns: 1fr; }
 }
+
+/* ==========================================================================
+   Numbered step spine. Used for install and quick-start sequences.
+   ========================================================================== */
+
+.ax-install {
+  counter-reset: step;
+  list-style: none;
+  margin: var(--ax-s-4) 0 0;
+  padding: 0;
+}
+
+.ax-install > li {
+  position: relative;
+  padding: 0 0 2rem 3.25rem;
+}
+
+.ax-install > li::before {
+  content: counter(step);
+  counter-increment: step;
+  position: absolute;
+  left: 0;
+  top: -2px;
+  width: 2rem;
+  height: 2rem;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--ax-bg-2);
+  border: 1px solid var(--ax-border-strong);
+  font-family: var(--ax-font-mono);
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: var(--ax-accent);
+}
+
+.ax-install > li::after {
+  content: "";
+  position: absolute;
+  left: 1rem;
+  top: 2.25rem;
+  bottom: 0.25rem;
+  width: 1px;
+  background: var(--ax-hairline);
+}
+
+.ax-install > li:last-child { padding-bottom: 0; }
+.ax-install > li:last-child::after { display: none; }
+
+.ax-install h3 {
+  font-family: var(--ax-font-display);
+  font-size: var(--ax-t-h3);
+  font-weight: 700;
+  line-height: 1.25;
+  color: var(--ax-text);
+}
+
+.ax-install p {
+  margin-top: 0.5rem;
+  font-size: var(--ax-t-sm);
+  line-height: 1.6;
+  color: var(--ax-text-muted);
+  max-width: var(--ax-measure);
+}
+
+/* The steps a person performs, marked the same way everywhere on the page. */
+.ax-you {
+  display: inline-block;
+  vertical-align: middle;
+  margin-left: 0.4rem;
+  padding: 0.1rem 0.4rem;
+  border-radius: var(--ax-r-xs);
+  background: var(--ax-accent-soft);
+  border: 1px solid var(--ax-accent-line);
+  font-family: var(--ax-font-mono);
+  font-size: var(--ax-t-microlabel);
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ax-accent);
+}
+
+
+
+
+
+
+
+/* ==========================================================================
+   Comparison card. A definition list inside the site card: what the other
+   thing does, what this does, and what that buys you.
+   ========================================================================== */
+
+.ax-compare dl { margin-top: var(--ax-s-4); }
+
+.ax-compare dl > div {
+  padding: var(--ax-s-3) 0;
+  border-top: 1px solid var(--ax-hairline);
+}
+
+.ax-compare dl > div:first-child { border-top: 0; padding-top: 0; }
+
+.ax-compare dt { margin-bottom: 0.25rem; }
+
+.ax-compare dd {
+  margin: 0;
+  font-size: var(--ax-t-sm);
+  line-height: 1.5;
+  color: var(--ax-text-muted);
+}
+
+/* The section's one emphasis: the answer, not the problem. */
+.ax-compare dd.is-accent {
+  color: var(--ax-accent);
+  font-weight: 600;
+}
+
+/* ==========================================================================
+   Icon card. The icon is a wayfinding mark, so it sits at label size and
+   never competes with the title.
+   ========================================================================== */
+
+.ax-iconcard__head {
+  display: flex;
+  align-items: center;
+  gap: var(--ax-s-3);
+}
+
+.ax-iconcard__icon {
+  display: grid;
+  place-items: center;
+  flex: 0 0 auto;
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: var(--ax-r-sm);
+  background: var(--ax-bg-2);
+  border: 1px solid var(--ax-border);
+  color: var(--ax-text-muted);
+}
+
+.ax-iconcard__icon svg { width: 18px; height: 18px; }
+
+.ax-iconcard__head h3 { margin: 0; }
+
+.ax-iconcard p { margin-top: var(--ax-s-4); }
+
+/* ==========================================================================
+   Table. The same grammar the prose tables use: mono column heads, hairline
+   rows, no cyan header band. The wrapper scrolls and is focusable, so a
+   clipped table can be reached from the keyboard and reads as clipped.
+   ========================================================================== */
+
+.ax-tablewrap {
+  margin-top: var(--ax-block-gap);
+  overflow-x: auto;
+  scrollbar-width: thin;
+  border-radius: var(--ax-r-lg);
+}
+
+.ax-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  border: 1px solid var(--ax-border);
+  border-radius: var(--ax-r-lg);
+  overflow: hidden;
+  font-size: var(--ax-t-sm);
+}
+
+.ax-table thead th {
+  padding: 0.75rem 1rem;
+  text-align: left;
+  background: var(--ax-bg-2);
+  border-bottom: 1px solid var(--ax-border);
+  font-family: var(--ax-font-mono);
+  font-size: var(--ax-t-microlabel);
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ax-text-dim);
+  white-space: nowrap;
+}
+
+.ax-table tbody th,
+.ax-table tbody td {
+  padding: 0.875rem 1rem;
+  border-top: 1px solid var(--ax-hairline);
+  color: var(--ax-text-body);
+  line-height: 1.5;
+  text-align: left;
+  vertical-align: top;
+  font-weight: 400;
+}
+
+.ax-table tbody tr:first-child th,
+.ax-table tbody tr:first-child td { border-top: 0; }
+
+.ax-table tbody th { font-weight: 600; color: var(--ax-text); }
+
+.ax-table tbody tr:hover { background: rgba(255, 255, 255, 0.02); }
+
+/* The answer column reads as one object, so the accent goes on its heading
+   rather than on six cells competing for the same fixation. */
+.ax-table thead th:last-child { color: var(--ax-accent); }
+.ax-table td.is-accent { color: var(--ax-text); font-weight: 600; }
+
+/* ==========================================================================
+   Wide step spine. The default step column is a measure of prose; a step whose
+   body is a code block needs the full width instead.
+   ========================================================================== */
+
+.ax-install--wide > li { padding-left: 3.25rem; }
+.ax-install--wide h3 { margin-bottom: var(--ax-s-3); }
+.ax-install--wide .ax-codeblock { max-width: none; }
+
+@media (max-width: 768px) {
+  /* A number disc plus a code block does not fit beside each other on a
+     phone, so the spine flattens and the disc goes inline with the title. */
+  .ax-install--wide > li { padding-left: 0; padding-bottom: var(--ax-s-6); }
+  .ax-install--wide > li::before { position: static; display: inline-grid; margin-bottom: var(--ax-s-3); }
+  .ax-install--wide > li::after { display: none; }
+
+  .ax-compare dd { font-size: var(--ax-t-sm); }
+}
+
+/* ==========================================================================
+   Release card. The status is a property of the release, so it appears once,
+   as a dot and a word, rather than on every line inside.
+   ========================================================================== */
+
+.ax-release { display: flex; flex-direction: column; }
+
+.ax-release__head {
+  padding-bottom: var(--ax-s-4);
+  border-bottom: 1px solid var(--ax-hairline);
+}
+
+.ax-release__status {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: var(--ax-s-2);
+}
+
+.ax-release__dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: currentColor;
+  flex: 0 0 auto;
+}
+
+.ax-release.is-complete .ax-release__status { color: var(--ax-ok); }
+.ax-release.is-in-progress .ax-release__status { color: var(--ax-warn); }
+.ax-release.is-planned .ax-release__status { color: var(--ax-text-dim); }
+
+.ax-release__list {
+  list-style: none;
+  margin: var(--ax-s-4) 0 0;
+  padding: 0;
+}
+
+.ax-release__list li {
+  position: relative;
+  padding-left: 1rem;
+  margin-top: var(--ax-s-3);
+  font-size: var(--ax-t-sm);
+  line-height: 1.5;
+  color: var(--ax-text-muted);
+}
+
+.ax-release__list li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.6em;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--ax-text-faint);
+}

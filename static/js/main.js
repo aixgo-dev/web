@@ -1,32 +1,42 @@
-// Copy code functionality
-document.addEventListener('DOMContentLoaded', function() {
-  const copyButtons = document.querySelectorAll('.copy-button');
+// Copy button, for every code block on the site.
+//
+// The button reads `data-copy-target` (the id of the element holding the text)
+// when one is given, and otherwise the `code` inside the `.ax-codeblock` it
+// sits in. Both forms exist because /code labels one snippet for analytics and
+// the rest are anonymous.
+//
+// This is progressive enhancement. Every code block is readable and
+// selectable without it.
+document.addEventListener('DOMContentLoaded', function () {
+  var track = function (name, props) {
+    if (name && window.posthog && typeof window.posthog.capture === 'function') {
+      window.posthog.capture(name, props || {});
+    }
+  };
 
-  copyButtons.forEach(button => {
-    button.addEventListener('click', async function() {
-      const codeBlock = this.nextElementSibling.querySelector('code');
-      const code = codeBlock.textContent;
-
-      try {
-        await navigator.clipboard.writeText(code);
-
-        // Show success state
-        this.classList.add('copied');
-        const originalHTML = this.innerHTML;
-        this.innerHTML = `
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <polyline points="20 6 9 17 4 12"></polyline>
-          </svg>
-        `;
-
-        // Reset after 2 seconds
-        setTimeout(() => {
-          this.classList.remove('copied');
-          this.innerHTML = originalHTML;
-        }, 2000);
-      } catch (err) {
-        console.error('Failed to copy code:', err);
+  document.querySelectorAll('.js-copy').forEach(function (btn) {
+    var source = function () {
+      if (btn.dataset.copyTarget) {
+        return document.getElementById(btn.dataset.copyTarget);
       }
+      var block = btn.closest('.ax-codeblock');
+      return block ? block.querySelector('code') : null;
+    };
+
+    btn.addEventListener('click', function () {
+      var src = source();
+      if (!src || !navigator.clipboard) { return; }
+
+      navigator.clipboard.writeText(src.innerText.trim()).then(function () {
+        var original = btn.textContent;
+        btn.dataset.copied = 'true';
+        btn.textContent = 'Copied';
+        setTimeout(function () {
+          btn.removeAttribute('data-copied');
+          btn.textContent = original;
+        }, 2000);
+        track(btn.dataset.copyEvent, { snippet: btn.dataset.copySnippet || '' });
+      });
     });
   });
 });

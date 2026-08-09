@@ -374,7 +374,7 @@
           <div class="ax-codeblock" id="install-cli">
             <div class="ax-codeblock__bar">
               <span>Terminal</span>
-              <button type="button" class="ax-codeblock__copy js-copy" data-copy-target="install-cli-code" data-copy-event="code_install_copied">Copy</button>
+              <button type="button" class="ax-codeblock__copy js-copy" data-copy-target="install-cli-code" data-copy-event="code_install_copied" data-copy-snippet="go install">Copy</button>
             </div>
             <pre id="install-cli-code" tabindex="0" role="group" aria-label="Install commands, scrollable"><code>go install github.com/aixgo-dev/code/cmd/aixgo-code@v0.5.0
 aixgo-code version</code></pre>
@@ -598,7 +598,7 @@ gate: make check</code></pre>
 }
 </script>
 
-{{/* Copy button, plus the three events autocapture cannot answer. Everything
+{{/* The three events autocapture cannot answer. Everything
      here is progressive enhancement: the page is complete without it, and
      section 04 in particular renders with no JavaScript at all. */}}
 <script>
@@ -609,18 +609,7 @@ gate: make check</code></pre>
     }
   };
 
-  document.querySelectorAll('.js-copy').forEach(function (btn) {
-    btn.addEventListener('click', function () {
-      var src = document.getElementById(btn.dataset.copyTarget);
-      if (!src || !navigator.clipboard) { return; }
-      navigator.clipboard.writeText(src.innerText.trim()).then(function () {
-        btn.dataset.copied = 'true';
-        btn.textContent = 'Copied';
-        setTimeout(function () { btn.removeAttribute('data-copied'); btn.textContent = 'Copy'; }, 2000);
-        track(btn.dataset.copyEvent, { snippet: 'go install' });
-      });
-    });
-  });
+  // The copy button itself is handled site-wide in static/js/main.js.
 
   document.querySelectorAll('details.js-faq').forEach(function (d) {
     d.addEventListener('toggle', function () {
