@@ -100,8 +100,9 @@
 .ax-note a:hover { color: var(--ax-accent); }
 .ax-note a + a { margin-left: var(--ax-s-4); }
 
-/* Inline code. One implementation, one size. */
-.ax-page :where(p, li, dd, summary, .ax-lifecycle__means) > code {
+/* Inline code. One rule, covering both the section layouts and the prose
+   column, which nest inside each other on the marketing and product pages. */
+:where(.ax-page, .content) :where(p, li, td, dd, summary, h2, h3, h4, .ax-lifecycle__means) > code {
   font-family: var(--ax-font-mono);
   font-size: var(--ax-t-code-inline);
   font-weight: 500;

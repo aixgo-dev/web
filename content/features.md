@@ -169,5 +169,6 @@ func main() {
 
 - **[Quick Start Guide](/guides/quick-start/)** - Get running in 5 minutes
 - **[Pattern Catalog](/features-patterns/)** - All 13 orchestration patterns
+- **[Configuration examples](/examples/readme/)** - Working YAML for every agent type, provider and pattern
 - **[GitHub Repository](https://github.com/aixgo-dev/aixgo)** - Source code and examples
 - **[Full Feature Reference](https://github.com/aixgo-dev/aixgo/blob/main/docs/FEATURES.md)** - Complete technical documentation

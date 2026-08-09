@@ -257,7 +257,7 @@ results, _ := docs.Query(ctx, query)
 
 - **[Vector Databases Guide](/guides/vector-databases/)**: Complete guide to building RAG systems
 - **[Embeddings Guide](/guides/embeddings/)**: Choosing and using embedding models
-- **[RAG Example](/examples/rag-agent/)**: Production-ready RAG implementation
+- **[RAG Example](https://github.com/aixgo-dev/aixgo/tree/main/examples/rag-agent)**: Production-ready RAG implementation
 
 ## The Supervisor Pattern
 

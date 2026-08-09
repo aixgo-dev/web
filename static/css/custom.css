@@ -152,15 +152,7 @@
    the bare `pre` markdown produces. Inline code is the accent's mono role.
    ========================================================================== */
 
-.content :where(p, li, td, h2, h3, h4, dd) > code {
-  font-family: var(--ax-font-mono);
-  font-size: var(--ax-t-code-inline);
-  font-weight: 500;
-  padding: 0.1em 0.36em;
-  border-radius: var(--ax-r-sm);
-  background: var(--ax-accent-soft);
-  color: var(--ax-accent);
-}
+/* Inline code is declared once, in sections.css, for both scopes. */
 
 /* Every fenced block goes through _markup/render-codeblock.html and comes out
    as `.ax-codeblock`, which brings its own frame. A bare `pre` only appears

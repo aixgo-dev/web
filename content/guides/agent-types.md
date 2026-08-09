@@ -222,8 +222,8 @@ Each category should include:
 ```
 
 **Learn more**:
-- [Classifier agent documentation](/Users/charlesgreen/go/src/github.com/aixgo-dev/aixgo/agents/README.md)
-- [Classifier workflow example](/Users/charlesgreen/go/src/github.com/aixgo-dev/aixgo/examples/classifier-workflow/README.md)
+- [Classifier agent documentation](https://github.com/aixgo-dev/aixgo/blob/main/agents/README.md)
+- [Classifier workflow example](https://github.com/aixgo-dev/aixgo/blob/main/examples/classifier-workflow/README.md)
 
 ## Aggregator Agent
 
@@ -476,7 +476,7 @@ agents:
 - If <3 respond: Fail with clear error message
 - If some agents fail: Continue with successful responses
 
-See [resilient-aggregation example](../../examples/resilient-aggregation/) for complete implementation.
+See [resilient-aggregation example](https://github.com/aixgo-dev/aixgo/tree/main/examples/resilient-aggregation) for complete implementation.
 
 ### Full Configuration Example
 
@@ -582,8 +582,8 @@ Typical token usage:
 - 10+ agents: Use hierarchical strategy
 
 **Learn more**:
-- [Aggregator agent documentation](/Users/charlesgreen/go/src/github.com/aixgo-dev/aixgo/agents/README.md)
-- [Aggregator workflow example](/Users/charlesgreen/go/src/github.com/aixgo-dev/aixgo/examples/aggregator-workflow/README.md)
+- [Aggregator agent documentation](https://github.com/aixgo-dev/aixgo/blob/main/agents/README.md)
+- [Aggregator workflow example](https://github.com/aixgo-dev/aixgo/blob/main/examples/aggregator-workflow/README.md)
 
 ## Planner Agent
 
@@ -747,8 +747,8 @@ model: gpt-3.5-turbo
 ## Next Steps
 
 - **[Multi-Agent Orchestration](/guides/multi-agent-orchestration/)** - Learn orchestration patterns
-- **[Classifier Example](/examples/classifier-workflow/)** - Hands-on classifier implementation
-- **[Aggregator Example](/examples/aggregator-workflow/)** - Multi-agent synthesis walkthrough
+- **[Classifier Example](https://github.com/aixgo-dev/aixgo/tree/main/examples/classifier-workflow)** - Hands-on classifier implementation
+- **[Aggregator Example](https://github.com/aixgo-dev/aixgo/tree/main/examples/aggregator-workflow)** - Multi-agent synthesis walkthrough
 - **[Provider Integration](/guides/provider-integration/)** - Configure LLM providers
 - **[Production Deployment](/guides/production-deployment/)** - Deploy agent systems
 

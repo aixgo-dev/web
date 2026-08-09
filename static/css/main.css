@@ -891,13 +891,19 @@ h1, h2, h3, h4, h5, h6 {
    ========================================================================== */
 
 /* Hidden without `display: none`, which would drop it out of the tab order and
-   leave the drawer openable by pointer only. */
+   leave the drawer openable by pointer only. Above the hamburger breakpoint
+   there is no drawer, so it goes back to `display: none` rather than sitting
+   in the tab order as an invisible stop. */
 .nav-toggle {
   position: absolute;
   width: 1px;
   height: 1px;
   opacity: 0;
   pointer-events: none;
+}
+
+@media (min-width: 769px) {
+  .nav-toggle { display: none; }
 }
 
 /* 44x44 is the smallest target a thumb reliably hits. The bars are 24px wide;
