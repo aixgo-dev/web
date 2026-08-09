@@ -36,7 +36,7 @@
              not name follows them, so a guide with a new category still
              appears. */}}
         {{- $groups := .Pages.GroupByParam "category" -}}
-        {{- $order := site.Data.guides.categoryOrder -}}
+        {{- $order := hugo.Data.guides.categoryOrder -}}
         {{- $ordered := slice -}}
         {{- range $name := $order -}}
           {{- range $groups -}}

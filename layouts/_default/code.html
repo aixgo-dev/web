@@ -10,7 +10,7 @@
   editing and cannot find the line, do not ship the sentence.
 */}}
 {{ define "main" }}
-{{- $c := site.Data.code -}}
+{{- $c := hugo.Data.code -}}
 {{- $repo := $c.repo -}}
 
 {{/* A <div>, not an <article>. custom.css carries legacy prose rules —

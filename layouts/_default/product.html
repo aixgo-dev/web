@@ -14,7 +14,7 @@
   Front matter: `data` names the file under data/ this page draws from.
 */}}
 {{ define "main" }}
-{{- $d := index site.Data (.Params.data | default (path.Base .File.ContentBaseName)) -}}
+{{- $d := index hugo.Data (.Params.data | default (path.Base .File.ContentBaseName)) -}}
 
 <div class="ax-page">
 
