@@ -778,7 +778,7 @@ Are you in production?
 
 ## Additional Resources
 
-- **[Vector Databases Guide](/guides/vector-databases)**: Deep dive into vector search
-- **[Production Deployment](/guides/production-deployment)**: Best practices for production
-- **[Observability](/guides/observability)**: Monitoring your vector infrastructure
-- **[Provider Integration](/guides/provider-integration)**: Integrating custom providers
+- **[Vector Databases Guide](/guides/vector-databases/)**: Deep dive into vector search
+- **[Production Deployment](/guides/production-deployment/)**: Best practices for production
+- **[Observability](/guides/observability/)**: Monitoring your vector infrastructure
+- **[Provider Integration](/guides/provider-integration/)**: Integrating custom providers

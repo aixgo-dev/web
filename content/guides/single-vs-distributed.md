@@ -283,6 +283,6 @@ perfectly with in-process channels.
 
 ## Next Steps
 
-- **[Multi-Agent Orchestration](/guides/multi-agent-orchestration)** - Build complex workflows
-- **[Production Deployment](/guides/production-deployment)** - Deploy to production environments
-- **[Observability & Monitoring](/guides/observability)** - Track performance and debug issues
+- **[Multi-Agent Orchestration](/guides/multi-agent-orchestration/)** - Build complex workflows
+- **[Production Deployment](/guides/production-deployment/)** - Deploy to production environments
+- **[Observability & Monitoring](/guides/observability/)** - Track performance and debug issues

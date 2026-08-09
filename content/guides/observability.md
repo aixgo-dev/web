@@ -686,6 +686,6 @@ Production AI systems are complex. Comprehensive observability is not optionalâ€
 
 ## Next Steps
 
-- **[Production Deployment](/guides/production-deployment)** - Deploy with monitoring
-- **[Multi-Agent Orchestration](/guides/multi-agent-orchestration)** - Debug complex workflows
-- **[Building Docker Images](/guides/docker-from-scratch)** - Container-based deployments
+- **[Production Deployment](/guides/production-deployment/)** - Deploy with monitoring
+- **[Multi-Agent Orchestration](/guides/multi-agent-orchestration/)** - Debug complex workflows
+- **[Building Docker Images](/guides/docker-from-scratch/)** - Container-based deployments

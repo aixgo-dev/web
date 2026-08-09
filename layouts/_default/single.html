@@ -4,7 +4,7 @@
   <div class="container-narrow">
     <!-- Back link if it's a guide or blog post -->
     {{ if or (eq .Section "guides") (eq .Section "blog") }}
-    <a href="/{{ .Section }}" class="back-link">← Back to {{ if eq .Section "guides" }}Guides{{ else }}Blog{{ end }}</a>
+    <a href="/{{ .Section }}/" class="back-link">← Back to {{ if eq .Section "guides" }}Guides{{ else }}Blog{{ end }}</a>
     {{ end }}
 
     <!-- Date and author for blog posts -->

@@ -277,3 +277,14 @@
   .content thead th,
   .content tbody td { padding: 0.625rem 0.75rem; }
 }
+
+/* ==========================================================================
+   Prose inside a section band. The wrap is 78rem, which is a layout width and
+   not a reading width, so the column narrows and stays left-aligned.
+   ========================================================================== */
+
+.ax-prose {
+  max-width: 52rem;
+}
+
+.ax-prose > :first-child { margin-top: 0; }

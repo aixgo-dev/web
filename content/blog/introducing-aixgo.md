@@ -88,7 +88,7 @@ func main() {
 }
 ```
 
-Configure agents declaratively in YAML. See the [Quick Start Guide](/guides/quick-start) for details.
+Configure agents declaratively in YAML. See the [Quick Start Guide](/guides/quick-start/) for details.
 
 ## Production Performance
 
@@ -192,7 +192,7 @@ Choose Python frameworks when:
 
 ## Getting Started
 
-Follow our [Quick Start Guide](/guides/quick-start) to get running in 5 minutes. Explore the [Features](/features) and join
+Follow our [Quick Start Guide](/guides/quick-start/) to get running in 5 minutes. Explore the [Features](/features/) and join
 [GitHub Discussions](https://github.com/aixgo-dev/aixgo/discussions).
 
 ## Roadmap
@@ -214,7 +214,7 @@ Follow our [Quick Start Guide](/guides/quick-start) to get running in 5 minutes.
 - Performance benchmarking suite
 - Production SLA commitments
 
-See our [v1.0 Compatibility Guarantee](/v1-compatibility) for API stability details.
+See our [v1.0 Compatibility Guarantee](/v1-compatibility/) for API stability details.
 
 ## Our Philosophy
 
@@ -223,7 +223,7 @@ Aixgo is built on a simple belief: **production AI deserves production tooling.*
 We're not trying to out-prototype Python. We're trying to out-ship it. Production-first design, single binary simplicity, type safety, Go-native patterns, observable by default,
 open source (MIT licensed).
 
-Read our complete [Philosophy](/why-aixgo) for design principles and decision criteria.
+Read our complete [Philosophy](/why-aixgo/) for design principles and decision criteria.
 
 ## Join Us
 

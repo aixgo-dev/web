@@ -1,0 +1,31 @@
+{{/*
+  Markdown tables render inside a focusable scroll container.
+
+  A wide table in a fixed column has to be clipped somewhere. Clipping it at
+  the container edge with no way to reach the rest loses data silently; this
+  makes the overflow scrollable, reachable from the keyboard, and visible as
+  overflow. The comparison tables on /features and /v1-compatibility are the
+  ones that need it.
+*/}}
+<div class="table-scroll" tabindex="0" role="group" aria-label="Table, scroll sideways to see all columns">
+  <table>
+    <thead>
+      {{- range .THead }}
+      <tr>
+        {{- range . }}
+        <th{{ with .Alignment }} style="text-align: {{ . }}"{{ end }}>{{ .Text }}</th>
+        {{- end }}
+      </tr>
+      {{- end }}
+    </thead>
+    <tbody>
+      {{- range .TBody }}
+      <tr>
+        {{- range . }}
+        <td{{ with .Alignment }} style="text-align: {{ . }}"{{ end }}>{{ .Text }}</td>
+        {{- end }}
+      </tr>
+      {{- end }}
+    </tbody>
+  </table>
+</div>

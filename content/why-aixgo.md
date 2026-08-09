@@ -1,9 +1,24 @@
 ---
 title: 'Why Aixgo'
-description: 'Why we built Aixgo and what we believe about production AI. Our design principles, values, and commitment to production-grade tooling.'
+layout: "marketing"
+eyebrow: "Aixgo · Design principles"
+description: "Why the framework is written in Go, what that costs, and where a Python framework is still the better answer."
+stats:
+  - value: "60x"
+    label: "Smaller container than a Python framework"
+    accent: true
+  - value: "450x"
+    label: "Faster cold start"
+    accent: true
+  - value: "95%"
+    label: "Fewer dependencies to audit and patch"
+  - value: "10x"
+    label: "More memory-efficient at baseline"
+cta_heading: "Decide with the code in front of you."
+cta_sub: "The quick start is four steps, and the whole framework is one module you can read."
 ---
 
-## Production AI Deserves Production Tooling
+## Production AI deserves production tooling
 
 **We're not trying to out-prototype Python. We're trying to out-ship it.**
 
@@ -18,7 +33,7 @@ Aixgo exists to eliminate that choice. We believe AI agents should ship with the
 
 <div class="philosophy-metrics">
 
-## The Production Reality
+## The production reality
 
 | What Matters | Python Frameworks | Aixgo | Impact |
 |--------------|------------------|-------|---------|
@@ -32,7 +47,7 @@ Aixgo exists to eliminate that choice. We believe AI agents should ship with the
 
 ---
 
-## The Problem We're Solving
+## The problem we are solving
 
 Python excels at AI research and prototyping. But production reveals fundamental limitations:
 
@@ -48,49 +63,49 @@ Go developers shouldn't have to abandon their stack's strengths—speed, securit
 
 ---
 
-## Our Design Principles
+## Design principles
 
-### 1. Production-First, Not Research-First
+### 1. Production first, not research first
 
 API stability over rapid iteration. Performance-driven decisions. Security and observability built-in from day one. We prioritize production-hardened primitives over research experiments—fewer features, but battle-tested at scale.
 
 **Key trade-off**: YAML configuration instead of Python DSLs for declarative, reviewable, deployable workflows.
 
-### 2. Single Binary Simplicity
+### 2. One binary
 
 Deploy AI agents in <20MB binaries with zero runtime dependencies. No Python interpreter, no virtual environments, no Docker required (though it works great with containers).
 
 **Real impact**: <20MB total deployment vs 1.2GB Python containers. Deploy to edge devices, serverless, IoT, anywhere.
 
-### 3. Type Safety as a Feature
+### 3. Type safety as a feature
 
 Catch errors at compile time, not in production. Go's type system enforces contracts between agents, tools, and workflows—your IDE tells you what's broken before your customers do.
 
 **Team velocity**: Less time debugging production runtime errors, more time building features. Refactor with confidence.
 
-### 4. Go-Native Patterns
+### 4. Go-native patterns
 
 We don't port Python concepts to Go. We embrace Go's strengths: channels for local message passing, gRPC for distributed systems, goroutines for concurrency, context for cancellation.
 
 **The abstraction that matters**: Same code works locally (channels) and distributed (gRPC). Runtime picks transport automatically.
 
-### 5. Observable by Default
+### 5. Observable by default
 
 Every agent interaction is traceable via OpenTelemetry, logged with structured context, and measurable with metrics. No instrumentation code required—just configuration.
 
 **Built-in integrations**: Prometheus, Grafana, Datadog, Langfuse, New Relic. Works out of the box.
 
-### 6. Open and Permissive
+### 6. Open and permissive
 
 MIT licensed. Use in commercial products without restrictions. No vendor lock-in, no surprise license changes. Your investment is protected.
 
 ---
 
-## When to Choose Aixgo
+## When to choose Aixgo
 
 <div class="decision-section">
 
-### Choose Aixgo When:
+### Choose Aixgo when
 
 **Deploying to production, not experimenting**
 - Predictable performance and resource usage matter
@@ -113,7 +128,7 @@ MIT licensed. Use in commercial products without restrictions. No vendor lock-in
 - Minimal dependency surface
 - Enterprise security requirements
 
-### Choose Python Frameworks When:
+### Choose a Python framework when
 
 **Doing exploratory research**
 - Rapid prototyping with frequent pivots
@@ -134,49 +149,59 @@ MIT licensed. Use in commercial products without restrictions. No vendor lock-in
 
 ---
 
-## Our Commitment
+## What we commit to
 
-### Stability First
+### Stability first
 
 When v1.0 releases, we guarantee API stability with semantic versioning, long-term support, and clear upgrade paths. No breaking changes without major version bumps.
 
-See our [v1.0 Compatibility Promise](/v1-compatibility) for details.
+See our [v1.0 compatibility promise](/v1-compatibility/) for details.
 
-### Open Development
+### Open development
 
 Public roadmap, open issue tracking, community-driven feature prioritization, transparent decision-making. Your feedback shapes Aixgo.
 
-### Long-Term Vision
+### Long-term direction
 
 Enterprise-grade multi-agent orchestration with production-proven patterns. We're building for what ships, not what trends.
 
 ---
 
-## Join the Movement
+## What Aixgo is not
 
-Aixgo is just getting started. We're building this in the open, learning from the community, and evolving based on real-world production usage.
+Scope is easier to trust when it is written down.
 
-If you're tired of wrestling with Python in production, if you believe AI agents should ship with the same simplicity as the rest of your Go services, or if you just want to see what production-grade AI looks like in pure Go—join us.
+**Not a replacement for Python in AI research.** PyTorch and TensorFlow are not
+what this competes with. Aixgo orchestrates agents in production.
+
+**Not a general-purpose AI toolkit.** It is specialised for multi-agent systems,
+and it does not train models.
+
+**Not trying to cover everything.** The focus is production deployment rather
+than prototyping speed, and the feature list is shorter because of it.
+
+---
+
+## Where to start
+
+Aixgo is developed in the open. The roadmap, the issues and the decisions are all on GitHub, and what ships next is shaped by what people report from running it.
+
+The fastest way to judge whether the argument on this page holds is to run the quick start and read the module.
 
 <div class="philosophy-cta-grid">
 
-**Get Started:**
+**Read next**
 
-- [Quick Start Guide](/guides/quick-start) - Get running in 5 minutes
-- [Core Concepts](/guides/core-concepts) - Understand Aixgo's architecture
-- [Features](/features) - Explore what's available today
-- [Proverbs](/proverbs) - 15 production principles
+- [Quick start](/guides/quick-start/) - Get running in 5 minutes
+- [Core concepts](/guides/core-concepts/) - Understand Aixgo's architecture
+- [Features](/features/) - Explore what's available today
+- [Proverbs](/proverbs/) - 15 production principles
+- [Orchestration patterns](/features-patterns/) - all 13, with the trade-offs
 
-**Get Involved:**
+**Take part**
 
 - [GitHub](https://github.com/aixgo-dev/aixgo) - Star the repo, open issues, contribute
 - [Discussions](https://github.com/aixgo-dev/aixgo/discussions) - Ask questions, share ideas
 - [Roadmap](https://github.com/orgs/aixgo-dev/projects/1) - See what's coming next
 
 </div>
-
----
-
-**Where Python prototypes go to die in production, Go agents ship and scale.**
-
-This is our philosophy. Welcome to Aixgo.

@@ -913,9 +913,9 @@ Debug logs include:
 
 Now that you have Bedrock integration configured, explore advanced Aixgo capabilities:
 
-- **[Multi-Agent Orchestration](/guides/multi-agent-orchestration)** - Build complex workflows with multiple Bedrock agents
-- **[Observability](/guides/observability)** - Monitor Bedrock costs and performance with OpenTelemetry
-- **[Production Deployment](/guides/production-deployment)** - Deploy Bedrock agents on ECS/EKS
-- **[Vector Databases & RAG](/guides/vector-databases)** - Combine Bedrock with retrieval-augmented generation
-- **[Cost Optimization](/guides/cost-optimization)** - Advanced techniques for reducing Bedrock costs
-- **[Provider Integration](/guides/provider-integration)** - Compare Bedrock with direct provider APIs
+- **[Multi-Agent Orchestration](/guides/multi-agent-orchestration/)** - Build complex workflows with multiple Bedrock agents
+- **[Observability](/guides/observability/)** - Monitor Bedrock costs and performance with OpenTelemetry
+- **[Production Deployment](/guides/production-deployment/)** - Deploy Bedrock agents on ECS/EKS
+- **[Vector Databases & RAG](/guides/vector-databases/)** - Combine Bedrock with retrieval-augmented generation
+- **[Cost Optimization](/guides/cost-optimization/)** - Advanced techniques for reducing Bedrock costs
+- **[Provider Integration](/guides/provider-integration/)** - Compare Bedrock with direct provider APIs

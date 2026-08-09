@@ -746,11 +746,11 @@ model: gpt-3.5-turbo
 
 ## Next Steps
 
-- **[Multi-Agent Orchestration](/guides/multi-agent-orchestration)** - Learn orchestration patterns
-- **[Classifier Example](/examples/classifier-workflow)** - Hands-on classifier implementation
-- **[Aggregator Example](/examples/aggregator-workflow)** - Multi-agent synthesis walkthrough
-- **[Provider Integration](/guides/provider-integration)** - Configure LLM providers
-- **[Production Deployment](/guides/production-deployment)** - Deploy agent systems
+- **[Multi-Agent Orchestration](/guides/multi-agent-orchestration/)** - Learn orchestration patterns
+- **[Classifier Example](/examples/classifier-workflow/)** - Hands-on classifier implementation
+- **[Aggregator Example](/examples/aggregator-workflow/)** - Multi-agent synthesis walkthrough
+- **[Provider Integration](/guides/provider-integration/)** - Configure LLM providers
+- **[Production Deployment](/guides/production-deployment/)** - Deploy agent systems
 
 ## Additional Resources
 

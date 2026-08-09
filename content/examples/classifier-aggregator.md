@@ -713,8 +713,8 @@ agents:
 
 ## Next Steps
 
-- **[Agent Types Guide](/guides/agent-types)** - Comprehensive agent documentation
-- **[Multi-Agent Orchestration](/guides/multi-agent-orchestration)** - Coordination patterns
+- **[Agent Types Guide](/guides/agent-types/)** - Comprehensive agent documentation
+- **[Multi-Agent Orchestration](/guides/multi-agent-orchestration/)** - Coordination patterns
 - **[Classifier Example Source](https://github.com/aixgo-dev/aixgo/tree/main/examples/classifier-workflow)** - Complete implementation
 - **[Aggregator Example Source](https://github.com/aixgo-dev/aixgo/tree/main/examples/aggregator-workflow)** - Complete implementation
 - **[Agent Framework Code](https://github.com/aixgo-dev/aixgo/tree/main/agents)** - Source code reference
