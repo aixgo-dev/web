@@ -724,12 +724,13 @@ header {
   color: var(--ax-accent);
 }
 
-/* Footer */
+/* Footer. Its own ground and a hairline, so it reads as the end of the page
+   rather than one more section. The 8rem top margin it used to carry was
+   compensating for sections that had no bottom padding of their own. */
 footer {
-  margin-top: 8rem;
   padding: 4rem 0 2rem;
-  border-top: 1px solid rgba(42, 53, 68, 0.3);
-  background: rgba(0, 0, 0, 0.1);
+  border-top: 1px solid var(--ax-hairline);
+  background: var(--ax-bg-1);
 }
 
 .footer-grid {
@@ -769,7 +770,7 @@ footer {
 }
 
 .footer-tagline {
-  font-size: 0.95rem;
+  font-size: var(--ax-t-sm);
   color: var(--color-text-muted);
   margin: 0;
   line-height: 1.5;
@@ -782,15 +783,12 @@ footer {
 }
 
 .footer-license {
-  font-size: 0.875rem;
-  color: var(--color-text-muted);
-  text-decoration: none;
-  transition: color 0.2s;
-  width: fit-content;
-}
-
-.footer-license:hover {
-  color: var(--color-cyan);
+  margin-top: var(--ax-s-2);
+  font-family: var(--ax-font-mono);
+  font-size: var(--ax-t-microlabel);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ax-text-dim);
 }
 
 /* Footer Columns */
@@ -801,12 +799,13 @@ footer {
 }
 
 .footer-heading {
-  font-size: 0.875rem;
-  font-weight: 600;
-  color: var(--color-text);
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
   margin: 0;
+  font-family: var(--ax-font-mono);
+  font-size: var(--ax-t-microlabel);
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ax-text-dim);
 }
 
 .footer-links {
@@ -827,7 +826,7 @@ footer {
 }
 
 .footer-links a:hover {
-  color: var(--color-cyan);
+  color: var(--ax-text);
 }
 
 /* Typography */

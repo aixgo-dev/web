@@ -935,7 +935,7 @@
 
 .ax-eyebrow__back:hover { text-decoration: underline; text-underline-offset: 3px; }
 
-.ax-postmeta { display: block; margin-top: var(--ax-s-5); }
+.ax-postmeta { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: var(--ax-s-5); }
 
 .ax-guidegroup + .ax-guidegroup { margin-top: var(--ax-s-9); }
 
