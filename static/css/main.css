@@ -625,6 +625,16 @@ header {
   text-decoration: none;
   transition: color 0.2s;
   font-weight: 500;
+  /* Two-word labels ("Aixgo Code") wrap to two lines and push the header to
+     three rows in the band between the hamburger breakpoint and 1024px. */
+  white-space: nowrap;
+}
+
+/* Between the hamburger at 768px and 1024px, five labels plus the logo and the
+   call to action no longer fit at a 2rem gap. Tighten the gap rather than let
+   the row wrap or overflow. */
+@media (max-width: 1023px) {
+  .nav-menu { gap: 1.125rem; }
 }
 
 .nav-menu a:hover {
