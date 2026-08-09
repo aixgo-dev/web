@@ -32,7 +32,7 @@
         {{ if $isBlog }}
         <p class="ax-microlabel ax-postmeta">
           <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2 January 2006" }}</time>
-          {{ with .Params.author }}<span aria-hidden="true">&middot;</span>{{ . }}{{ end }}
+          {{ with .Params.author }}<span aria-hidden="true"> &middot; </span>{{ . }}{{ end }}
         </p>
         {{ end }}
       </div>

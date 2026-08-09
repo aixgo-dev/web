@@ -935,7 +935,7 @@
 
 .ax-eyebrow__back:hover { text-decoration: underline; text-underline-offset: 3px; }
 
-.ax-postmeta { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: var(--ax-s-5); }
+.ax-postmeta { display: block; margin-top: var(--ax-s-5); }
 
 .ax-guidegroup + .ax-guidegroup { margin-top: var(--ax-s-9); }
 
@@ -956,7 +956,7 @@
   text-decoration: none;
 }
 
-.ax-listcard__meta { display: flex; gap: 0.5rem; margin-bottom: var(--ax-s-3); }
+.ax-listcard__meta { margin-bottom: var(--ax-s-3); }
 
 /* Tags are metadata, not the argument, so they take the border treatment
    rather than the accent fill they used to have. Ten cyan pills on a card

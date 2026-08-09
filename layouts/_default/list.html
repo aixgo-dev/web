@@ -50,7 +50,7 @@
           <a href="{{ .RelPermalink }}" class="ax-card ax-listcard">
             <p class="ax-microlabel ax-listcard__meta">
               <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2 January 2006" }}</time>
-              {{ with .Params.author }}<span aria-hidden="true">&middot;</span>{{ . }}{{ end }}
+              {{ with .Params.author }}<span aria-hidden="true"> &middot; </span>{{ . }}{{ end }}
             </p>
             <h2>{{ .Title }}</h2>
             <p>{{ .Description }}</p>
