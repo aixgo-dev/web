@@ -1,0 +1,26 @@
+# Order the category groups on /guides/ by learning path rather than by name.
+#
+# GroupByParam sorts alphabetically, which put "Advanced" at the top of the page
+# and "Getting Started" fifth. A reader arriving at the index with no Aixgo
+# background met the hardest material first.
+#
+# The list runs from what you need on day one to what you only need once the
+# rest makes sense: build something, learn the vocabulary, learn the agent types
+# and the tools around them, then the provider and orchestration material, then
+# shipping it, then lookup tables, then the internals.
+#
+# A category missing from this list still renders. It is appended after the
+# ordered groups, so adding a guide with a new category never drops it from the
+# index; it just lands at the bottom until someone gives it a place here.
+categoryOrder:
+  - Getting Started
+  - Core Concepts
+  - Agents
+  - Tools
+  - LLM Integration
+  - RAG & Embeddings
+  - Orchestration
+  - Deployment
+  - Production
+  - Reference
+  - Advanced

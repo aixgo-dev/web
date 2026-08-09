@@ -29,7 +29,25 @@
     <div class="ax-wrap">
       {{ if $isGuides }}
 
-        {{ range .Pages.GroupByParam "category" }}
+        {{/* GroupByParam sorts the categories by name, which opened the index
+             on "Advanced" and pushed "Getting Started" to fifth.
+             data/guides.yaml carries the learning-path order instead: the
+             categories it names render in that order, and any category it does
+             not name follows them, so a guide with a new category still
+             appears. */}}
+        {{- $groups := .Pages.GroupByParam "category" -}}
+        {{- $order := site.Data.guides.categoryOrder -}}
+        {{- $ordered := slice -}}
+        {{- range $name := $order -}}
+          {{- range $groups -}}
+            {{- if eq .Key $name }}{{ $ordered = $ordered | append . }}{{ end -}}
+          {{- end -}}
+        {{- end -}}
+        {{- range $groups -}}
+          {{- if not (in $order .Key) }}{{ $ordered = $ordered | append . }}{{ end -}}
+        {{- end }}
+
+        {{ range $ordered }}
         <div class="ax-guidegroup">
           <h2 class="ax-guidegroup__head">{{ .Key | default "Other" }}</h2>
           <div class="ax-grid ax-grid--2">
