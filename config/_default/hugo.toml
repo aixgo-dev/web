@@ -1,6 +1,9 @@
 # -- Site Configuration --
 baseURL = "https://aixgo.dev/"
-languageCode = "en-us"
+
+# Formerly `languageCode`, renamed in Hugo 0.158. The site is single-language,
+# so languages.en.toml sets `locale` too and its value wins over this one.
+locale = "en-us"
 title = "Aixgo - Production AI Agents in Go"
 defaultContentLanguage = "en"
 

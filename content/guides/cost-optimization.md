@@ -21,11 +21,11 @@ LLM API costs can quickly escalate in production. Aixgo helps you optimize costs
 - **Budget monitoring**: Alert on cost thresholds before overspend
 - **Batch processing**: Process multiple items in single API calls
 
-## Built-In Cost Tracking
+## Built-in cost tracking
 
 Every LLM call is automatically tracked with detailed metrics.
 
-### What's Tracked
+### What's tracked
 
 - **Token usage**: Input and output tokens per call
 - **Cost calculation**: Based on provider pricing tables
@@ -33,7 +33,7 @@ Every LLM call is automatically tracked with detailed metrics.
 - **OpenTelemetry integration**: Export to Prometheus, Datadog, Langfuse
 - **Time-series data**: Track costs over time
 
-### Querying Cost Metrics
+### Querying cost metrics
 
 ```go
 import (
@@ -60,7 +60,7 @@ func getCostMetrics() {
 }
 ```
 
-### Export to Monitoring Systems
+### Export to monitoring systems
 
 ```yaml
 # OpenTelemetry configuration
@@ -75,9 +75,9 @@ observability:
   # langfuse_secret_key: sk-lf-...
 ```
 
-## Cost Optimization Strategies
+## Cost optimization strategies
 
-### 1. Application-Level Caching (60-80% cost reduction)
+### 1. Application-level caching (60-80% cost reduction)
 
 **Why application-level caching?**
 
@@ -90,7 +90,7 @@ Caching is an infrastructure concern, not a framework concern. Use Redis, Memcac
 - You control TTL, invalidation, cache keys
 - Standard tools (Redis) with proven reliability
 
-#### Redis Caching Wrapper
+#### Redis caching wrapper
 
 ```go
 package cache
@@ -150,7 +150,7 @@ func (c *CachedAgent) generateCacheKey(payload string) string {
 }
 ```
 
-#### Usage Example
+#### Usage example
 
 ```go
 func main() {
@@ -171,7 +171,7 @@ func main() {
 }
 ```
 
-#### Cache Strategies
+#### Cache strategies
 
 **Aggressive caching (24h+ TTL):**
 
@@ -206,11 +206,11 @@ cachedAgent := cache.NewCachedAgent(rdb, agent, 3*time.Hour)
 cachedAgent := cache.NewCachedAgent(rdb, agent, 30*time.Minute)
 ```
 
-### 2. Intelligent Model Selection (25-50% cost reduction)
+### 2. Intelligent model selection (25-50% cost reduction)
 
 Use the **Router pattern** to route queries to cost-appropriate models.
 
-#### Cost-Based Routing
+#### Cost-based routing
 
 ```yaml
 supervisor:
@@ -273,7 +273,7 @@ agents:
       - source: complexity-classifier
 ```
 
-#### Cost Comparison
+#### Cost comparison
 
 **Without routing (all queries → GPT-4):**
 
@@ -292,11 +292,11 @@ agents:
 
 **Savings: 83% ($373.50/month)**
 
-### 3. Deterministic Aggregation ($0 vs $$)
+### 3. Deterministic aggregation ($0 vs $$)
 
 Use deterministic voting strategies instead of LLM aggregation when possible.
 
-#### Cost Comparison: LLM vs Voting
+#### Cost comparison: LLM vs voting
 
 **LLM-powered consensus:**
 
@@ -320,7 +320,7 @@ aggregator_config:
 - Speed: <1ms (instant)
 - Quality: Good (for classification/voting tasks)
 
-#### When to Use Each
+#### When to use each
 
 **Use voting_majority when:**
 
@@ -336,7 +336,7 @@ aggregator_config:
 - Conflict resolution complex
 - Quality justifies cost
 
-#### Cost Savings Example
+#### Cost savings example
 
 1000 aggregations/day:
 
@@ -344,11 +344,11 @@ aggregator_config:
 - **Deterministic voting**: 1000 × $0 = $0/day ($0/month)
 - **Savings: $900/month**
 
-### 4. Batch Processing (90%+ cost reduction)
+### 4. Batch processing (90%+ cost reduction)
 
 Process multiple items in one API call instead of many individual calls.
 
-#### Anti-Pattern (100 separate calls)
+#### Anti-pattern (100 separate calls)
 
 ```go
 // DON'T DO THIS - expensive!
@@ -374,7 +374,7 @@ batchResult, err := llm.CreateStructured[BatchResults](ctx, client, prompt, nil)
 
 Cost: 1 call = 90%+ savings
 
-#### Batch Size Optimization
+#### Batch size optimization
 
 ```go
 const (
@@ -404,11 +404,11 @@ func processBatch(ctx context.Context, items []Item) ([]Result, error) {
 }
 ```
 
-### 5. Budget Monitoring and Alerts
+### 5. Budget monitoring and alerts
 
 Track spending and alert on thresholds before overspend.
 
-#### Budget Monitor Implementation
+#### Budget monitor implementation
 
 ```go
 package budget
@@ -500,11 +500,11 @@ func main() {
 }
 ```
 
-### 6. Model Selection by Task
+### 6. Model selection by task
 
 Different models have different cost/quality tradeoffs. Choose appropriately.
 
-#### Model Cost Comparison (as of 2024)
+#### Model cost comparison (as of 2024)
 
 | Model | Input Cost | Output Cost | Use Case |
 |-------|-----------|-------------|----------|
@@ -515,7 +515,7 @@ Different models have different cost/quality tradeoffs. Choose appropriately.
 | claude-3-sonnet | $3/1M | $15/1M | Balanced quality/cost |
 | claude-3-opus | $15/1M | $75/1M | Highest quality |
 
-#### Task-Optimized Model Selection
+#### Task-optimized model selection
 
 ```yaml
 agents:
@@ -543,7 +543,7 @@ agents:
     # No model cost - just writes to storage
 ```
 
-## Cost Optimization Checklist
+## Cost optimization checklist
 
 Use this checklist for production systems:
 
@@ -558,9 +558,9 @@ Use this checklist for production systems:
 - [ ] **Set max_tokens limits**: Prevent unexpectedly long responses
 - [ ] **Use appropriate models**: Match model tier to task complexity
 
-## Real-World Cost Optimization Example
+## Real-world cost optimization example
 
-### Before Optimization
+### Before optimization
 
 **System:** Customer support ticket analysis
 
@@ -578,7 +578,7 @@ Use this checklist for production systems:
 - Aggregation: 1,000 summaries × $0.03 = $30/day
 - **Total: $270/day ($8,100/month)**
 
-### After Optimization
+### After optimization
 
 **Optimizations applied:**
 
@@ -607,7 +607,7 @@ Use this checklist for production systems:
 | Voting aggregation | $30/day | 4 hours | Very High |
 | Batch processing | $10/day | 4 hours | High |
 
-## Monitoring Cost Trends
+## Monitoring cost trends
 
 ### Export to Prometheus
 
@@ -620,7 +620,7 @@ scrape_configs:
       - targets: ['localhost:9090']
 ```
 
-### Grafana Dashboard
+### Grafana dashboard
 
 Create dashboard with:
 
@@ -662,7 +662,7 @@ groups:
           summary: "Cache hit rate below 40%"
 ```
 
-## Best Practices
+## Best practices
 
 1. **Start with monitoring**: Can't optimize what you don't measure
 2. **Cache aggressively**: Most queries are repeated
@@ -675,9 +675,9 @@ groups:
 9. **Monitor cache hit rates**: >50% hit rate indicates good caching strategy
 10. **Use appropriate models**: Don't use GPT-4 for classification
 
-## See Also
+## See also
 
-- [Router Pattern](./multi-agent-orchestration/#router-pattern) - Intelligent routing
+- [Router Pattern](./multi-agent-orchestration/#4-router-pattern) - Intelligent routing
 - [Aggregator Strategies](./agent-types/#aggregator-agent) - Deterministic vs LLM aggregation
 - [Observability Guide](./observability/) - Metrics and monitoring
 - [Production Deployment](./production-deployment/) - Production best practices

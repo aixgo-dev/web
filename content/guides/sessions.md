@@ -7,7 +7,7 @@ weight: 8
 
 AI agents that remember. Aixgo sessions provide durable conversation history with automatic persistence, checkpoints, and seamless resumption across restarts.
 
-## Quick Start
+## Quick start
 
 ```go
 package main
@@ -39,7 +39,7 @@ func main() {
 }
 ```
 
-## Why Sessions?
+## Why sessions?
 
 | Problem | Solution |
 |---------|----------|
@@ -48,9 +48,9 @@ func main() {
 | Complex state management | Automatic session lifecycle |
 | Multi-node deployments | Redis backend for shared state |
 
-## Storage Backends
+## Storage backends
 
-### File Backend (JSONL)
+### File backend (JSONL)
 
 Best for single-node deployments and development:
 
@@ -64,7 +64,7 @@ backend, err := session.NewFileBackend("~/.aixgo/sessions")
 - Restrictive permissions (0700/0600)
 - File locking for concurrent access
 
-### Redis Backend
+### Redis backend
 
 Best for distributed deployments:
 
@@ -109,7 +109,7 @@ Checkpoints include:
 - Timestamp and checksum
 - Custom metadata
 
-## Runtime Integration
+## Runtime integration
 
 Use `CallWithSession()` for automatic session management:
 
@@ -121,7 +121,7 @@ rt.SetSessionManager(sessionMgr)
 result, err := rt.CallWithSession(ctx, "assistant", msg, sessionID)
 ```
 
-## Context Helpers
+## Context helpers
 
 Pass sessions through context:
 
@@ -174,7 +174,7 @@ cd examples/session-basic && go run main.go
 cd examples/session-react && go run main.go
 ```
 
-## Best Practices
+## Best practices
 
 1. **Use GetOrCreate()** - Handles both new and existing sessions
 2. **Checkpoint before risky operations** - Enable rollback capability
@@ -182,7 +182,7 @@ cd examples/session-react && go run main.go
 4. **Clean up old sessions** - Implement retention policies
 5. **Pass sessions via context** - Cleaner than parameter threading
 
-## Next Steps
+## Next steps
 
 - [Multi-Agent Orchestration](/guides/multi-agent-orchestration/) - Coordinate multiple agents
 - [Production Deployment](/guides/production-deployment/) - Deploy with sessions

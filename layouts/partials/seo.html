@@ -3,10 +3,27 @@
 {{- $title := cond .IsHome (string .Site.Params.homeTitle) (printf "%s | %s" .Title .Site.Title) -}}
 {{- $description := cond (ne .Description "") .Description .Site.Params.description -}}
 {{/* A page that ships its own social card gets the large card. Everything else
-     falls back to the logo, which only reads at summary size. */}}
+     falls back to the logo, which is 883x154 and only reads at summary size.
+
+     A card comes from one of two places. `image` in front matter wins, and
+     takes any path. Failing that, a file at `static/og-<slug>.png` is picked up
+     by name, where <slug> is the last segment of the page URL: /code/ reads
+     static/og-code.png. The convention exists so adding a card is one file
+     rather than a file plus a front-matter line, and os.FileExists checks the
+     source tree, so a page whose card has not been drawn yet keeps the logo
+     rather than pointing at a 404.
+
+     Both paths declare 1200x630. That is the size a card has to be for the
+     large treatment to render, and it is what the width and height tags tell a
+     scraper before it has fetched the file. Ship cards at that size. */}}
 {{- $ogImage := absURL "aixgo-logo.png" -}}
 {{- $ogImageAlt := .Site.Title -}}
 {{- $twitterCard := "summary" -}}
+{{- $slugCard := printf "og-%s.png" (path.Base .RelPermalink) -}}
+{{- if and (ne .RelPermalink "/") (os.FileExists (printf "static/%s" $slugCard)) -}}
+  {{- $ogImage = absURL $slugCard -}}
+  {{- $twitterCard = "summary_large_image" -}}
+{{- end -}}
 {{- with .Params.image -}}
   {{- $ogImage = absURL . -}}
   {{- $twitterCard = "summary_large_image" -}}
@@ -21,6 +38,10 @@
 <meta property="og:title" content="{{ $title }}">
 <meta property="og:description" content="{{ $description }}">
 <meta property="og:image" content="{{ $ogImage }}">
+{{- if eq $twitterCard "summary_large_image" }}
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+{{- end }}
 <meta property="og:image:alt" content="{{ $ogImageAlt }}">
 <meta property="og:locale" content="{{ replace .Site.Language.Lang "-" "_" }}_US">
 {{- if .IsPage }}

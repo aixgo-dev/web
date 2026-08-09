@@ -10,16 +10,16 @@ We're excited to announce **Aixgo v0.7.0**, bringing Amazon Bedrock support to t
 This release enables Go developers to access foundation models from Anthropic, Meta, Amazon,
 and Mistral through AWS's managed AI service with enterprise-grade security.
 
-## What's New in v0.7.0
+## What's new in v0.7.0
 
 **Quick Links:**
 
-1. [Amazon Bedrock Provider](#1-amazon-bedrock-provider) - Access 20+ foundation models
-1. [Multi-Model Access](#2-multi-model-access) - Claude, Llama, Nova, Titan, and more
-1. [Enterprise Security](#3-enterprise-security) - AWS IAM, VPC endpoints, CloudTrail
-1. [Getting Started](#4-getting-started) - Quick setup guide
+1. [Amazon Bedrock provider](#1-amazon-bedrock-provider) - Access 20+ foundation models
+1. [Multi-model access](#2-multi-model-access) - Claude, Llama, Nova, Titan, and more
+1. [Enterprise security](#3-enterprise-security) - AWS IAM, VPC endpoints, CloudTrail
+1. [Getting started](#4-getting-started) - Quick setup guide
 
-### 1. Amazon Bedrock Provider
+### 1. Amazon Bedrock provider
 
 The centerpiece of v0.7.0 is the new Bedrock provider, offering access to foundation models
 from multiple providers through a single, unified AWS API.
@@ -59,7 +59,7 @@ resp, err := p.CreateCompletion(ctx, provider.CompletionRequest{
 })
 ```
 
-### 2. Multi-Model Access
+### 2. Multi-model access
 
 Amazon Bedrock provides access to foundation models from multiple AI providers:
 
@@ -85,7 +85,7 @@ provider.DetectProvider("meta.llama3-70b-instruct-v1:0")             // -> "bedr
 provider.DetectProvider("bedrock/anthropic.claude-3-haiku")          // -> "bedrock"
 ```
 
-### 3. Enterprise Security
+### 3. Enterprise security
 
 Amazon Bedrock integrates with AWS's enterprise security features:
 
@@ -124,7 +124,7 @@ Every API call is logged for audit and compliance:
 - Access patterns
 - Cost attribution
 
-### 4. Getting Started
+### 4. Getting started
 
 **Prerequisites:**
 
@@ -163,7 +163,7 @@ export AWS_REGION=us-east-1
 aixgo run -config agents.yaml
 ```
 
-## Cost Comparison
+## Cost comparison
 
 Amazon Bedrock pricing is competitive with direct provider access:
 
@@ -176,9 +176,9 @@ Amazon Bedrock pricing is competitive with direct provider access:
 
 Plus benefits of consolidated AWS billing, volume discounts, and enterprise contracts.
 
-## Migration Guide
+## Migration guide
 
-### From Anthropic Direct API
+### From Anthropic direct API
 
 ```yaml
 # Before (v0.6.0)
@@ -195,7 +195,7 @@ agents:
     provider: bedrock
 ```
 
-### Environment Variables
+### Environment variables
 
 ```bash
 # Remove (optional - can keep for fallback)
@@ -206,7 +206,7 @@ export AWS_REGION=us-east-1
 # Credentials via IAM role, profile, or access keys
 ```
 
-## What's Next
+## What's next
 
 Our roadmap for v0.8.0 includes:
 

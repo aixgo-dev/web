@@ -19,11 +19,11 @@ Aixgo offers six core agent types, each designed for specific roles in your mult
 - **Aggregator**: Multi-agent output synthesis and consensus building
 - **Planner**: Task decomposition and workflow orchestration
 
-## Producer Agent
+## Producer agent
 
 Producer agents generate messages at configured intervals, providing the data input for your agent workflows.
 
-### When to Use
+### When to use
 
 - Polling external APIs or data sources
 - Generating synthetic test data
@@ -42,7 +42,7 @@ agents:
       - target: processor
 ```
 
-### Best Practices
+### Best practices
 
 - Set appropriate intervals based on your data source refresh rate
 - Use exponential backoff for failed polling attempts
@@ -51,11 +51,11 @@ agents:
 
 **Learn more**: [Producer examples](https://github.com/aixgo-dev/aixgo/tree/main/examples/producer-workflow)
 
-## ReAct Agent
+## ReAct agent
 
 ReAct (Reasoning + Acting) agents combine LLM reasoning with tool execution capabilities for complex decision-making workflows.
 
-### When to Use
+### When to use
 
 - Data analysis requiring intelligent reasoning
 - Decision-making workflows with business logic
@@ -85,7 +85,7 @@ agents:
       - target: logger
 ```
 
-### Best Practices
+### Best practices
 
 - Provide clear, specific system prompts
 - Define precise tool schemas with validation
@@ -95,11 +95,11 @@ agents:
 
 **Learn more**: [ReAct examples](https://github.com/aixgo-dev/aixgo/tree/main/examples/react-workflow)
 
-## Logger Agent
+## Logger agent
 
 Logger agents consume and persist messages, providing observability and audit capabilities for your workflows.
 
-### When to Use
+### When to use
 
 - Audit logging and compliance
 - Debugging multi-agent workflows
@@ -117,7 +117,7 @@ agents:
       - source: analyst
 ```
 
-### Best Practices
+### Best practices
 
 - Use structured logging formats (JSON)
 - Implement log rotation and retention policies
@@ -126,11 +126,11 @@ agents:
 
 **Learn more**: [Logger examples](https://github.com/aixgo-dev/aixgo/tree/main/examples/logger-workflow)
 
-## Classifier Agent
+## Classifier agent
 
 Classifier agents use LLM-powered semantic understanding to categorize content with confidence scoring, few-shot learning, and structured outputs.
 
-### When to Use
+### When to use
 
 - Customer support ticket routing and prioritization
 - Content moderation and categorization
@@ -139,7 +139,7 @@ Classifier agents use LLM-powered semantic understanding to categorize content w
 - Sentiment analysis with custom categories
 - Multi-label content tagging
 
-### Key Features
+### Key features
 
 - **Structured JSON Outputs**: Schema-validated responses for reliable parsing
 - **Confidence Scoring**: Automatic quality assessment (0-1 scale)
@@ -192,7 +192,7 @@ agents:
       max_tokens: 500       # Sufficient for reasoning
 ```
 
-### Category Definition Best Practices
+### Category definition best practices
 
 Each category should include:
 
@@ -201,13 +201,13 @@ Each category should include:
 - **keywords**: Terms strongly associated with this category
 - **examples**: 2-3 representative samples
 
-### Confidence Threshold Guidelines
+### Confidence threshold guidelines
 
 - **0.5-0.6**: Exploratory use, may have incorrect classifications
 - **0.7-0.8**: Production baseline, good accuracy/coverage balance
 - **0.85+**: High-stakes scenarios, may reject ambiguous inputs
 
-### Example Output
+### Example output
 
 ```json
 {
@@ -225,11 +225,11 @@ Each category should include:
 - [Classifier agent documentation](https://github.com/aixgo-dev/aixgo/blob/main/agents/README.md)
 - [Classifier workflow example](https://github.com/aixgo-dev/aixgo/blob/main/examples/classifier-workflow/README.md)
 
-## Aggregator Agent
+## Aggregator agent
 
 Aggregator agents synthesize outputs from multiple agents using 9 intelligent strategies, from zero-cost deterministic voting to sophisticated LLM-powered consensus building.
 
-### When to Use
+### When to use
 
 - Multi-agent research synthesis
 - Combining outputs from specialized expert agents
@@ -240,7 +240,7 @@ Aggregator agents synthesize outputs from multiple agents using 9 intelligent st
 - Conflict resolution between diverse perspectives
 - Production systems requiring deterministic, reproducible results
 
-### Key Features
+### Key features
 
 - **9 Aggregation Strategies**: 5 LLM-powered + 4 deterministic voting methods
 - **Resilience by Default**: Handles partial failures, missing inputs, timeouts
@@ -250,9 +250,9 @@ Aggregator agents synthesize outputs from multiple agents using 9 intelligent st
 - **Consensus Scoring**: Quantify agreement levels (0-1 scale)
 - **Performance Tracking**: Built-in observability and metrics
 
-### All 9 Aggregation Strategies
+### All 9 aggregation strategies
 
-#### LLM-Powered Strategies
+#### LLM-powered strategies
 
 These strategies use LLM reasoning for sophisticated synthesis. They provide high-quality results but incur API costs and latency.
 
@@ -332,7 +332,7 @@ aggregator_config:
   max_input_sources: 10
 ```
 
-#### Deterministic Strategies (v0.1.3+)
+#### Deterministic strategies (v0.1.3+)
 
 These strategies provide instant, reproducible results with zero LLM costs. Perfect for production systems requiring deterministic behavior.
 
@@ -395,7 +395,7 @@ aggregator_config:
   # Selects result from agent with highest confidence score
 ```
 
-### Resilience Features
+### Resilience features
 
 The aggregator is **resilient by default**, designed to handle real-world failures gracefully:
 
@@ -405,7 +405,7 @@ The aggregator is **resilient by default**, designed to handle real-world failur
 - **Confidence scoring**: Weights results by confidence levels when available
 - **Partial result support**: Aggregates whatever is available, doesn't require all sources
 
-### When to Use Each Strategy
+### When to use each strategy
 
 **Use deterministic (voting_*)** when:
 
@@ -423,7 +423,7 @@ The aggregator is **resilient by default**, designed to handle real-world failur
 - Complex cross-agent analysis required
 - Quality justifies cost and latency
 
-### Strategy Selection Decision Tree
+### Strategy selection decision tree
 
 ```text
 Need reproducibility (same input → same output)?
@@ -441,7 +441,7 @@ Need reproducibility (same input → same output)?
     └─ Balanced synthesis? → consensus
 ```
 
-### Example: Resilient Aggregation
+### Example: resilient aggregation
 
 ```yaml
 agents:
@@ -478,7 +478,7 @@ agents:
 
 See [resilient-aggregation example](https://github.com/aixgo-dev/aixgo/tree/main/examples/resilient-aggregation) for complete implementation.
 
-### Full Configuration Example
+### Full configuration example
 
 ```yaml
 agents:
@@ -527,7 +527,7 @@ agents:
       max_tokens: 1500
 ```
 
-### Example Output
+### Example output
 
 ```json
 {
@@ -554,9 +554,9 @@ agents:
 }
 ```
 
-### Best Practices
+### Best practices
 
-#### Strategy Selection
+#### Strategy selection
 
 - **Consensus**: Use when you need balanced synthesis with conflict transparency
 - **Weighted**: Use when certain agents have more expertise or authority
@@ -564,7 +564,7 @@ agents:
 - **Hierarchical**: Use for scalability with many agents (10+)
 - **RAG-based**: Use for question answering with source attribution
 
-#### Timeout Configuration
+#### Timeout configuration
 
 Set based on expected agent response times:
 
@@ -572,7 +572,7 @@ Set based on expected agent response times:
 - Standard agents (3-5s): `timeout_ms: 5000`
 - Complex agents (5-10s): `timeout_ms: 10000`
 
-#### Token Management
+#### Token management
 
 Typical token usage:
 
@@ -585,11 +585,11 @@ Typical token usage:
 - [Aggregator agent documentation](https://github.com/aixgo-dev/aixgo/blob/main/agents/README.md)
 - [Aggregator workflow example](https://github.com/aixgo-dev/aixgo/blob/main/examples/aggregator-workflow/README.md)
 
-## Planner Agent
+## Planner agent
 
 Planner agents decompose complex tasks into executable steps and orchestrate their execution across multiple agents.
 
-### When to Use
+### When to use
 
 - Complex multi-step workflows requiring coordination
 - Dynamic task decomposition based on context
@@ -613,9 +613,9 @@ agents:
 
 **Learn more**: [Planner examples](https://github.com/aixgo-dev/aixgo/tree/main/examples/planner-workflow)
 
-## Integration Patterns
+## Integration patterns
 
-### Parallel Classification + Aggregation
+### Parallel classification + aggregation
 
 Combine multiple classifiers with an aggregator for comprehensive analysis:
 
@@ -665,7 +665,7 @@ agents:
       aggregation_strategy: consensus
 ```
 
-### Multi-Expert Research Pipeline
+### Multi-expert research pipeline
 
 Deploy specialized experts with weighted aggregation:
 
@@ -709,9 +709,9 @@ agents:
         business-expert: 0.7
 ```
 
-## Performance Considerations
+## Performance considerations
 
-### Token Usage Optimization
+### Token usage optimization
 
 - **Producer**: No LLM calls, zero token usage
 - **ReAct**: 200-2000 tokens per message (depends on complexity)
@@ -720,7 +720,7 @@ agents:
 - **Aggregator**: 500-2500 tokens (scales with agent count)
 - **Planner**: 300-1000 tokens per planning operation
 
-### Latency Guidelines
+### Latency guidelines
 
 - **Producer**: <10ms (local generation)
 - **ReAct**: 500ms-5s (LLM-dependent)
@@ -729,7 +729,7 @@ agents:
 - **Aggregator**: 1s-5s (scales with agent count)
 - **Planner**: 1s-3s (LLM-dependent)
 
-### Cost Management
+### Cost management
 
 Choose appropriate models for your use case:
 
@@ -744,7 +744,7 @@ model: gpt-4-turbo
 model: gpt-3.5-turbo
 ```
 
-## Next Steps
+## Next steps
 
 - **[Multi-Agent Orchestration](/guides/multi-agent-orchestration/)** - Learn orchestration patterns
 - **[Classifier Example](https://github.com/aixgo-dev/aixgo/tree/main/examples/classifier-workflow)** - Hands-on classifier implementation
@@ -752,7 +752,7 @@ model: gpt-3.5-turbo
 - **[Provider Integration](/guides/provider-integration/)** - Configure LLM providers
 - **[Production Deployment](/guides/production-deployment/)** - Deploy agent systems
 
-## Additional Resources
+## Additional resources
 
 - [Agent Framework Source Code](https://github.com/aixgo-dev/aixgo/tree/main/agents)
 - [Complete Examples Directory](https://github.com/aixgo-dev/aixgo/tree/main/examples)

@@ -5,8 +5,6 @@ category: 'Advanced'
 weight: 7
 ---
 
-# Extending Aixgo
-
 Aixgo is designed to be extensible. This guide shows you how to add custom providers for LLMs, vector databases, and embeddings.
 
 ## Overview
@@ -18,7 +16,7 @@ Aixgo uses a registry pattern that allows you to:
 - Integrate custom embedding services
 - Extend existing providers with additional features
 
-### Provider Architecture
+### Provider architecture
 
 ```text
 ┌─────────────────────────────────────────┐
@@ -44,11 +42,11 @@ Aixgo uses a registry pattern that allows you to:
 └─────────────────────────────────────────┘
 ```
 
-## Adding a Custom Vector Store
+## Adding a custom vector store
 
 Let's implement a Qdrant vector store as an example using Aixgo's Collection-based architecture.
 
-### Step 1: Implement the VectorStore Interface
+### Step 1: implement the VectorStore interface
 
 ```go
 // pkg/vectorstore/qdrant/qdrant.go
@@ -147,7 +145,7 @@ func (q *QdrantStore) Close() error {
 }
 ```
 
-### Step 2: Implement the Collection Interface
+### Step 2: implement the collection interface
 
 ```go
 // QdrantCollection implements vectorstore.Collection
@@ -397,7 +395,7 @@ func buildQdrantFilter(filter vectorstore.Filter) *qdrantclient.Filter {
 }
 ```
 
-### Step 3: Usage Example
+### Step 3: usage example
 
 ```go
 package main
@@ -471,11 +469,11 @@ func main() {
 }
 ```
 
-## Adding a Custom Embedding Provider
+## Adding a custom embedding provider
 
 Let's implement a Cohere embeddings provider.
 
-### Step 1: Define Configuration
+### Step 1: define configuration
 
 ```go
 // pkg/embeddings/embeddings.go
@@ -503,7 +501,7 @@ type Config struct {
 }
 ```
 
-### Step 2: Implement the Interface
+### Step 2: implement the interface
 
 ```go
 // pkg/embeddings/cohere.go
@@ -620,7 +618,7 @@ func (c *CohereEmbeddings) Close() error {
 }
 ```
 
-## Adding a Custom LLM Provider
+## Adding a custom LLM provider
 
 Example: Adding Mistral AI support.
 
@@ -677,9 +675,9 @@ func (m *MistralLLM) Close() error {
 }
 ```
 
-## Best Practices
+## Best practices
 
-### 1. Configuration Validation
+### 1. Configuration validation
 
 Always validate configuration early:
 
@@ -699,7 +697,7 @@ func (c *CustomConfig) Validate() error {
 }
 ```
 
-### 2. Error Handling
+### 2. Error handling
 
 Provide clear, actionable error messages:
 
@@ -712,7 +710,7 @@ return fmt.Errorf("failed to connect to Qdrant at %s:%d: %w",
     q.host, q.port, err)
 ```
 
-### 3. Context Support
+### 3. Context support
 
 Always respect context cancellation:
 
@@ -730,7 +728,7 @@ func (c *CustomProvider) Search(ctx context.Context, query Query) (Results, erro
 }
 ```
 
-### 4. Resource Cleanup
+### 4. Resource cleanup
 
 Implement proper cleanup:
 
@@ -785,7 +783,7 @@ func TestCustomProvider(t *testing.T) {
 }
 ```
 
-## Complete Example: pgvector Provider
+## Complete example: pgvector provider
 
 Here's a complete implementation for PostgreSQL with pgvector extension:
 
@@ -988,9 +986,9 @@ func (p *PgVectorStore) Close() error {
 }
 ```
 
-## Deployment and Distribution
+## Deployment and distribution
 
-### Creating a Separate Module
+### Creating a separate module
 
 For external providers, create a separate module:
 
@@ -1030,9 +1028,9 @@ config := vectorstore.Config{
 }
 ```
 
-## Testing Custom Providers
+## Testing custom providers
 
-### Integration Tests
+### Integration tests
 
 ```go
 func TestQdrantIntegration(t *testing.T) {
@@ -1069,7 +1067,7 @@ func TestQdrantIntegration(t *testing.T) {
 }
 ```
 
-## Contributing Back
+## Contributing back
 
 To contribute your provider to Aixgo:
 
@@ -1089,7 +1087,7 @@ See [CONTRIBUTING.md](https://github.com/aixgo-dev/aixgo/blob/main/CONTRIBUTING.
 - [Cohere API](https://docs.cohere.ai/)
 - [Mistral API](https://docs.mistral.ai/)
 
-## Next Steps
+## Next steps
 
 - Try the [RAG Agent Example](https://github.com/aixgo-dev/aixgo/tree/main/examples/rag-agent)
 - Read [Vector Databases Guide](./vector-databases.md)

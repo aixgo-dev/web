@@ -9,7 +9,7 @@ weight: 6
 One of Aixgo's most powerful advantages over Python frameworks is compile-time type safety. This guide shows how Go's type system catches errors before deployment and ensures
 reliable LLM interactions.
 
-## The Runtime Error Problem
+## The runtime error problem
 
 Python frameworks discover type errors in production:
 
@@ -32,7 +32,7 @@ This leads to:
 - Customer-facing errors
 - Wasted time and resources
 
-## Aixgo's Solution: Compile-Time Safety
+## Aixgo's solution: compile-time safety
 
 Go catches these errors before you deploy:
 
@@ -49,9 +49,9 @@ agent := aixgo.NewAgent(
 
 Your IDE tells you what's broken before your customers do.
 
-## Type-Safe Agent Configuration
+## Type-safe agent configuration
 
-### Strong Typing for Agent Options
+### Strong typing for agent options
 
 ```go
 package main
@@ -75,7 +75,7 @@ func main() {
 }
 ```
 
-### Enum-Based Role Safety
+### Enum-based role safety
 
 ```go
 // Roles are compile-time constants
@@ -96,11 +96,11 @@ agent := aixgo.NewAgent(
 )
 ```
 
-## Type-Safe Tool Definitions
+## Type-safe tool definitions
 
 ReAct agents use tools to interact with external systems. Aixgo enforces type safety for tool schemas.
 
-### Defining Tools with Struct Types
+### Defining tools with struct types
 
 ```go
 package main
@@ -154,7 +154,7 @@ func main() {
 }
 ```
 
-### Automatic Schema Generation
+### Automatic schema generation
 
 Aixgo generates JSON schemas from Go structs automatically:
 
@@ -183,9 +183,9 @@ type SearchInput struct {
 
 No manual schema writing. No drift between code and schema.
 
-## Compile-Time Error Detection
+## Compile-time error detection
 
-### Configuration Errors
+### Configuration errors
 
 ```go
 // ❌ Won't compile - wrong type
@@ -199,7 +199,7 @@ agent := aixgo.NewAgent(
 )
 ```
 
-### Missing Required Fields
+### Missing required fields
 
 ```go
 type ToolInput struct {
@@ -213,7 +213,7 @@ func searchTool(input ToolInput) (string, error) {
 }
 ```
 
-### Type Mismatches in Message Passing
+### Type mismatches in message passing
 
 ```go
 // Define message types
@@ -232,9 +232,9 @@ func processMessage(msg DataMessage) {
 // processMessage("wrong type")  // ❌ Won't compile
 ```
 
-## Refactoring with Confidence
+## Refactoring with confidence
 
-### Safe Across Large Codebases
+### Safe across large codebases
 
 ```go
 // Change a tool input structure
@@ -252,7 +252,7 @@ type QueryInput struct {
 // No hidden runtime errors in production
 ```
 
-### Interface Changes are Tracked
+### Interface changes are tracked
 
 ```go
 // Change an interface
@@ -265,9 +265,9 @@ type Analyzer interface {
 // Can't deploy until all implementations are updated
 ```
 
-## LLM Output Validation
+## LLM output validation
 
-### Structured Output Parsing
+### Structured output parsing
 
 ```go
 // Define expected LLM output structure
@@ -293,7 +293,7 @@ func parseAnalysis(llmOutput string) (*AnalysisResult, error) {
 }
 ```
 
-### Retry on Type Errors
+### Retry on type errors
 
 ```go
 // Automatic retry if LLM returns invalid type
@@ -309,7 +309,7 @@ agent := aixgo.NewAgent(
 // 3. Returns error only after max retries
 ```
 
-## Python vs Go: Type Safety Comparison
+## Python vs Go: type safety comparison
 
 | Scenario               | Python                                 | Aixgo (Go)                              |
 | ---------------------- | -------------------------------------- | --------------------------------------- |
@@ -319,9 +319,9 @@ agent := aixgo.NewAgent(
 | **LLM output parsing** | Manual validation, easy to miss        | Struct-based, validated automatically   |
 | **Schema drift**       | Code and schema can diverge            | Schema generated from code              |
 
-## Best Practices
+## Best practices
 
-### 1. Use Structs for Complex Inputs
+### 1. Use structs for complex inputs
 
 ```go
 // ❌ Avoid: untyped maps
@@ -339,7 +339,7 @@ func processTool(input ToolInput) {
 }
 ```
 
-### 2. Define Custom Types for Enums
+### 2. Define custom types for enums
 
 ```go
 type Sentiment string
@@ -361,7 +361,7 @@ output := AnalysisOutput{
 }
 ```
 
-### 3. Validate at Boundaries
+### 3. Validate at boundaries
 
 ```go
 import "github.com/go-playground/validator/v10"
@@ -380,7 +380,7 @@ func handleInput(input UserInput) error {
 }
 ```
 
-### 4. Use Pointer Types for Optional Fields
+### 4. Use pointer types for optional fields
 
 ```go
 type AgentConfig struct {
@@ -395,7 +395,7 @@ if config.Temperature != nil {
 }
 ```
 
-## Real-World Example: Type-Safe Research Agent
+## Real-world example: type-safe research agent
 
 ```go
 package main
@@ -460,7 +460,7 @@ func main() {
 }
 ```
 
-## Key Takeaways
+## Key takeaways
 
 1. **Compile-time safety** - Errors caught before deployment, not in production
 2. **Automatic schema generation** - No manual JSON schema writing
@@ -470,7 +470,7 @@ func main() {
 
 Type safety is not just a nice-to-have—it's a production necessity for reliable AI systems.
 
-## Next Steps
+## Next steps
 
 - **[Multi-Agent Orchestration](/guides/multi-agent-orchestration/)** - Build complex type-safe workflows
 - **[Production Deployment](/guides/production-deployment/)** - Deploy with confidence

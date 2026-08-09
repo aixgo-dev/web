@@ -10,18 +10,18 @@ We're thrilled to announce **Aixgo v0.4.0**, our most significant release yet. T
 variants for sophisticated retrieval workflows, critical security enhancements with full JWT verification, and a major platform upgrade to Go 1.26. Whether you're building complex
 task planners, knowledge-intensive applications, or secure multi-tenant systems, v0.4.0 delivers the tools you need.
 
-## What's New in v0.4.0
+## What's new in v0.4.0
 
 **Quick Links:**
 
-1. [Go 1.26 Upgrade](#1-go-126-upgrade-major-platform-update) - Modern Go with performance improvements
-1. [Security Enhancements](#2-security-enhancements-critical) - JWT verification and file-based API keys
-1. [Planner Agent](#3-planner-agent-6-advanced-strategies) - MCTS, Tree-of-Thought, ReAct Planning, and more
-1. [RAG Pattern Variants](#4-rag-pattern-4-variants) - Conversational, Multi-Query, and Hybrid RAG
-1. [Reflection Pattern](#5-reflection-pattern-improvements) - Multi-critic aggregation with quality scoring
-1. [MCP Tools Enhancement](#6-mcp-tools-typed-registration) - Type-safe tool registration with generics
+1. [Go 1.26 upgrade](#1-go-126-upgrade-major-platform-update) - Modern Go with performance improvements
+1. [Security enhancements](#2-security-enhancements-critical) - JWT verification and file-based API keys
+1. [Planner agent](#3-planner-agent-6-advanced-strategies) - MCTS, Tree-of-Thought, ReAct Planning, and more
+1. [RAG pattern variants](#4-rag-pattern-4-variants) - Conversational, Multi-Query, and Hybrid RAG
+1. [Reflection pattern](#5-reflection-pattern-improvements) - Multi-critic aggregation with quality scoring
+1. [MCP tools enhancement](#6-mcp-tools-typed-registration) - Type-safe tool registration with generics
 
-### 1. Go 1.26 Upgrade (Major Platform Update)
+### 1. Go 1.26 upgrade (major platform update)
 
 Aixgo now requires **Go 1.26** or later, bringing significant performance improvements and modern language features.
 
@@ -53,11 +53,11 @@ go get github.com/aixgo-dev/aixgo@v0.4.0
 go mod tidy
 ```
 
-### 2. Security Enhancements (CRITICAL)
+### 2. Security enhancements (critical)
 
 This release includes two major security features for production deployments.
 
-#### JWT Verification (Full Implementation)
+#### JWT verification (full implementation)
 
 Aixgo now includes complete JWT verification with automatic JWKS (JSON Web Key Set) fetching, supporting Google Cloud, Auth0, Okta, and any OIDC-compliant provider.
 
@@ -115,7 +115,7 @@ email := claims["email"].(string)
 - **Standards Compliance** - OIDC-compliant, works with any identity provider
 - **Production Ready** - Battle-tested crypto/rsa implementation
 
-#### File-Based API Keys
+#### File-based API keys
 
 Load API keys securely from files with automatic permission validation.
 
@@ -190,11 +190,11 @@ ls -l /etc/secrets/api-keys.txt
 # Should show: -rw------- (600)
 ```
 
-### 3. Planner Agent: 6 Advanced Strategies
+### 3. Planner agent: 6 advanced strategies
 
 The Planner agent now supports 6 sophisticated planning strategies for complex task decomposition.
 
-#### Strategy 1: Chain-of-Thought (CoT)
+#### Strategy 1: chain-of-thought (CoT)
 
 Systematic step-by-step decomposition with reasoning chains.
 
@@ -220,7 +220,7 @@ Step 3: Compute statistics (Reasoning: Need metrics for comparison)
 Step 4: Generate report (Reasoning: Present findings)
 ```
 
-#### Strategy 2: Tree-of-Thought (ToT)
+#### Strategy 2: tree-of-thought (ToT)
 
 Multi-branch exploration with LLM-based scoring to find optimal paths.
 
@@ -248,7 +248,7 @@ agents:
 
 **Performance:** 20-40% better solution quality for complex problems vs. single-path approaches.
 
-#### Strategy 3: ReAct Planning
+#### Strategy 3: ReAct planning
 
 Reasoning-action cycles with iterative refinement.
 
@@ -287,7 +287,7 @@ Iteration 3:
   Action: finalize_plan()
 ```
 
-#### Strategy 4: Monte Carlo Tree Search (MCTS)
+#### Strategy 4: Monte Carlo tree search (MCTS)
 
 UCB1-based exploration with backpropagation for optimal path finding.
 
@@ -314,7 +314,7 @@ agents:
 
 **Performance:** Converges to optimal solution with sufficient simulations (typically 50-200).
 
-#### Strategy 5: Backward Chaining
+#### Strategy 5: backward chaining
 
 Goal-to-steps decomposition with dependency graph construction.
 
@@ -347,7 +347,7 @@ Subgoal 2: Infrastructure is ready
 Dependency Graph: 1.1, 1.2 → 1 → 2.1, 2.2 → 2 → Goal
 ```
 
-#### Strategy 6: Hierarchical Planning
+#### Strategy 6: hierarchical planning
 
 Multi-level task breakdown with high-level strategy decomposition.
 
@@ -396,11 +396,11 @@ Level 3 (Low-Level Actions):
 | Backward Chaining | Goal-oriented         | Medium     | Good       | Fast   |
 | Hierarchical      | Large projects        | High       | Good       | Medium |
 
-### 4. RAG Pattern: 4 Variants
+### 4. RAG pattern: 4 variants
 
 Retrieval-Augmented Generation now supports 4 sophisticated variants for different use cases.
 
-#### Variant 1: Standard RAG
+#### Variant 1: standard RAG
 
 Basic retrieve → generate flow for simple knowledge retrieval.
 
@@ -426,7 +426,7 @@ Retrieve: Top 5 docs with similarity > 0.7
 Generate: Answer using retrieved context
 ```
 
-#### Variant 2: Conversational RAG
+#### Variant 2: conversational RAG
 
 History tracking with last 100 turns stored, 5 included in context.
 
@@ -462,7 +462,7 @@ User: "Can you show an example?"  ← Builds on conversation
 Bot: "Here's a complete example using Google..."
 ```
 
-#### Variant 3: Multi-Query RAG
+#### Variant 3: multi-query RAG
 
 Query expansion with reciprocal rank fusion (RRF) for comprehensive retrieval.
 
@@ -501,7 +501,7 @@ where k=60, rank_i is doc position in query_i results
 
 **Performance:** 30-50% better recall for complex queries vs. single-query retrieval.
 
-#### Variant 4: Hybrid RAG
+#### Variant 4: hybrid RAG
 
 Semantic + keyword retrieval with RRF score merging.
 
@@ -559,11 +559,11 @@ Merged (RRF):
 | Multi-Query    | Research       | Medium     | Best   | Good      |
 | Hybrid         | Technical docs | High       | Better | Best      |
 
-### 5. Reflection Pattern Improvements
+### 5. Reflection pattern improvements
 
 Enhanced quality assessment and multi-critic aggregation for iterative refinement.
 
-#### Quality Score Extraction
+#### Quality score extraction
 
 Robust parsing of quality scores from LLM outputs.
 
@@ -597,7 +597,7 @@ supervisor:
     score_extraction_method: 'json_first' # Try JSON, then regex, then sentiment
 ```
 
-#### Critique Combination
+#### Critique combination
 
 Structured refinement prompts for iterative improvement.
 
@@ -620,7 +620,7 @@ Iteration 3 (with refinement):
   Score: 0.9 ✓
 ```
 
-#### Multi-Critic Aggregation
+#### Multi-critic aggregation
 
 Parallel critics with score averaging for comprehensive evaluation.
 
@@ -655,7 +655,7 @@ Combined Feedback: "Good technical accuracy. Improve clarity in sections 2-3 and
 Refinement: [Updated documentation with clearer explanations and examples]
 ```
 
-### 6. MCP Tools: Typed Registration
+### 6. MCP tools: typed registration
 
 Type-safe tool registration using Go generics with automatic schema generation.
 
@@ -730,7 +730,7 @@ Error: "validation failed:
   - age: must be at most 120"
 ```
 
-## Test Coverage
+## Test coverage
 
 All new features are thoroughly tested:
 
@@ -755,15 +755,15 @@ go test ./internal/supervisor/patterns -v -run TestRAG
 go test ./agents -v -run TestPlanner
 ```
 
-## Breaking Changes
+## Breaking changes
 
-### Go Version Requirement
+### Go version requirement
 
 **Before:** Go 1.24+ **After:** Go 1.26+
 
 Action required: Upgrade to Go 1.26 before updating Aixgo.
 
-### Dependency Updates
+### Dependency updates
 
 17 dependencies upgraded to latest versions. Most are backward compatible, but review `go.mod` changes if you import these directly:
 
@@ -772,7 +772,7 @@ Action required: Upgrade to Go 1.26 before updating Aixgo.
 - `go.opentelemetry.io/*` - v1.26.0 → v1.32.0
 - And 14 more (see full changelog)
 
-## Upgrade Guide
+## Upgrade guide
 
 ### 1. Upgrade Go
 
@@ -811,7 +811,7 @@ FROM golang:1.24-alpine
 FROM golang:1.26-alpine
 ```
 
-### 4. Test Your Application
+### 4. Test your application
 
 ```bash
 # Run tests with race detector
@@ -837,14 +837,14 @@ jobs:
           go-version: '1.26' # Update from 1.24
 ```
 
-## Performance Improvements
+## Performance improvements
 
 - **Go 1.26 Runtime** - 5-10% general performance improvement
 - **Optimized Dependencies** - gRPC 1.68.0 brings 15% latency reduction
 - **JWKS Caching** - 1-hour cache reduces JWT verification latency by 90%
 - **RRF Scoring** - Optimized reciprocal rank fusion with O(n log n) complexity
 
-## What's Next
+## What's next
 
 Looking ahead to v0.5.0 (Q2 2026):
 
@@ -880,7 +880,7 @@ Looking ahead to v0.5.0 (Q2 2026):
 - **API Reference**: [pkg.go.dev](https://pkg.go.dev/github.com/aixgo-dev/aixgo)
 - **Release Notes**: [v0.4.0 on GitHub](https://github.com/aixgo-dev/aixgo/releases/tag/v0.4.0)
 
-## Get Involved
+## Get involved
 
 We'd love to hear from you:
 

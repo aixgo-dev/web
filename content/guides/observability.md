@@ -8,7 +8,7 @@ weight: 9
 
 Production AI systems need comprehensive observability. This guide shows how to instrument Aixgo agents with OpenTelemetry, distributed tracing, metrics, and structured logging.
 
-## Built-in Observability
+## Built-in observability
 
 Aixgo includes comprehensive observability features out of the box:
 
@@ -17,7 +17,7 @@ Aixgo includes comprehensive observability features out of the box:
 - **Prometheus Metrics** - Production monitoring and alerting
 - **Health Checks** - Liveness and readiness probes
 
-### Enable with Configuration
+### Enable with configuration
 
 ```yaml
 # config/agents.yaml
@@ -40,9 +40,9 @@ agents:
 
 That's it. Distributed tracing is now enabled for your entire agent system.
 
-## Distributed Tracing
+## Distributed tracing
 
-### How Tracing Works
+### How tracing works
 
 Every message flow is automatically traced:
 
@@ -61,7 +61,7 @@ Each span includes:
 - Tool executions
 - Errors
 
-### Viewing Traces
+### Viewing traces
 
 Aixgo exports traces to any OpenTelemetry-compatible backend:
 
@@ -106,7 +106,7 @@ observability:
   endpoint: 'http://datadog-agent:8126'
 ```
 
-### Trace Attributes
+### Trace attributes
 
 Aixgo automatically adds contextual attributes:
 
@@ -129,9 +129,9 @@ Aixgo automatically adds contextual attributes:
 }
 ```
 
-## Structured Logging
+## Structured logging
 
-### Default JSON Logging
+### Default JSON logging
 
 Aixgo uses structured logging with automatic trace correlation:
 
@@ -171,7 +171,7 @@ func main() {
 }
 ```
 
-### Contextual Logging
+### Contextual logging
 
 Log with trace context automatically:
 
@@ -187,7 +187,7 @@ func processMessage(ctx context.Context, msg string) {
 
 ## Metrics
 
-### Built-in Metrics
+### Built-in metrics
 
 Aixgo exports these metrics automatically:
 
@@ -210,7 +210,7 @@ Aixgo exports these metrics automatically:
 - `aixgo_supervisor_active_agents` - Number of active agents
 - `aixgo_supervisor_message_queue_size` - Pending messages
 
-### Prometheus Integration
+### Prometheus integration
 
 ```yaml
 # config/agents.yaml
@@ -230,7 +230,7 @@ scrape_configs:
       - targets: ['localhost:9090']
 ```
 
-### Custom Metrics
+### Custom metrics
 
 Add application-specific metrics:
 
@@ -264,7 +264,7 @@ func processData(data string) {
 }
 ```
 
-## Health Checks
+## Health checks
 
 Aixgo exposes liveness and readiness endpoints for container orchestration:
 
@@ -298,9 +298,9 @@ readinessProbe:
   periodSeconds: 5
 ```
 
-## Integration with Observability Platforms
+## Integration with observability platforms
 
-### Grafana Stack (Loki + Tempo + Mimir)
+### Grafana stack (Loki + Tempo + Mimir)
 
 Complete observability setup:
 
@@ -375,7 +375,7 @@ observability:
   endpoint: 'datadog-agent:8126'
 ```
 
-### Langfuse (LLM-Specific)
+### Langfuse (LLM-specific)
 
 Track LLM calls, costs, and performance:
 
@@ -397,9 +397,9 @@ Langfuse dashboard shows:
 - Model performance comparisons
 - Prompt engineering analytics
 
-## Debugging Multi-Agent Workflows
+## Debugging multi-agent workflows
 
-### Trace Visualization
+### Trace visualization
 
 View message flow across agents:
 
@@ -416,7 +416,7 @@ Request [trace_id: abc123]
 Total: 1.28s
 ```
 
-### Identifying Bottlenecks
+### Identifying bottlenecks
 
 Sort spans by duration to find slow operations:
 
@@ -436,7 +436,7 @@ Sort spans by duration to find slow operations:
 
 ## Alerting
 
-### Prometheus Alerts
+### Prometheus alerts
 
 ```yaml
 # alerts.yml
@@ -465,7 +465,7 @@ groups:
           summary: 'High token consumption (cost concern)'
 ```
 
-### Grafana Alerts
+### Grafana alerts
 
 Create dashboards with alerts:
 
@@ -495,9 +495,9 @@ Create dashboards with alerts:
 }
 ```
 
-## Best Practices
+## Best practices
 
-### 1. Always Enable Tracing in Production
+### 1. Always enable tracing in production
 
 ```yaml
 # config/agents-prod.yaml
@@ -506,7 +506,7 @@ observability:
   sampling_rate: 0.1 # 10% sampling to reduce overhead
 ```
 
-### 2. Use Structured Logging
+### 2. Use structured logging
 
 ```go
 // ❌ Bad: unstructured
@@ -520,7 +520,7 @@ slog.Error("Message processing failed",
 )
 ```
 
-### 3. Set SLOs and Monitor Them
+### 3. Set SLOs and monitor them
 
 Define service level objectives:
 
@@ -530,7 +530,7 @@ Define service level objectives:
 
 Monitor with alerts.
 
-### 4. Correlate Logs with Traces
+### 4. Correlate logs with traces
 
 Always log with context:
 
@@ -539,7 +539,7 @@ slog.InfoContext(ctx, "Processing started")
 // trace_id and span_id automatically included
 ```
 
-### 5. Track LLM Costs
+### 5. Track LLM costs
 
 Monitor token usage to control costs:
 
@@ -553,9 +553,9 @@ costPerToken := 0.00001  // $0.01 per 1K tokens
 totalCost := totalTokens * costPerToken
 ```
 
-## Troubleshooting Common Issues
+## Troubleshooting common issues
 
-### Missing Traces
+### Missing traces
 
 **Symptom:** Traces not appearing in backend
 
@@ -574,7 +574,7 @@ observability:
   debug: true # Enable verbose OTLP logging
 ```
 
-### High Overhead
+### High overhead
 
 **Symptom:** Tracing impacting performance
 
@@ -586,7 +586,7 @@ observability:
   sampling_rate: 0.1 # Sample 10% instead of 100%
 ```
 
-### Incomplete Spans
+### Incomplete spans
 
 **Symptom:** Some spans missing from trace
 
@@ -600,7 +600,7 @@ observability:
   span_timeout: 60s # Increase timeout
 ```
 
-## Example: Complete Observability Setup
+## Example: complete observability setup
 
 ```yaml
 # config/agents-prod.yaml
@@ -674,7 +674,7 @@ func main() {
 - ✅ LLM analytics in Langfuse
 - ✅ Structured logs with trace correlation
 
-## Key Takeaways
+## Key takeaways
 
 1. **Built-in observability** - OpenTelemetry included, no manual instrumentation
 2. **Distributed tracing** - Track messages across multi-agent workflows
@@ -684,7 +684,7 @@ func main() {
 
 Production AI systems are complex. Comprehensive observability is not optional—it's essential.
 
-## Next Steps
+## Next steps
 
 - **[Production Deployment](/guides/production-deployment/)** - Deploy with monitoring
 - **[Multi-Agent Orchestration](/guides/multi-agent-orchestration/)** - Debug complex workflows

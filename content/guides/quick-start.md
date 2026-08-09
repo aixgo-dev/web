@@ -15,7 +15,7 @@ that persists the results.
 go get github.com/aixgo-dev/aixgo
 ```
 
-## 2. Set Up Your API Key
+## 2. Set up your API key
 
 Before running agents, configure your LLM provider API key:
 
@@ -96,7 +96,7 @@ go run main.go
 
 That's it! You now have a running multi-agent system with producer, analyzer, and logger agents orchestrated by a supervisor. The entire deployment is a single binary.
 
-## What Just Happened?
+## What just happened?
 
 This example demonstrates Aixgo's core concepts:
 
@@ -112,23 +112,23 @@ The supervisor automatically:
 - Enforces the max_rounds limit (10 iterations)
 - Handles graceful shutdown
 
-## Next Steps
+## Next steps
 
 Now that you have your first agent running, explore Aixgo's powerful features:
 
-### Build Production Systems
+### Build production systems
 
 - **[Vector Databases & RAG](/guides/vector-databases/)** - Add semantic search and retrieval-augmented generation to eliminate hallucinations
 - **[Multi-Agent Orchestration](/guides/multi-agent-orchestration/)** - Build complex workflows with multiple specialized agents
 - **[Production Deployment](/guides/production-deployment/)** - Deploy your agents to production with monitoring and scaling
 
-### Advanced Features
+### Advanced features
 
 - **[Provider Integration](/guides/provider-integration/)** - Connect to OpenAI, Anthropic, Google, and more
 - **[Observability](/guides/observability/)** - Monitor your agents with OpenTelemetry and distributed tracing
 - **[Type Safety](/guides/type-safety/)** - Leverage Go's type system for compile-time error detection
 
-### Core Concepts
+### Core concepts
 
 - **[Core Concepts](/guides/core-concepts/)** - Learn about agent types and supervisor patterns
 - **[Extending Aixgo](/guides/extending-aixgo/)** - Add custom LLM providers, vector databases, and embeddings

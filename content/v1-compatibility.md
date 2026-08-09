@@ -11,7 +11,7 @@ integrations—will continue to work correctly with all future v1.x releases.
 This document defines what "compatibility" means, what is covered by our guarantee, and how Aixgo will evolve while honoring this commitment. This stability commitment reflects our
 [core philosophy](/why-aixgo/) that production AI deserves production-grade tooling.
 
-## The Compatibility Promise
+## The compatibility promise
 
 When Aixgo reaches v1.0, we commit that:
 
@@ -27,9 +27,9 @@ distributed deployments.
 While we expect the vast majority of programs will maintain this compatibility, it is impossible to guarantee that no future change will break any program. This document catalogs
 exceptions to our compatibility promise.
 
-## What Is Covered
+## What is covered
 
-### YAML Workflow Configurations
+### YAML workflow configurations
 
 All documented YAML schema elements for workflow definitions are stable:
 
@@ -64,7 +64,7 @@ agents:
 
 This configuration will execute identically across all v1.x releases.
 
-### Go SDK Public APIs
+### Go SDK public APIs
 
 All exported types, functions, and methods in the `github.com/aixgo-dev/aixgo` module are covered:
 
@@ -84,7 +84,7 @@ supervisor.AddAgent(analyzer)
 supervisor.Run(context.Background())  // Signature stable
 ```
 
-### Protocol Wire Formats
+### Protocol wire formats
 
 The serialized message formats for gRPC and MCP are guaranteed:
 
@@ -95,17 +95,17 @@ The serialized message formats for gRPC and MCP are guaranteed:
 
 Clients and servers built on v1.0 can communicate with v1.x counterparts.
 
-## What Is Excluded
+## What is excluded
 
 The following are explicitly **not** covered by the compatibility guarantee:
 
-### 1. Security Fixes
+### 1. Security fixes
 
 If a security vulnerability is discovered, we will fix it even if doing so breaks compatibility. Security always takes precedence over backward compatibility.
 
 **Rationale:** Protecting users from exploits is more important than API stability. We will document breaking security changes in release notes with migration guidance.
 
-### 2. Experimental Features
+### 2. Experimental features
 
 Features marked as **alpha** or **beta** in documentation may change or be removed:
 
@@ -129,7 +129,7 @@ agents:
 
 **Guidance:** Avoid experimental features in production code until they graduate to stable status.
 
-### 3. Internal Packages
+### 3. Internal packages
 
 Packages under `internal/` directories are not covered. These are implementation details subject to change without notice.
 
@@ -138,13 +138,13 @@ Packages under `internal/` directories are not covered. These are implementation
 - `github.com/aixgo-dev/aixgo/internal/executor` - Not stable
 - `github.com/aixgo-dev/aixgo/internal/transport` - Not stable
 
-### 4. Bugs and Unspecified Behavior
+### 4. Bugs and unspecified behavior
 
 Fixing bugs may break programs that depend on incorrect behavior. Similarly, behaviors not explicitly documented are subject to change.
 
 **Example:** If a YAML parser incorrectly accepts malformed input, fixing this bug may break configurations that relied on the bug.
 
-### 5. Performance Characteristics
+### 5. Performance characteristics
 
 We do not guarantee execution speed, memory usage, or resource consumption. Optimizations may change performance profiles between releases.
 
@@ -161,13 +161,13 @@ The `aixgo` CLI tool, code generators, and development utilities may change:
 
 **Guidance:** For automation, use the Go SDK or gRPC APIs rather than parsing CLI output.
 
-### 7. External Dependencies
+### 7. External dependencies
 
 Compatibility with third-party LLM providers, vector databases, or external services is not guaranteed. If OpenAI changes their API, Aixgo may update its integration accordingly.
 
 **Rationale:** We cannot control external service evolution. We will minimize disruption but cannot guarantee zero-impact migrations.
 
-### 8. Unkeyed YAML Struct Literals
+### 8. Unkeyed YAML struct literals
 
 Adding new fields to YAML configurations may break workflows that rely on field ordering in unkeyed structs.
 
@@ -189,9 +189,9 @@ agents:
     model: gpt-4-turbo
 ```
 
-## How Aixgo Will Evolve
+## How Aixgo will evolve
 
-### Adding Features
+### Adding features
 
 New capabilities will be introduced through:
 
@@ -202,7 +202,7 @@ New capabilities will be introduced through:
 
 **Backward compatibility:** Existing code will not need modification. New features are opt-in.
 
-### Deprecation Policy
+### Deprecation policy
 
 When features need to be replaced:
 
@@ -218,7 +218,7 @@ When features need to be replaced:
 func NewSupervisor(name string) *Supervisor { ... }
 ```
 
-### Semantic Versioning
+### Semantic versioning
 
 Aixgo follows strict semantic versioning:
 
@@ -226,11 +226,11 @@ Aixgo follows strict semantic versioning:
 - **v1.x.0** - Minor releases (new features, backward-compatible)
 - **v2.0.0** - Major releases (breaking changes)
 
-## Writing Future-Proof Code
+## Writing future-proof code
 
 Follow these guidelines to ensure your code remains compatible:
 
-### 1. Use Keyed YAML Fields
+### 1. Use keyed YAML fields
 
 Always specify field names explicitly:
 
@@ -248,7 +248,7 @@ agents:
   - gpt-4-turbo
 ```
 
-### 2. Avoid Experimental Features
+### 2. Avoid experimental features
 
 Check documentation for "alpha," "beta," or "experimental" warnings:
 
@@ -260,7 +260,7 @@ supervisor := aixgo.NewSupervisor("coordinator")
 supervisor := aixgo.NewExperimentalSupervisor("coordinator")  // May change
 ```
 
-### 3. Depend on Public APIs Only
+### 3. Depend on public APIs only
 
 Import from `github.com/aixgo-dev/aixgo`, not `internal/` packages:
 
@@ -272,7 +272,7 @@ import "github.com/aixgo-dev/aixgo"
 import "github.com/aixgo-dev/aixgo/internal/executor"
 ```
 
-### 4. Handle Errors Gracefully
+### 4. Handle errors gracefully
 
 Don't assume specific error messages or types unless documented:
 
@@ -288,7 +288,7 @@ if err != nil && strings.Contains(err.Error(), "timeout") {
 }
 ```
 
-### 5. Pin to Minor Versions
+### 5. Pin to minor versions
 
 Use Go modules to control upgrade cadence:
 
@@ -299,7 +299,7 @@ require github.com/aixgo-dev/aixgo v1.2.3  // Specific version
 
 For production, pin to a specific minor version and test before upgrading.
 
-## Migration Path from Alpha
+## Migration path from alpha
 
 When v1.0 is released, we will provide:
 
@@ -308,7 +308,7 @@ When v1.0 is released, we will provide:
 3. **Deprecation warnings** - Advance notice of features removed in v1.0
 4. **Extended support** - v0.x will receive critical security patches for 6 months after v1.0 release
 
-## Reporting Compatibility Issues
+## Reporting compatibility issues
 
 If you encounter a compatibility regression:
 

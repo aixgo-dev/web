@@ -5,8 +5,6 @@ category: 'Advanced'
 weight: 8
 ---
 
-# Using Public Interfaces
-
 Aixgo v0.2.2 introduces the `agent` package—a standalone, minimal-dependency package that exports core interfaces for building custom agents. This enables library-style integration into existing Go applications without requiring the full Aixgo framework.
 
 ## Overview
@@ -18,7 +16,7 @@ The public agent package provides:
 - **Runtime Interface**: Coordinate multiple agents with synchronous and asynchronous communication
 - **LocalRuntime**: Production-ready single-process runtime implementation
 
-### When to Use Public Interfaces
+### When to use public interfaces
 
 | Use Case | Approach |
 |----------|----------|
@@ -38,9 +36,9 @@ go get github.com/aixgo-dev/aixgo/agent
 
 The package has minimal dependencies (only `github.com/google/uuid`), making it suitable for projects where dependency management is a concern.
 
-## Core Interfaces
+## Core interfaces
 
-### Agent Interface
+### Agent interface
 
 All agents must implement the `Agent` interface:
 
@@ -67,7 +65,7 @@ type Agent interface {
 }
 ```
 
-### Message Struct
+### Message struct
 
 Messages are the standard unit of communication:
 
@@ -81,7 +79,7 @@ type Message struct {
 }
 ```
 
-### Runtime Interface
+### Runtime interface
 
 The Runtime coordinates agent communication:
 
@@ -108,7 +106,7 @@ type Runtime interface {
 }
 ```
 
-## Creating a Custom Agent
+## Creating a custom agent
 
 Here's a complete example of a custom agent:
 
@@ -222,9 +220,9 @@ func main() {
 }
 ```
 
-## Message Patterns
+## Message patterns
 
-### Creating Messages with Metadata
+### Creating messages with metadata
 
 ```go
 // Create a message with structured payload
@@ -239,7 +237,7 @@ msg := agent.NewMessage("request", map[string]interface{}{
 priority := msg.GetMetadataString("priority", "normal")
 ```
 
-### Asynchronous Communication
+### Asynchronous communication
 
 ```go
 // Send a message without waiting for response
@@ -257,9 +255,9 @@ go func() {
 rt.Broadcast(agent.NewMessage("shutdown", nil))
 ```
 
-## Integration Patterns
+## Integration patterns
 
-### Embedding in an HTTP Service
+### Embedding in an HTTP service
 
 ```go
 package main
@@ -306,7 +304,7 @@ func (s *AgentService) HandleAnalyze(w http.ResponseWriter, r *http.Request) {
 }
 ```
 
-### Wrapping Existing Code
+### Wrapping existing code
 
 Migrate existing logic incrementally by wrapping it in an agent:
 
@@ -358,7 +356,7 @@ func (w *LegacyWrapper) Stop(ctx context.Context) error {
 }
 ```
 
-## Building an Orchestrator
+## Building an orchestrator
 
 Create complex workflows by composing agents:
 
@@ -393,7 +391,7 @@ func (o *WorkflowOrchestrator) Execute(ctx context.Context, input *agent.Message
 }
 ```
 
-## Testing Agents
+## Testing agents
 
 ```go
 package myagent_test
@@ -455,7 +453,7 @@ func TestWithRuntime(t *testing.T) {
 }
 ```
 
-## Comparison: Framework vs. Library
+## Comparison: framework vs. library
 
 | Feature | Full Framework | Public Package |
 |---------|----------------|----------------|
@@ -467,7 +465,7 @@ func TestWithRuntime(t *testing.T) {
 | Dependencies | Full framework | Only uuid |
 | Use case | Standalone AI apps | Integration into existing services |
 
-## Migrating to Full Framework
+## Migrating to full framework
 
 When you're ready for advanced features, migration is straightforward:
 
@@ -491,7 +489,7 @@ reactAgent := agents.NewReActAgent(config)
 rt.Register(reactAgent)
 ```
 
-## Best Practices
+## Best practices
 
 1. **Keep agents focused**: Each agent should have a single responsibility
 1. **Use metadata for tracing**: Add correlation IDs and request context to messages
@@ -499,7 +497,7 @@ rt.Register(reactAgent)
 1. **Test in isolation**: Test agents independently before integrating with the runtime
 1. **Graceful shutdown**: Always call `runtime.Stop()` to clean up resources
 
-## Next Steps
+## Next steps
 
 - [Core Concepts](/guides/core-concepts/) - Understand agent fundamentals
 - [Multi-Agent Orchestration](/guides/multi-agent-orchestration/) - Advanced coordination patterns

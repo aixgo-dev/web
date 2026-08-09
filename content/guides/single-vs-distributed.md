@@ -8,7 +8,7 @@ weight: 5
 
 One of Aixgo's planned features is seamless scaling: write your code once, and run it anywhere. Currently in alpha, local mode is available. Distributed mode coming in v0.2.
 
-## The Problem with Traditional Scaling
+## The problem with traditional scaling
 
 Most frameworks require you to choose your architecture upfront:
 
@@ -18,7 +18,7 @@ Most frameworks require you to choose your architecture upfront:
 
 This creates a painful transition: prototype locally with one architecture, then rewrite for production with another.
 
-## Aixgo's Solution: Transport Abstraction
+## Aixgo's solution: transport abstraction
 
 Aixgo abstracts message transport into a runtime layer. Your agent code stays the same; the runtime selects the appropriate transport based on configuration.
 
@@ -30,9 +30,9 @@ supervisor.AddAgent(analyzer)
 supervisor.Run()  // Runtime picks: channels or gRPC
 ```
 
-## Local Mode: Go Channels
+## Local mode: Go channels
 
-### How It Works
+### How it works
 
 In local mode, Aixgo uses Go channels for inter-agent communication. All agents run in the same process, communicating through in-memory channels.
 
@@ -54,7 +54,7 @@ func (r *LocalRuntime) Send(target string, msg Message) {
 - **Low latency** - In-memory communication, microsecond message passing
 - **Perfect for development** - Rapid prototyping and testing
 
-### When to Use Local Mode
+### When to use local mode
 
 ✅ **Local development** - Prototyping and testing on your machine
 
@@ -64,9 +64,9 @@ func (r *LocalRuntime) Send(target string, msg Message) {
 
 ✅ **Edge devices** - Resource-constrained environments where one process is sufficient
 
-## Distributed Mode: gRPC
+## Distributed mode: gRPC
 
-### How It Works
+### How it works
 
 In distributed mode, Aixgo uses gRPC with Protocol Buffers for inter-agent communication. Agents can run on different nodes, regions, or even cloud providers.
 
@@ -85,7 +85,7 @@ supervisor.Run()  // Runtime uses gRPC
 - **Multi-region support** - Deploy across geographic regions
 - **Resource optimization** - Run compute-heavy agents on dedicated hardware
 
-### When to Use Distributed Mode
+### When to use distributed mode
 
 ✅ **High throughput** - Processing thousands of messages per second
 
@@ -95,11 +95,11 @@ supervisor.Run()  // Runtime uses gRPC
 
 ✅ **Fault tolerance** - Critical systems requiring redundancy
 
-## The Same Code, Different Configuration
+## The same code, different configuration
 
 Here's the key insight: **your agent code never changes**. Only configuration differs.
 
-### Local Configuration
+### Local configuration
 
 ```yaml
 # config/agents.yaml
@@ -119,7 +119,7 @@ agents:
       - source: producer
 ```
 
-### Distributed Configuration
+### Distributed configuration
 
 ```yaml
 # config/agents.yaml
@@ -141,9 +141,9 @@ agents:
       - source: producer
 ```
 
-## Scaling Path: Local → Single Instance → Distributed
+## Scaling path: local → single instance → distributed
 
-### Step 1: Develop Locally
+### Step 1: develop locally
 
 ```bash
 # Development on your laptop
@@ -152,7 +152,7 @@ go run main.go
 
 Configuration: `mode: local`
 
-### Step 2: Deploy Single Instance
+### Step 2: deploy single instance
 
 ```dockerfile
 # Dockerfile
@@ -169,7 +169,7 @@ CMD ["/agent"]
 
 Deploy to Cloud Run, Lambda, or any container platform. Still using `mode: local` - all agents in one process.
 
-### Step 3: Scale to Distributed
+### Step 3: scale to distributed
 
 When you need more capacity:
 
@@ -204,7 +204,7 @@ spec:
           args: ['--agent=analyzer']
 ```
 
-## Performance Comparison
+## Performance comparison
 
 Choose the right deployment mode based on your performance and scale requirements.
 
@@ -217,9 +217,9 @@ Choose the right deployment mode based on your performance and scale requirement
 | **Cost**       | $10-50/month (small instance) | $100-500/month (cluster)    |
 | **Complexity** | Simple                        | Requires orchestration      |
 
-## Best Practices
+## Best practices
 
-### Start Local
+### Start local
 
 Always begin with local mode:
 
@@ -227,7 +227,7 @@ Always begin with local mode:
 - Easy debugging
 - Validate logic before adding infrastructure
 
-### Measure Before Distributing
+### Measure before distributing
 
 Only move to distributed mode when you have evidence you need it:
 
@@ -237,7 +237,7 @@ Only move to distributed mode when you have evidence you need it:
 
 Don't prematurely optimize—many production workloads run fine in local mode on a single Cloud Run instance.
 
-### Use Environment-Based Configuration
+### Use environment-based configuration
 
 ```go
 // main.go
@@ -262,7 +262,7 @@ ENV=prod go run main.go
 ENV=prod-distributed go run main.go
 ```
 
-### Monitor Transport Performance
+### Monitor transport performance
 
 Use OpenTelemetry to track:
 
@@ -272,7 +272,7 @@ Use OpenTelemetry to track:
 
 This data informs when to scale.
 
-## Current Status & Roadmap
+## Current status & roadmap
 
 **Local Mode: ✅ Available (v0.1)** Ready for production use with Go channels.
 
@@ -281,7 +281,7 @@ This data informs when to scale.
 While distributed mode is in development, you can build production systems today using local mode. Most use cases—especially single-instance Cloud Run/Lambda deployments—work
 perfectly with in-process channels.
 
-## Next Steps
+## Next steps
 
 - **[Multi-Agent Orchestration](/guides/multi-agent-orchestration/)** - Build complex workflows
 - **[Production Deployment](/guides/production-deployment/)** - Deploy to production environments

@@ -12,7 +12,7 @@ Aixgo provides **Pydantic AI-style automatic validation retry**, a powerful feat
 
 ## Overview
 
-### The Problem
+### The problem
 
 LLMs are powerful but imperfect. When extracting structured data, they often:
 - Omit required fields
@@ -22,7 +22,7 @@ LLMs are powerful but imperfect. When extracting structured data, they often:
 
 Traditional approaches fail immediately on validation errors, requiring manual retry logic and increasing development complexity.
 
-### The Solution
+### The solution
 
 Aixgo's validation retry feature automatically:
 1. **Detects** validation failures
@@ -41,9 +41,9 @@ This is **enabled by default** with `MaxRetries=3`, providing Pydantic AI-style 
 - **Opt-out support** for performance-critical scenarios
 - **Works with all agents** and providers
 
-## Quick Start
+## Quick start
 
-### Basic Usage
+### Basic usage
 
 ```go
 package main
@@ -94,7 +94,7 @@ func main() {
 }
 ```
 
-### What Happens Behind the Scenes
+### What happens behind the scenes
 
 When you call `CreateStructured`, Aixgo automatically handles validation failures:
 
@@ -119,7 +119,7 @@ Please correct the issues and provide a valid response that matches all requirem
 ```
 Validation succeeds - result returned to your application
 
-## How It Works
+## How it works
 
 ### Architecture
 
@@ -150,7 +150,7 @@ Validation succeeds - result returned to your application
 └─────────────────────────────────────────────────────────────┘
 ```
 
-### Retry Loop Logic
+### Retry loop logic
 
 ```go
 for attempt := 0; attempt < maxRetries; attempt++ {
@@ -182,7 +182,7 @@ for attempt := 0; attempt < maxRetries; attempt++ {
 
 ## Configuration
 
-### ClientConfig Options
+### ClientConfig options
 
 ```go
 type ClientConfig struct {
@@ -202,7 +202,7 @@ type ClientConfig struct {
 }
 ```
 
-### Default Behavior
+### Default behavior
 
 ```go
 // Default: MaxRetries=3, retry enabled
@@ -212,9 +212,9 @@ client := llm.NewClient(provider, llm.ClientConfig{
 // ✅ Automatic retry with up to 3 attempts
 ```
 
-### Disable Retry (Opt-Out)
+### Disable retry (opt-out)
 
-#### Option 1: Use DisableValidationRetry Flag
+#### Option 1: use DisableValidationRetry flag
 
 ```go
 client := llm.NewClient(provider, llm.ClientConfig{
@@ -223,7 +223,7 @@ client := llm.NewClient(provider, llm.ClientConfig{
 })
 ```
 
-#### Option 2: Set MaxRetries to 1
+#### Option 2: set MaxRetries to 1
 
 ```go
 client := llm.NewClient(provider, llm.ClientConfig{
@@ -232,7 +232,7 @@ client := llm.NewClient(provider, llm.ClientConfig{
 })
 ```
 
-### Custom Retry Count
+### Custom retry count
 
 ```go
 client := llm.NewClient(provider, llm.ClientConfig{
@@ -241,9 +241,9 @@ client := llm.NewClient(provider, llm.ClientConfig{
 })
 ```
 
-## Use Cases
+## Use cases
 
-### Use Case 1: User Data Extraction
+### Use case 1: user data extraction
 
 ```go
 type User struct {
@@ -259,7 +259,7 @@ type User struct {
 user, err := llm.CreateStructured[User](ctx, client, prompt, nil)
 ```
 
-### Use Case 2: API Response Parsing
+### Use case 2: API response parsing
 
 ```go
 type APIResponse struct {
@@ -280,11 +280,11 @@ type Metadata struct {
 response, err := llm.CreateStructured[APIResponse](ctx, client, prompt, nil)
 ```
 
-## Validating Array Length
+## Validating array length
 
 Go's validator tags don't support `minItems` for slices. Use the `Validatable` interface for custom array validation.
 
-### The Problem
+### The problem
 
 LLMs frequently return empty arrays when they shouldn't:
 
@@ -294,7 +294,7 @@ LLMs frequently return empty arrays when they shouldn't:
 
 This is a common failure mode that degrades data quality and requires explicit handling.
 
-### The Solution
+### The solution
 
 Implement the `Validatable` interface with custom validation:
 
@@ -315,7 +315,7 @@ result, err := llm.CreateStructured[DataCollection](ctx, client, prompt, nil)
 // Framework automatically retries if validation fails
 ```
 
-### Automatic Retry Feedback
+### Automatic retry feedback
 
 When validation fails, the LLM receives detailed feedback:
 
@@ -330,7 +330,7 @@ If truly not found, use: ["Not specified"]
 
 The retry mechanism feeds this error message back to the LLM, prompting it to correct the issue. This typically resolves 60-80% of empty array problems automatically.
 
-### Reusable Pattern
+### Reusable pattern
 
 Create a generic helper for application code (not provided by framework):
 
@@ -350,11 +350,11 @@ type Response struct {
 }
 ```
 
-## Comprehensive Validation Tags Reference
+## Validation tag reference
 
 Aixgo uses the [go-playground/validator](https://github.com/go-playground/validator) library, which supports extensive validation tags.
 
-### Required and Optional Fields
+### Required and optional fields
 
 ```go
 type User struct {
@@ -363,7 +363,7 @@ type User struct {
 }
 ```
 
-### Numeric Constraints
+### Numeric constraints
 
 ```go
 type Product struct {
@@ -374,7 +374,7 @@ type Product struct {
 }
 ```
 
-### String Constraints
+### String constraints
 
 ```go
 type User struct {
@@ -393,7 +393,7 @@ type Order struct {
 }
 ```
 
-### Format Validation
+### Format validation
 
 ```go
 type Contact struct {
@@ -405,7 +405,7 @@ type Contact struct {
 }
 ```
 
-### Nested Validation (dive)
+### Nested validation (dive)
 
 ```go
 type Company struct {
@@ -420,7 +420,7 @@ type Employee struct {
 // The "dive" tag validates each element in the slice
 ```
 
-### Combining Tags
+### Combining tags
 
 ```go
 type User struct {
@@ -435,7 +435,7 @@ type User struct {
 }
 ```
 
-### When to Use Struct Tags vs Validatable Interface
+### When to use struct tags vs Validatable interface
 
 **Use struct tags when:**
 
@@ -472,11 +472,11 @@ func (o Order) Validate() error {
 }
 ```
 
-## Cross-Field Validation
+## Cross-field validation
 
 When validation depends on multiple fields, implement the `Validatable` interface.
 
-### Date Range Validation
+### Date range validation
 
 ```go
 type Event struct {
@@ -492,7 +492,7 @@ func (e Event) Validate() error {
 }
 ```
 
-### Conditional Required Fields
+### Conditional required fields
 
 ```go
 type Payment struct {
@@ -512,7 +512,7 @@ func (p Payment) Validate() error {
 }
 ```
 
-### Mutually Exclusive Fields
+### Mutually exclusive fields
 
 ```go
 type Search struct {
@@ -534,7 +534,7 @@ func (s Search) Validate() error {
 }
 ```
 
-### Sum Validation
+### Sum validation
 
 ```go
 type Budget struct {
@@ -555,9 +555,9 @@ func (b Budget) Validate() error {
 }
 ```
 
-## Best Practices
+## Best practices
 
-### 1. Use Descriptive Validation Tags
+### 1. Use descriptive validation tags
 
 **Good:**
 ```go
@@ -579,7 +579,7 @@ type User struct {
 }
 ```
 
-### 2. Provide Explicit System Prompts
+### 2. Provide explicit system prompts
 
 ```go
 result, err := llm.CreateStructured[User](ctx, client, userPrompt, &llm.CreateOptions{
@@ -595,7 +595,7 @@ All fields are REQUIRED. If information is missing, make reasonable assumptions 
 })
 ```
 
-### 3. Set Reasonable MaxRetries
+### 3. Set reasonable MaxRetries
 
 ```go
 // Simple schema: 3 retries (default)
@@ -619,7 +619,7 @@ client := llm.NewClient(provider, llm.ClientConfig{
 
 ## Troubleshooting
 
-### Validation Still Fails After Retries
+### Validation still fails after retries
 
 **Problem**: Error message shows "validation failed after 3 attempts"
 
@@ -656,7 +656,7 @@ client := llm.NewClient(provider, llm.ClientConfig{
    DefaultModel: "gpt-4",  // Better than gpt-3.5-turbo
    ```
 
-### Performance Issues
+### Performance issues
 
 **Problem**: Requests are too slow
 
@@ -682,13 +682,13 @@ client := llm.NewClient(provider, llm.ClientConfig{
    - Use few-shot prompting
    - Simplify schema complexity
 
-## Related Documentation
+## Related documentation
 
 - [Validation Tags Reference](https://pkg.go.dev/github.com/go-playground/validator/v10)
 - [Pydantic AI Inspiration](https://ai.pydantic.dev/)
 - [Example: Pydantic-Style Validation](https://github.com/aixgo-dev/aixgo/tree/main/examples/pydantic-style-validation/)
 
-## See Also
+## See also
 
 - [LLM Provider Integration](/guides/provider-integration/)
 - [Type Safety](/guides/type-safety/)

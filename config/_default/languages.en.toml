@@ -1,6 +1,13 @@
 disabled = false
-languageCode = "en"
-languageName = "English"
+
+# `locale` and `label` are what Hugo 0.158 renamed `languageCode` and
+# `languageName` to. Values carried across unchanged. A Hugo older than 0.158
+# ignores both names and falls back to the language key, which is also "en", so
+# the RSS <language> element comes out the same either way. That matters here
+# because the deploy pin lives in the Cloudflare Pages project rather than in
+# this repo and can lag the local version.
+locale = "en"
+label = "English"
 weight = 1
 title = "Aixgo"
 

@@ -6,9 +6,9 @@ category: 'Reference'
 weight: 11
 ---
 
-## Provider Status
+## Provider status
 
-### LLM Providers
+### LLM providers
 
 | Provider           | Status                                  | Notes                                                     |
 | ------------------ | --------------------------------------- | --------------------------------------------------------- |
@@ -21,7 +21,7 @@ weight: 11
 | HuggingFace        | {{< status-badge status="available" >}} | Free Inference API, cloud backends                        |
 | Ollama             | {{< status-badge status="available" >}} | Local models, zero costs, enterprise SSRF protection, hybrid fallback |
 
-### Vector Databases
+### Vector databases
 
 | Provider  | Status                                  | Notes                                 |
 | --------- | --------------------------------------- | ------------------------------------- |
@@ -30,7 +30,7 @@ weight: 11
 | Qdrant    | {{< status-badge status="planned" >}}   | Planned for v0.2                      |
 | pgvector  | {{< status-badge status="planned" >}}   | Planned for v0.2                      |
 
-### Embedding Providers
+### Embedding providers
 
 | Provider        | Status                                  | Notes                                          |
 | --------------- | --------------------------------------- | ---------------------------------------------- |
@@ -40,7 +40,7 @@ weight: 11
 
 ---
 
-## LLM Providers
+## LLM providers
 
 ### OpenAI (GPT-4, GPT-3.5)
 
@@ -208,7 +208,7 @@ agent := aixgo.NewAgent(
 - Gemini 1.5 Pro: $0.00125 per 1K input chars, $0.005 per 1K output chars
 - Gemini 1.5 Flash: $0.000125 per 1K input chars, $0.000375 per 1K output chars
 
-### HuggingFace Inference API
+### HuggingFace inference API
 
 **Supported backends:**
 
@@ -270,7 +270,7 @@ agent := aixgo.NewAgent(
 
 ---
 
-### Ollama (Local Models)
+### Ollama (local models)
 
 **Run production AI models on your own infrastructure with zero API costs and complete data privacy.**
 
@@ -785,7 +785,7 @@ resp, err := p.CreateCompletion(ctx, provider.CompletionRequest{
 
 **See also:** [AWS Bedrock Guide](/guides/aws-bedrock/) for comprehensive setup and production deployment.
 
-## Provider Comparison
+## Provider comparison
 
 | Provider          | Best For                          | Context Length | Tool Support | Cost      |
 | ----------------- | --------------------------------- | -------------- | ------------ | --------- |
@@ -797,9 +797,9 @@ resp, err := p.CreateCompletion(ctx, provider.CompletionRequest{
 | **xAI**           | Real-time info, research          | 128K tokens    | ✅ Good      | $$$       |
 | **Ollama**        | Local inference, data privacy     | Varies (4K-32K)| ⚠️ Limited   | Free      |
 
-## Multi-Provider Strategy
+## Multi-provider strategy
 
-### Fallback Configuration
+### Fallback configuration
 
 Use multiple providers with automatic fallback:
 
@@ -822,7 +822,7 @@ agents:
 
 If OpenAI fails, automatically try Anthropic, then Google.
 
-### Cost Optimization
+### Cost optimization
 
 Route based on complexity:
 
@@ -840,7 +840,7 @@ Route based on complexity:
   provider: openai
 ```
 
-### Region-Specific Routing
+### Region-specific routing
 
 ```yaml
 # US region: Vertex AI (low latency)
@@ -858,7 +858,7 @@ Route based on complexity:
   endpoint: https://api.openai.com/v1 # or EU-specific endpoint
 ```
 
-## Vector Databases & Embeddings
+## Vector databases & embeddings
 
 ### Overview
 
@@ -871,9 +871,9 @@ vector storage for maximum flexibility.
 Documents → Embeddings Service → Vector Database → Semantic Search
 ```
 
-### Embedding Providers
+### Embedding providers
 
-#### OpenAI Embeddings
+#### OpenAI embeddings
 
 **Best for:** Production deployments, highest quality
 
@@ -916,7 +916,7 @@ embedding, err := embSvc.Embed(ctx, "Your text here")
 - `text-embedding-3-large`: 3072 dimensions, $0.13 per 1M tokens
 - `text-embedding-ada-002`: 1536 dimensions (legacy)
 
-#### HuggingFace Inference API
+#### HuggingFace inference API
 
 **Best for:** Development, cost-sensitive deployments
 
@@ -940,7 +940,7 @@ embeddings:
 
 **Pricing:** FREE (Inference API) with rate limits
 
-#### HuggingFace TEI (Self-Hosted)
+#### HuggingFace TEI (self-hosted)
 
 **Best for:** High-throughput production workloads
 
@@ -966,9 +966,9 @@ embeddings:
     normalize: true
 ```
 
-### Vector Store Providers
+### Vector store providers
 
-#### Firestore Vector Search
+#### Firestore vector search
 
 **Best for:** Serverless production deployments on GCP
 
@@ -1045,7 +1045,7 @@ results, err := store.Search(ctx, vectorstore.SearchQuery{
 
 **Pricing:** ~$0.06 per 100K reads + storage
 
-#### In-Memory Vector Store
+#### In-memory vector store
 
 **Best for:** Development, testing, prototyping
 
@@ -1066,7 +1066,7 @@ vectorstore:
 - ❌ Data lost on restart
 - ❌ Limited capacity
 
-#### Qdrant (Planned - v0.2)
+#### Qdrant (planned - v0.2)
 
 High-performance dedicated vector database:
 
@@ -1081,7 +1081,7 @@ vectorstore:
     collection: knowledge_base
 ```
 
-#### pgvector (Planned - v0.2)
+#### pgvector (planned - v0.2)
 
 PostgreSQL extension for vector search:
 
@@ -1095,7 +1095,7 @@ vectorstore:
     table: embeddings
 ```
 
-### Complete RAG Example
+### Complete RAG example
 
 ```go
 package main
@@ -1163,7 +1163,7 @@ func main() {
 }
 ```
 
-### Provider Comparison: Embeddings
+### Provider comparison: embeddings
 
 | Provider            | Cost                 | Quality        | Speed     | Best For    |
 | ------------------- | -------------------- | -------------- | --------- | ----------- |
@@ -1171,7 +1171,7 @@ func main() {
 | **HuggingFace API** | Free                 | Good-Excellent | Medium    | Development |
 | **HuggingFace TEI** | Free (self-host)     | Good-Excellent | Very Fast | High-volume |
 
-### Provider Comparison: Vector Stores
+### Provider comparison: vector stores
 
 | Provider               | Persistence | Scalability | Setup  | Cost      |
 | ---------------------- | ----------- | ----------- | ------ | --------- |
@@ -1180,15 +1180,15 @@ func main() {
 | **Qdrant** (planned)   | Yes         | Very High   | Medium | Self-host |
 | **pgvector** (planned) | Yes         | High        | Medium | Self-host |
 
-### Learn More
+### Learn more
 
 - **[Vector Databases Guide](/guides/vector-databases/)** - Complete RAG implementation guide
 - **[Extending Aixgo](/guides/extending-aixgo/)** - Add custom vector store providers
 - **[RAG Agent Example](https://github.com/aixgo-dev/aixgo/tree/main/examples/rag-agent)** - Full working example
 
-## API Key Management
+## API key management
 
-### Environment Variables
+### Environment variables
 
 ```bash
 # .env file
@@ -1204,7 +1204,7 @@ Load with:
 export $(cat .env | xargs)
 ```
 
-### Kubernetes Secrets
+### Kubernetes secrets
 
 ```bash
 kubectl create secret generic llm-keys \
@@ -1223,7 +1223,7 @@ env:
         key: OPENAI_API_KEY
 ```
 
-### Cloud Secret Managers
+### Cloud secret managers
 
 **Google Secret Manager:**
 
@@ -1239,9 +1239,9 @@ func getAPIKey(ctx context.Context, secretName string) (string, error) {
 }
 ```
 
-## Rate Limiting & Retries
+## Rate limiting & retries
 
-### Provider Rate Limits
+### Provider rate limits
 
 | Provider  | Tier        | Requests/Min | Tokens/Min |
 | --------- | ----------- | ------------ | ---------- |
@@ -1251,7 +1251,7 @@ func getAPIKey(ctx context.Context, secretName string) (string, error) {
 | Anthropic | Paid        | 50           | 100,000    |
 | Vertex AI | Default     | 60           | 60,000     |
 
-### Retry Configuration
+### Retry configuration
 
 ```yaml
 agents:
@@ -1270,9 +1270,9 @@ agents:
         - server_error
 ```
 
-## Monitoring Provider Performance
+## Monitoring provider performance
 
-### Track Latency by Provider
+### Track latency by provider
 
 ```go
 import "github.com/prometheus/client_golang/prometheus"
@@ -1288,7 +1288,7 @@ var providerLatency = prometheus.NewHistogramVec(
 // Aixgo tracks this automatically
 ```
 
-### Cost Tracking
+### Cost tracking
 
 ```yaml
 observability:
@@ -1296,9 +1296,9 @@ observability:
   cost_alert_threshold: 100 # Alert if daily cost > $100
 ```
 
-## Best Practices
+## Best practices
 
-### 1. Use Environment-Specific Keys
+### 1. Use environment-specific keys
 
 ```yaml
 # Development
@@ -1308,11 +1308,11 @@ OPENAI_API_KEY=sk-dev-...
 OPENAI_API_KEY=sk-prod-...
 ```
 
-### 2. Implement Fallback Providers
+### 2. Implement fallback providers
 
 Always have a backup provider to avoid single point of failure.
 
-### 3. Monitor Token Usage
+### 3. Monitor token usage
 
 Track and alert on unexpected token consumption:
 
@@ -1324,14 +1324,14 @@ observability:
     daily_token_limit: 1000000
 ```
 
-### 4. Choose Models Strategically
+### 4. Choose models strategically
 
 - **Simple tasks:** gpt-3.5-turbo, gemini-flash, claude-haiku
 - **Complex reasoning:** gpt-4-turbo, claude-3-opus
 - **Long documents:** claude-3-opus (200K), gemini-pro (2M)
 - **Cost-sensitive:** gemini-flash, gpt-3.5-turbo
 
-### 5. Use Caching
+### 5. Use caching
 
 Cache LLM responses for repeated queries:
 
@@ -1347,7 +1347,7 @@ agent := aixgo.NewAgent(
 
 ## Troubleshooting
 
-### Authentication Errors
+### Authentication errors
 
 **Error:** `401 Unauthorized`
 
@@ -1357,7 +1357,7 @@ agent := aixgo.NewAgent(
 - Check key has not expired
 - Ensure environment variable is loaded
 
-### Rate Limit Exceeded
+### Rate limit exceeded
 
 **Error:** `429 Too Many Requests`
 
@@ -1368,7 +1368,7 @@ agent := aixgo.NewAgent(
 - Upgrade to higher tier
 - Add multiple API keys for rotation
 
-### Timeout Errors
+### Timeout errors
 
 **Error:** `Request timeout`
 
@@ -1382,7 +1382,7 @@ agents:
     timeout: 60s # Increase timeout
 ```
 
-## Next Steps
+## Next steps
 
 - **[Type Safety & LLM Integration](/guides/type-safety/)** - Type-safe provider usage
 - **[Observability & Monitoring](/guides/observability/)** - Monitor provider performance
