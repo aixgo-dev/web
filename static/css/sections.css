@@ -902,3 +902,17 @@
   border-radius: 50%;
   background: var(--ax-text-faint);
 }
+
+/* The permission/path chip group, sitting under a pair of fit lists. */
+.ax-perms { margin-top: var(--ax-s-9); }
+.ax-perms .ax-grid { margin-top: var(--ax-s-4); }
+
+.ax-perms .ax-card > code {
+  font-family: var(--ax-font-mono);
+  font-size: var(--ax-t-sm);
+  font-weight: 500;
+  color: var(--ax-accent);
+  overflow-wrap: anywhere;
+}
+
+.ax-perms .ax-card p { margin-top: var(--ax-s-3); }

@@ -1,0 +1,71 @@
+# Aixgate's structured lists. The prose stays in content/aixgate.md; anything
+# that is a list of like-shaped things is here, so the template can give it a
+# component instead of leaving it as a markdown table.
+#
+# Every line below came out of content/aixgate.md. No claim changed on the way.
+
+repo: "https://github.com/aixgo-dev/aixgate"
+release: "v0.1"
+
+hero:
+  eyebrow: "Aixgate · Open source · MIT"
+  status: >-
+    v0.1 proof of concept. macOS only, with a hardcoded policy and no
+    configuration. v0.2 brings YAML policy, an audit log and Linux. Treat it as
+    defence in depth rather than your only control.
+
+stats:
+  - value: "1"
+    label: "Go binary. No Docker, no daemon, no kernel extension"
+    accent: true
+  - value: "0"
+    label: "Configuration in v0.1: the policy is fixed"
+    accent: true
+  - value: "macOS"
+    label: "Supported today. Linux arrives in v0.2"
+  - value: "MIT"
+    label: "Open source licence"
+
+# The policy v0.1 enforces, stated as paths rather than prose.
+protected:
+  - path: ".env, .env.*"
+    note: "Matched anywhere under the working directory."
+  - path: "~/.ssh/id_rsa, id_ed25519, id_ecdsa, id_dsa"
+    note: "Private keys. Public keys stay readable."
+  - path: "~/.aws/credentials"
+    note: "The credentials file itself."
+
+defends:
+  - "Prompt injection that causes an agent to read sensitive files outside its declared scope."
+  - "Autonomous-run drift, where an agent operating with less human oversight reads credentials it never needed."
+  - "Compliance posture for developers under SOC 2, ISO 27001 or financial regulation who need a recorded boundary on what AI agents can see."
+
+cannot:
+  - "Rooted hosts. If an attacker has root, the sandboxing assumptions are already gone."
+  - "Kernel exploits. A sandbox-exec or Landlock escape is a kernel CVE, not an Aixgate bug."
+  - "Vulnerabilities in the agent itself. A bug in Claude Code is upstream's problem."
+
+roadmap:
+  - version: "v0.1"
+    state: "done"
+    item: "macOS, hardcoded policy, aixgate run"
+  - version: "v0.2"
+    state: "progress"
+    item: "Linux FUSE backend, YAML policy file, built-in profiles for claude-code, aider, cursor, codex and generic, append-only audit log with aixgate audit tail and query, and an aixgate doctor diagnostic"
+  - version: "v1.0"
+    state: "todo"
+    item: "Stable policy schema, signed audit log, FUSE-T fallback for macOS, a fuller profile library"
+  - version: "v1.x"
+    state: "todo"
+    item: "Windows via WFP, an eBPF backend on Linux, a fleet management hook"
+
+links:
+  - text: "GitHub repository"
+    url: "https://github.com/aixgo-dev/aixgate"
+    note: "Source, issues and releases"
+  - text: "Discussions"
+    url: "https://github.com/aixgo-dev/aixgate/discussions"
+    note: "Questions and feature requests"
+  - text: "Architecture and threat model"
+    url: "https://github.com/aixgo-dev/aixgate/blob/main/docs/PRD.md"
+    note: "The full PRD"
