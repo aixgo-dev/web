@@ -850,7 +850,10 @@
 
 .ax-keylist li:first-child { border-top: 0; }
 
+/* The chip is a grid item, so it would otherwise stretch to the whole track
+   and the tint would read as a bar rather than a key. */
 .ax-keylist code {
+  justify-self: start;
   font-family: var(--ax-font-mono);
   font-size: var(--ax-t-xs);
   color: var(--ax-accent);
