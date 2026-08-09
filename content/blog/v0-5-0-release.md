@@ -12,8 +12,8 @@ We're excited to announce **Aixgo v0.5.0**, bringing two major improvements that
 
 **Quick Links:**
 
-1. [Public Provider API](#1-public-provider-api) - Import LLM providers in your projects
-1. [Guided ReAct Workflows](#2-guided-react-workflows) - Step-by-step execution with verification
+1. [Public provider API](#1-public-provider-api) - Import LLM providers in your projects
+1. [Guided ReAct workflows](#2-guided-react-workflows) - Step-by-step execution with verification
 
 ### 1. Public provider API
 

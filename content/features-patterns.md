@@ -15,7 +15,7 @@ All patterns are **fully implemented and production-ready** in v0.2.0+.
 >
 > **This page provides a marketing-friendly overview for evaluation and planning.**
 
-## Pattern Overview
+## Pattern overview
 
 <div class="pattern-grid">
 
@@ -23,7 +23,7 @@ All patterns are **fully implemented and production-ready** in v0.2.0+.
 
 <div class="pattern-card implemented">
 
-#### Supervisor Pattern
+#### Supervisor pattern
 **Centralized orchestration with specialized agents**
 
 Route tasks to expert agents, aggregate results, and maintain conversation state. Perfect for customer service and multi-agent workflows.
@@ -40,7 +40,7 @@ orchestration:
 
 <div class="pattern-card implemented">
 
-#### Sequential Pattern
+#### Sequential pattern
 **Ordered pipeline execution**
 
 Execute agents in sequence where each step's output feeds the next. Ideal for ETL, content pipelines, and multi-stage workflows.
@@ -57,7 +57,7 @@ orchestration:
 
 <div class="pattern-card implemented">
 
-#### Parallel Pattern
+#### Parallel pattern
 **Concurrent execution with aggregation**
 
 Execute multiple agents simultaneously and aggregate results. **3-4× speedup** for independent tasks.
@@ -76,7 +76,7 @@ orchestration:
 
 <div class="pattern-card implemented">
 
-#### Router Pattern
+#### Router pattern
 **Intelligent routing for cost optimization**
 
 Route simple queries to cheap models, complex to expensive. **25-50% cost reduction** in production.
@@ -98,7 +98,7 @@ orchestration:
 
 <div class="pattern-card implemented">
 
-#### Swarm Pattern
+#### Swarm pattern
 **Decentralized agent handoffs**
 
 Dynamic agent-to-agent handoffs based on conversational context. Popularized by OpenAI Swarm.
@@ -117,7 +117,7 @@ orchestration:
 
 <div class="pattern-card implemented">
 
-#### Hierarchical Pattern
+#### Hierarchical pattern
 **Multi-level delegation**
 
 Managers delegate to sub-managers who delegate to workers. Perfect for complex decomposition.
@@ -139,7 +139,7 @@ orchestration:
 
 <div class="pattern-card implemented">
 
-#### RAG Pattern
+#### RAG pattern
 **Retrieval-Augmented Generation**
 
 Retrieve relevant docs from vector store, then generate grounded answers. **Most common enterprise pattern**.
@@ -160,7 +160,7 @@ orchestration:
 
 <div class="pattern-card implemented">
 
-#### Reflection Pattern
+#### Reflection pattern
 **Iterative refinement with self-critique**
 
 Generator creates output, critic reviews it, generator refines. **20-50% quality improvement**.
@@ -181,7 +181,7 @@ orchestration:
 
 <div class="pattern-card implemented">
 
-#### Ensemble Pattern
+#### Ensemble pattern
 **Multi-model voting for accuracy**
 
 Multiple models vote on outputs to reduce errors. **25-50% error reduction** in high-stakes decisions.
@@ -201,7 +201,7 @@ orchestration:
 
 <div class="pattern-card implemented">
 
-#### Classifier Pattern
+#### Classifier pattern
 **Intent-based routing**
 
 Classify user intent and route to specialized agents. Perfect for support ticket routing and content categorization.
@@ -223,7 +223,7 @@ orchestration:
 
 <div class="pattern-card implemented">
 
-#### Aggregation Pattern
+#### Aggregation pattern
 **Multi-agent synthesis**
 
 Combine outputs from multiple agents using consensus, weighted, or semantic strategies.
@@ -243,7 +243,7 @@ orchestration:
 
 <div class="pattern-card implemented">
 
-#### Planning Pattern
+#### Planning pattern
 **Dynamic task decomposition**
 
 Break complex tasks into subtasks with dynamic replanning based on execution results.
@@ -263,7 +263,7 @@ orchestration:
 
 <div class="pattern-card implemented">
 
-#### MapReduce Pattern
+#### MapReduce pattern
 **Distributed batch processing**
 
 Process large datasets in parallel chunks and aggregate results.
@@ -285,7 +285,7 @@ orchestration:
 
 <div class="pattern-card future">
 
-#### Debate Pattern
+#### Debate pattern
 **Adversarial collaboration for accuracy**
 
 Agents with different perspectives debate to reach consensus. **20-40% improvement in factual accuracy**.
@@ -298,7 +298,7 @@ Agents with different perspectives debate to reach consensus. **20-40% improveme
 
 <div class="pattern-card future">
 
-#### Plan-and-Execute Pattern
+#### Plan-and-execute pattern
 **Strategic planning before execution**
 
 Planner decomposes task, executors handle sub-tasks, planner adjusts based on results.
@@ -311,7 +311,7 @@ Planner decomposes task, executors handle sub-tasks, planner adjusts based on re
 
 <div class="pattern-card future">
 
-#### Nested/Composite Pattern
+#### Nested/composite pattern
 **Encapsulate complex workflows as single agents**
 
 Complex multi-agent workflows packaged as reusable components.
@@ -324,7 +324,7 @@ Complex multi-agent workflows packaged as reusable components.
 
 </div>
 
-## Pattern Comparison
+## Pattern comparison
 
 | Pattern | Complexity | Cost | Latency | Accuracy | Production Maturity |
 |---------|-----------|------|---------|----------|---------------------|
@@ -344,22 +344,22 @@ Complex multi-agent workflows packaged as reusable components.
 | **Debate** (Roadmap) | High | 9× | Very High | Very High | Roadmap |
 | **Nested** (Roadmap) | High | Variable | Variable | Variable | Roadmap |
 
-### Cost Legend
+### Cost legend
 - `1×` = Single agent execution
 - `N×` = N agents (sequential or parallel)
 - `0.25-0.5×` = Router savings (cheap models for most queries)
 - `0.3×` = RAG token reduction vs full KB
 - `2-4×`, `3-5×`, `9×` = Multiple iterations/agents
 
-### Latency Legend
+### Latency legend
 - **Low**: < 1s overhead
 - **Medium**: 1-5s overhead
 - **High**: 5-15s overhead
 - **Very High**: > 15s overhead
 
-## Pattern Selection Guide
+## Pattern selection guide
 
-### Choose by Goal
+### Choose by goal
 
 **💰 Reduce Costs**
 → **Router** (25-50% savings) or **RAG** (70% token reduction)
@@ -379,7 +379,7 @@ Complex multi-agent workflows packaged as reusable components.
 **📚 Knowledge-Intensive**
 → **RAG** (retrieval-augmented)
 
-### Decision Tree
+### Decision tree
 
 ```text
 Need to reduce costs? → Router or RAG
@@ -392,9 +392,9 @@ Need knowledge base access? → RAG
 General orchestration? → Supervisor (default)
 ```
 
-## Real-World Examples
+## Real-world examples
 
-### Cost Optimization with Router
+### Cost optimization with router
 
 ```go
 // Before: Always using GPT-4
@@ -415,7 +415,7 @@ router := orchestration.NewRouter(
 
 **Result**: **25-50% cost reduction** in production deployments.
 
-### Speed Improvement with Parallel
+### Speed improvement with parallel
 
 ```go
 // Before: Sequential execution
@@ -432,7 +432,7 @@ parallel := orchestration.NewParallel(
 
 **Result**: **3-4× speedup** for independent research tasks.
 
-### Accuracy Improvement with Ensemble
+### Accuracy improvement with ensemble
 
 ```go
 // Before: Single model (GPT-4)
@@ -454,12 +454,12 @@ ensemble := orchestration.NewEnsemble(
 
 All 13 core patterns are **implemented and production-ready** in v0.2.0+.
 
-### Future Patterns (v2.1+, 2025 H2)
+### Future patterns (v2.1+, 2025 H2)
 
 - **Debate Pattern** - Adversarial collaboration for accuracy
 - **Nested/Composite Pattern** - Encapsulate complex workflows as single agents
 
-## Getting Started
+## Getting started
 
 ### Installation
 
@@ -467,7 +467,7 @@ All 13 core patterns are **implemented and production-ready** in v0.2.0+.
 go get github.com/aixgo-dev/aixgo
 ```
 
-### Quick Example
+### Quick example
 
 ```yaml
 # config/agents.yaml
@@ -515,7 +515,7 @@ func main() {
 }
 ```
 
-### Learn More
+### Learn more
 
 - [Documentation](https://aixgo.dev)
 - [Pattern Catalog](https://github.com/aixgo-dev/aixgo/blob/main/docs/PATTERNS.md)

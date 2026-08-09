@@ -14,12 +14,12 @@ task planners, knowledge-intensive applications, or secure multi-tenant systems,
 
 **Quick Links:**
 
-1. [Go 1.26 Upgrade](#1-go-126-upgrade-major-platform-update) - Modern Go with performance improvements
-1. [Security Enhancements](#2-security-enhancements-critical) - JWT verification and file-based API keys
-1. [Planner Agent](#3-planner-agent-6-advanced-strategies) - MCTS, Tree-of-Thought, ReAct Planning, and more
-1. [RAG Pattern Variants](#4-rag-pattern-4-variants) - Conversational, Multi-Query, and Hybrid RAG
-1. [Reflection Pattern](#5-reflection-pattern-improvements) - Multi-critic aggregation with quality scoring
-1. [MCP Tools Enhancement](#6-mcp-tools-typed-registration) - Type-safe tool registration with generics
+1. [Go 1.26 upgrade](#1-go-126-upgrade-major-platform-update) - Modern Go with performance improvements
+1. [Security enhancements](#2-security-enhancements-critical) - JWT verification and file-based API keys
+1. [Planner agent](#3-planner-agent-6-advanced-strategies) - MCTS, Tree-of-Thought, ReAct Planning, and more
+1. [RAG pattern variants](#4-rag-pattern-4-variants) - Conversational, Multi-Query, and Hybrid RAG
+1. [Reflection pattern](#5-reflection-pattern-improvements) - Multi-critic aggregation with quality scoring
+1. [MCP tools enhancement](#6-mcp-tools-typed-registration) - Type-safe tool registration with generics
 
 ### 1. Go 1.26 upgrade (major platform update)
 

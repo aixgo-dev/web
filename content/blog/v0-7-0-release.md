@@ -14,10 +14,10 @@ and Mistral through AWS's managed AI service with enterprise-grade security.
 
 **Quick Links:**
 
-1. [Amazon Bedrock Provider](#1-amazon-bedrock-provider) - Access 20+ foundation models
-1. [Multi-Model Access](#2-multi-model-access) - Claude, Llama, Nova, Titan, and more
-1. [Enterprise Security](#3-enterprise-security) - AWS IAM, VPC endpoints, CloudTrail
-1. [Getting Started](#4-getting-started) - Quick setup guide
+1. [Amazon Bedrock provider](#1-amazon-bedrock-provider) - Access 20+ foundation models
+1. [Multi-model access](#2-multi-model-access) - Claude, Llama, Nova, Titan, and more
+1. [Enterprise security](#3-enterprise-security) - AWS IAM, VPC endpoints, CloudTrail
+1. [Getting started](#4-getting-started) - Quick setup guide
 
 ### 1. Amazon Bedrock provider
 

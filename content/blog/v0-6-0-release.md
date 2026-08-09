@@ -14,10 +14,10 @@ complete AI development toolkit with the new `aixgo chat` command.
 
 **Quick Links:**
 
-1. [Interactive Coding Assistant](#1-interactive-coding-assistant) - Multi-model chat interface
-1. [CLI Modernization](#2-cli-modernization) - Cobra-based subcommands
-1. [Session Management](#3-session-management) - Persistent conversations
-1. [Assistant Tools](#4-assistant-tools) - File, git, and terminal operations
+1. [Interactive coding assistant](#1-interactive-coding-assistant) - Multi-model chat interface
+1. [CLI modernization](#2-cli-modernization) - Cobra-based subcommands
+1. [Session management](#3-session-management) - Persistent conversations
+1. [Assistant tools](#4-assistant-tools) - File, git, and terminal operations
 
 ### 1. Interactive coding assistant
 

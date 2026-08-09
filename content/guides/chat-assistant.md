@@ -11,15 +11,15 @@ The `aixgo chat` command provides an interactive coding assistant that combines 
 
 - [Prerequisites](#prerequisites)
 - [Installation](#installation)
-- [API Key Setup](#api-key-setup)
-- [Starting a Session](#starting-a-session)
-- [CLI Flags](#cli-flags)
-- [In-Session Commands](#in-session-commands)
-- [Built-in Tools](#built-in-tools)
-- [Session Management](#session-management)
-- [Model Selection](#model-selection)
-- [Security Model](#security-model)
-- [Example Workflows](#example-workflows)
+- [API key setup](#api-key-setup)
+- [Starting a session](#starting-a-session)
+- [CLI flags](#cli-flags)
+- [In-session commands](#in-session-commands)
+- [Built-in tools](#built-in-tools)
+- [Session management](#session-management)
+- [Model selection](#model-selection)
+- [Security model](#security-model)
+- [Example workflows](#example-workflows)
 - [Troubleshooting](#troubleshooting)
 
 ---
@@ -27,7 +27,7 @@ The `aixgo chat` command provides an interactive coding assistant that combines 
 ## Prerequisites
 
 - Go 1.26 or later (for building from source)
-- At least one LLM provider API key (see [API Key Setup](#api-key-setup))
+- At least one LLM provider API key (see [API key setup](#api-key-setup))
 
 ---
 
@@ -65,7 +65,7 @@ export GOOGLE_API_KEY=<your-google-api-key>          # Gemini models
 export XAI_API_KEY=<your-xai-api-key>                # Grok models
 ```
 
-To see which models are available with your configured keys, run `aixgo models` (see [Model Selection](#model-selection)).
+To see which models are available with your configured keys, run `aixgo models` (see [Model selection](#model-selection)).
 
 ---
 
@@ -186,7 +186,7 @@ The assistant has access to three categories of tools that the model can invoke 
 > Create a new file at internal/util/strings.go with these helper functions
 ```
 
-File tools validate paths before operating on them to prevent directory traversal. See [Security Model](#security-model) for details.
+File tools validate paths before operating on them to prevent directory traversal. See [Security model](#security-model) for details.
 
 ### Git operations
 
@@ -230,7 +230,7 @@ Respond `y` to proceed or `n` to cancel. The command output is returned to the m
 > Show running processes
 ```
 
-See [Security Model](#security-model) for the full list of allowed commands and blocking rules.
+See [Security model](#security-model) for the full list of allowed commands and blocking rules.
 
 ---
 
