@@ -107,7 +107,7 @@ jobs:
         run: |
           tag=$(jq -r .tag data/release.json)
           branch="release-sync/${tag}"
-          for i in $(seq 1 30); do
+          for _ in $(seq 1 30); do
             state=$(gh pr view "$branch" --json state --jq .state 2>/dev/null || echo "UNKNOWN")
             [ "$state" = "MERGED" ] && { echo "merged"; exit 0; }
             [ "$state" = "CLOSED" ] && { echo "PR closed without merge" >&2; exit 1; }
