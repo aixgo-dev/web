@@ -55,21 +55,48 @@ check_drift() {
   echo "  ok release-drift: ${have} is current"
 }
 
+# Cloudflare bot protection 403s bare curl from datacenter runners, which is
+# where this check runs. A browser User-Agent usually passes; when the custom
+# domain still 403s, the deployment is verified via the Pages origin the
+# domain CNAMEs to, and the fallback is logged so it cannot pass silently.
+# A page that LOADS without the tag still fails on every path.
+UA="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (release-sync gate)"
+FALLBACK_SITE="${FALLBACK_SITE:-https://aixgo.pages.dev/}"
+
+fetch_shows() { # $1=url $2=needle; returns 0 shown / 1 not shown / 2 blocked
+  local body code
+  body=$(curl -sS -A "$UA" -w '\n%{http_code}' "$1" 2>/dev/null) || return 2
+  code="${body##*$'\n'}"
+  case "$code" in
+    200) printf '%s' "$body" | grep -q "$2" && return 0 || return 1 ;;
+    403) return 2 ;;
+    *)   return 1 ;;
+  esac
+}
+
 check_live() {
-  local tag tries sleep_s i
+  local tag tries sleep_s i rc
   tag=$(jq -r .tag "$FILE")
   tries="${LIVE_TRIES:-1}"
   sleep_s="${LIVE_SLEEP:-30}"
   i=1
   while [ "$i" -le "$tries" ]; do
-    if curl -fsS "$SITE" | grep -q "$tag"; then
+    fetch_shows "$SITE" "$tag"; rc=$?
+    if [ "$rc" = "0" ]; then
       echo "  ok release-live: ${SITE} shows ${tag}"
       return 0
+    fi
+    if [ "$rc" = "2" ]; then
+      echo "  note release-live: ${SITE} blocked this client (403); checking the Pages origin"
+      if fetch_shows "$FALLBACK_SITE" "$tag"; then
+        echo "  ok release-live: ${FALLBACK_SITE} shows ${tag} (custom-domain edge blocked the runner, deployment verified)"
+        return 0
+      fi
     fi
     [ "$i" -lt "$tries" ] && sleep "$sleep_s"
     i=$((i + 1))
   done
-  fail release-live "${SITE} does not show ${tag} after ${tries} tries"
+  fail release-live "neither ${SITE} nor ${FALLBACK_SITE} shows ${tag} after ${tries} tries"
 }
 
 [ "$#" -gt 0 ] || fail usage "no checks named; use: shape scope drift live"
