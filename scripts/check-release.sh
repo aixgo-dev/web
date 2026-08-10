@@ -81,7 +81,7 @@ check_live() {
   sleep_s="${LIVE_SLEEP:-30}"
   i=1
   while [ "$i" -le "$tries" ]; do
-    fetch_shows "$SITE" "$tag"; rc=$?
+    rc=0; fetch_shows "$SITE" "$tag" || rc=$?
     if [ "$rc" = "0" ]; then
       echo "  ok release-live: ${SITE} shows ${tag}"
       return 0
