@@ -66,3 +66,21 @@ jobs:
 
       - name: Gate the release fact (shape, and scope for bot PRs)
         run: ./scripts/check-release.sh shape scope
+
+  # The gate #22 proved was missing: an unparseable workflow merged and
+  # registered with no dispatchable triggers, silently. actionlint catches
+  # broken YAML, bad expressions, and shellcheck issues in run blocks.
+  actionlint:
+    name: Actionlint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Set up Go
+        uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e # v7.0.0
+        with:
+          go-version: stable
+
+      - name: Run actionlint
+        run: go run github.com/rhysd/actionlint/cmd/actionlint@v1.7.7 -color
