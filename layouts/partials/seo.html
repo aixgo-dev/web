@@ -16,14 +16,15 @@
      Both paths declare 1200x630. That is the size a card has to be for the
      large treatment to render, and it is what the width and height tags tell a
      scraper before it has fetched the file. Ship cards at that size. */}}
-{{- /* The fallback must be near-square: X's summary card silently drops
-     images with extreme aspect ratios, which is why the 883x154 wordmark
-     produced cards with no thumbnail at all. */ -}}
+{{- /* The fallback is near-square because summary cards crop to a square
+     on every platform, and scrape caches are keyed by URL, so a fixed image
+     ships under a new filename or nobody sees it. */ -}}
 {{- $ogImage := absURL "og-default.png" -}}
 {{- $ogImageAlt := .Site.Title -}}
 {{- $twitterCard := "summary" -}}
-{{- $slugCard := printf "og-%s.png" (path.Base .RelPermalink) -}}
-{{- if and (ne .RelPermalink "/") (os.FileExists (printf "static/%s" $slugCard)) -}}
+{{- /* The home page has no usable slug, so it names its card directly. */ -}}
+{{- $slugCard := printf "og-%s.png" (cond .IsHome "home" (path.Base .RelPermalink)) -}}
+{{- if os.FileExists (printf "static/%s" $slugCard) -}}
   {{- $ogImage = absURL $slugCard -}}
   {{- $twitterCard = "summary_large_image" -}}
 {{- end -}}
@@ -36,7 +37,9 @@
 <link rel="canonical" href="{{ .Permalink }}">
 
 <meta property="og:site_name" content="{{ .Site.Title }}">
-<meta property="og:type" content="{{ if .IsPage }}article{{ else }}website{{ end }}">
+{{- /* article implies dated, authored, expiring content; guides and product
+     pages are evergreen. Only blog posts are articles. */ -}}
+<meta property="og:type" content="{{ if and .IsPage (eq .Section "blog") }}article{{ else }}website{{ end }}">
 <meta property="og:url" content="{{ .Permalink }}">
 <meta property="og:title" content="{{ $title }}">
 <meta property="og:description" content="{{ $description }}">
@@ -60,6 +63,8 @@
 {{- end }}
 
 <meta name="twitter:card" content="{{ $twitterCard }}">
+<meta name="twitter:site" content="@charles_green">
+<meta name="twitter:creator" content="@charles_green">
 <meta name="twitter:title" content="{{ $title }}">
 <meta name="twitter:description" content="{{ $description }}">
 <meta name="twitter:image" content="{{ $ogImage }}">
