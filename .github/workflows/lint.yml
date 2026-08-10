@@ -35,10 +35,21 @@ jobs:
       - name: Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
+      # Build with the pinned version rather than 'latest', so this job grades
+      # the site on the Hugo that Cloudflare Pages actually deploys with. A CI
+      # build on a version production never runs is not a gate for production.
+      # NOTE: Cloudflare Pages cannot read .hugo-version — Pages supports no
+      # version file for Hugo, only the HUGO_VERSION project env var, which is
+      # set by hand in the dashboard and must be kept equal to this file.
+      # Nothing yet fails when the two drift: aixgo-dev/web#32.
+      - name: Read the pinned Hugo version
+        id: hugo-pin
+        run: echo "version=$(cat .hugo-version)" >> "$GITHUB_OUTPUT"
+
       - name: Set up Hugo
         uses: peaceiris/actions-hugo@2752ce1d29631191ea3f27c23495fa06139a5b78 # v3
         with:
-          hugo-version: 'latest'
+          hugo-version: ${{ steps.hugo-pin.outputs.version }}
           extended: true
 
       - name: Build site
