@@ -44,7 +44,10 @@ jobs:
           client-id: ${{ vars.AIXGO_GH_APP_CLIENT_ID }}
           private-key: ${{ secrets.AIXGO_GH_APP_PRIVATE_KEY }}
           owner: ${{ github.repository_owner }}
-          repositories: ${{ github.event.repository.name }}
+          # Hardcoded: schedule events carry no repository object in their
+          # payload, and an empty value here would break exactly the cron leg
+          # that exists as the backstop.
+          repositories: web
           permission-contents: write
           permission-pull-requests: write
 
