@@ -1,0 +1,25 @@
+{
+  "_comment": "The failing counterpart to pages-project.json, holding both failure modes at once: production pinned to a stale version, and preview with no HUGO_VERSION at all. This is the state the repo was actually in before the pin landed (production 0.156.0, preview unconfirmed). Used to prove the gate goes red, not just green.",
+  "success": true,
+  "errors": [],
+  "messages": [],
+  "result": {
+    "name": "aixgo",
+    "production_branch": "main",
+    "deployment_configs": {
+      "production": {
+        "build_image_major_version": 3,
+        "env_vars": {
+          "HUGO_VERSION": { "type": "plain_text", "value": "0.156.0" },
+          "NODE_VERSION": { "type": "plain_text", "value": "24" }
+        }
+      },
+      "preview": {
+        "build_image_major_version": 2,
+        "env_vars": {
+          "NODE_VERSION": { "type": "plain_text", "value": "24" }
+        }
+      }
+    }
+  }
+}
