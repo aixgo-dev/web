@@ -64,7 +64,7 @@ Required env vars (set in Cloudflare Pages project, not this repo): `HUGO_VERSIO
 ### Data file conventions
 
 - `data/features.yaml`: each feature has `status: complete | in_progress | roadmap`. The status renders as a badge via the `status-badge` shortcode. Do not hardcode feature info in templates.
-- `data/milestones.yaml`: roadmap milestones with `title`, `target`, and `description`. Rendered on the homepage.
+- `data/milestones.yaml`: release milestone cards with `version`, `status` (`complete | in_progress | planned`), `date` (month + year; omit on planned cards), and `highlights` (list of one-line strings). Rendered on the homepage by `layouts/partials/milestone-cards.html`. Every line must be sourced from the release notes at github.com/aixgo-dev/aixgo/releases.
 - `data/version.yaml`: site-wide tagline/version data.
 
 ### Template conventions
@@ -131,7 +131,7 @@ Edit `data/features.yaml`. Status transitions are usually: `roadmap` → `in_pro
 
 ### Update a roadmap milestone
 
-Edit `data/milestones.yaml`. Each entry: `title`, `target` (e.g. "v0.5"), `description`, optionally `status`.
+Edit `data/milestones.yaml`. Each entry: `version` (a real tag), `status` (`complete | in_progress | planned` — the template renders an empty badge for anything else), `date` (omit on planned cards; a roadmap date nobody re-checks is how this file went stale), `highlights`.
 
 ### Add a Hugo shortcode
 
