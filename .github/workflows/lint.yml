@@ -92,6 +92,17 @@ jobs:
       - name: Install the pinned lint toolchain
         run: npm ci
 
+      # This job runs `npm run lint:html` directly rather than through make, so
+      # the Makefile's built-site guard does not cover it. htmlhint exits 0 on
+      # a glob matching nothing, which would turn a build that silently emitted
+      # no pages into a green required check that graded zero files. Asserting
+      # the count here keeps the guard on both paths.
+      - name: Confirm the build produced HTML to grade
+        run: |
+          count=$(find public -name '*.html' | wc -l | tr -d ' ')
+          [ "$count" -gt 0 ] || { echo "FAIL lint-html: public/ has no HTML; htmlhint would grade nothing" >&2; exit 1; }
+          echo "  ok lint-html: ${count} built pages to grade"
+
       - name: Lint HTML
         run: npm run lint:html
 
