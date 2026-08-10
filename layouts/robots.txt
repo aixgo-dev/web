@@ -2,3 +2,9 @@ User-agent: *
 Allow: /
 
 Sitemap: {{ "sitemap.xml" | absURL }}
+
+# The llms.txt proposal (https://llmstxt.org/) says nothing about robots.txt, so
+# this is a courtesy line and not a standard: a crawler that already reads this
+# file learns where the curated index lives without guessing at the root path.
+# llms.txt: {{ "llms.txt" | absURL }}
+# llms-full.txt: {{ "llms-full.txt" | absURL }}
