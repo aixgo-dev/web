@@ -1,0 +1,62 @@
+{{- /*
+  /llms-full.txt: the companion to /llms.txt, holding the documentation inline
+  instead of linking to it, so a model that cannot fetch 22 URLs still gets the
+  whole of the guides in one request.
+
+  Guides only, and the file says so in its own header rather than leaving a
+  reader to wonder. The /code and /aixgate product pages and the homepage are
+  assembled by layouts/_default/code.html, layouts/_default/product.html and
+  layouts/index.html out of data/*.yaml; their markdown files carry front matter
+  and a comment and nothing else, so .RawContent for them is empty and there is
+  no markdown source to inline. Those pages are linked from /llms.txt.
+
+  Guide bodies go in as their markdown source, unrendered, because the source is
+  what a model reads best: headings keep their hashes and code blocks keep their
+  fences. The one transform below rewrites the status-badge shortcode calls in
+  the provider tables to the bare status word, since unrendered shortcode syntax
+  in the middle of a table tells a reader nothing. check-llms.sh fails on any
+  shortcode delimiter surviving into the output, so the day someone uses a
+  second shortcode in a guide this template goes red rather than leaking Hugo
+  syntax into the published file.
+
+  Ordered the same way /llms.txt and /guides/ order them, by the category order
+  in data/guides.yaml then by weight.
+*/ -}}
+{{- $site := strings.TrimSuffix "/" site.BaseURL -}}
+# Aixgo documentation, full text
+
+> Aixgo is a production-grade AI agent framework for Go. It enables secure, scalable multi-agent systems with no Python dependencies, single-binary deployment under 20MB, sub-100ms cold starts, and true parallel concurrency (no GIL).
+
+Every guide published at {{ $site }}/guides/, markdown source inlined, in the order the guides index lists them. Generated when the site builds. The curated link index, which also covers the products, the blog and the current release, is at {{ $site }}/llms.txt.
+
+The product pages and the homepage are not inlined here. Their prose lives in Hugo templates and data files rather than in markdown, so there is no source to include. Read them at {{ $site }}/code/, {{ $site }}/aixgate/ and {{ $site }}/.
+
+Each guide below starts with a level-one heading, its source URL and its category.
+{{ $guides := site.GetPage "/guides" -}}
+{{- $groups := $guides.Pages.GroupByParam "category" -}}
+{{- $order := hugo.Data.guides.categoryOrder -}}
+{{- $ordered := slice -}}
+{{- range $name := $order -}}
+  {{- range $groups -}}
+    {{- if eq .Key $name }}{{ $ordered = $ordered | append . }}{{ end -}}
+  {{- end -}}
+{{- end -}}
+{{- range $groups -}}
+  {{- if not (in $order .Key) }}{{ $ordered = $ordered | append . }}{{ end -}}
+{{- end -}}
+{{- $docs := slice -}}
+{{- range $ordered }}{{ range .Pages }}{{ $docs = $docs | append . }}{{ end }}{{ end -}}
+{{- range $guides.Pages }}{{ if not (in $docs .) }}{{ $docs = $docs | append . }}{{ end }}{{ end -}}
+{{- range $docs }}
+
+---
+
+# {{ .Title }}
+
+Source: {{ .Permalink }}
+Category: {{ .Params.category | default "Uncategorised" }}
+{{ with .Description }}
+{{ . }}
+{{ end }}
+{{ .RawContent | replaceRE `\{\{<\s*status-badge\s+status="([a-zA-Z0-9.-]+)"\s*>\}\}` "$1" | chomp }}
+{{ end -}}

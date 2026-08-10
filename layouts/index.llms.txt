@@ -1,0 +1,114 @@
+{{- /*
+  /llms.txt, in the format proposed at https://llmstxt.org/: one H1, a
+  blockquote summary, prose, then H2 sections of `- [title](url): description`
+  links.
+
+  This file used to be static/llms.txt, written by hand. It went stale the way
+  hand-maintained artifacts do: it never mentioned Aixgo Code or Aixgate, it
+  never picked up the goals-gates-loops guide, it listed no blog posts, and
+  nothing anywhere went red about any of it. The header block below is still
+  that hand-written copy, kept because it is good and because it describes the
+  framework's shape rather than its inventory. Everything under the first H2 is
+  read out of content/ and data/, so a new guide, product or post lands here on
+  the next build, and no count in a generated line can drift.
+
+  scripts/check-llms.sh grades the built file. Rename a section heading here and
+  you rename it there too.
+*/ -}}
+{{- /*
+  One list entry. This is a define rather than a partial on purpose: Hugo parses
+  partials as html/template even when the calling template is plain text, which
+  ships the category "RAG & Embeddings" as "RAG &amp; Embeddings" and every
+  apostrophe as "&#39;". A define is parsed in this template's own text
+  namespace and stays literal. check-llms.sh fails on an escaped entity, so a
+  future move back to a partial goes red rather than quietly mangling the file.
+
+  Descriptions come from front matter and data/*.yaml, where a folded block can
+  carry newlines. Collapsing whitespace keeps each entry on one line.
+*/ -}}
+{{- define "llms-link" -}}
+{{- $desc := .desc | replaceRE `\s+` " " | chomp -}}
+- [{{ .title }}]({{ .url }}){{ with $desc }}: {{ . }}{{ end }}
+{{ end -}}
+{{- $site := strings.TrimSuffix "/" site.BaseURL -}}
+{{- $repo := site.Params.github -}}
+# Aixgo
+
+> Aixgo is a production-grade AI agent framework for Go. It enables secure, scalable multi-agent systems with no Python dependencies, single-binary deployment under 20MB, sub-100ms cold starts, and true parallel concurrency (no GIL).
+
+Aixgo targets backend Go engineers, DevOps teams, and data engineers who need to ship AI agents in production without the operational overhead of Python frameworks like LangChain or LlamaIndex. The framework provides 13 orchestration patterns (Supervisor, Sequential, Parallel, Router, Swarm, Hierarchical, RAG, Reflection, Ensemble, Classifier, Aggregation, Planning, MapReduce), 6 agent types (ReAct, Classifier, Aggregator, Planner, Producer, Logger), 8+ LLM providers (OpenAI, Anthropic, Gemini, xAI, Vertex AI, Amazon Bedrock, HuggingFace, plus inference services), Pydantic AI-style validation retry for structured output, and Model Context Protocol (MCP) tool calling.
+
+Every link below is read out of this site's own pages and data files when the site builds, and a CI gate fails the build when the result stops matching what was published. The full text of every guide is at {{ $site }}/llms-full.txt.
+
+## Products
+
+{{ template "llms-link" (dict "title" "Aixgo" "url" (printf "%s/" $site) "desc" "The framework itself. Agent runtime, supervisor, orchestration patterns and provider integrations, in one Go module.") -}}
+{{- range hugo.Data.products -}}
+  {{- $title := .name -}}
+  {{- $url := .url | absURL -}}
+  {{- with site.GetPage .url -}}
+    {{- $title = .Title -}}
+    {{- $url = .Permalink -}}
+  {{- end -}}
+  {{- $desc := .description | chomp -}}
+  {{- with .status }}{{ $desc = printf "%s (%s)" $desc . }}{{ end -}}
+  {{- template "llms-link" (dict "title" $title "url" $url "desc" $desc) -}}
+{{- end }}
+## Documentation
+
+{{ $guides := site.GetPage "/guides" -}}
+{{- $groups := $guides.Pages.GroupByParam "category" -}}
+{{- $order := hugo.Data.guides.categoryOrder -}}
+{{- /* The order layouts/_default/list.html renders: the categories named in
+       data/guides.yaml first and in that order, then any category it does not
+       name. GroupByParam drops a page with no category at all, so the last pass
+       appends whatever the groups missed. A guide cannot fall out of this list
+       by carrying front matter nobody thought about. */ -}}
+{{- $ordered := slice -}}
+{{- range $name := $order -}}
+  {{- range $groups -}}
+    {{- if eq .Key $name }}{{ $ordered = $ordered | append . }}{{ end -}}
+  {{- end -}}
+{{- end -}}
+{{- range $groups -}}
+  {{- if not (in $order .Key) }}{{ $ordered = $ordered | append . }}{{ end -}}
+{{- end -}}
+{{- $docs := slice -}}
+{{- range $ordered }}{{ range .Pages }}{{ $docs = $docs | append . }}{{ end }}{{ end -}}
+{{- range $guides.Pages }}{{ if not (in $docs .) }}{{ $docs = $docs | append . }}{{ end }}{{ end -}}
+{{- range $docs -}}
+  {{- template "llms-link" (dict "title" .Title "url" .Permalink "desc" .Description) -}}
+{{- end }}
+## About the framework
+
+{{ $productURLs := slice -}}
+{{- range hugo.Data.products }}{{ $productURLs = $productURLs | append .url }}{{ end -}}
+{{- range (where site.RegularPages "Section" "").ByTitle -}}
+  {{- if not (in $productURLs .RelPermalink) -}}
+    {{- template "llms-link" (dict "title" .Title "url" .Permalink "desc" .Description) -}}
+  {{- end -}}
+{{- end }}
+## Blog
+
+{{ $posts := (where site.RegularPages "Section" "blog").ByDate.Reverse -}}
+{{- range first 10 $posts -}}
+  {{- template "llms-link" (dict "title" .Title "url" .Permalink "desc" .Description) -}}
+{{- end -}}
+{{- template "llms-link" (dict "title" "All posts" "url" (printf "%s/blog/" $site) "desc" (printf "The index, listing all %d posts newest first." (len $posts))) }}
+## Latest release
+
+{{ $r := hugo.Data.release -}}
+{{- template "llms-link" (dict "title" $r.tag "url" $r.url "desc" (printf "Released %s. A scheduled workflow writes this fact from the GitHub API, and a gate fails when it falls behind either the latest release or the deployed page. Nobody edits it by hand." (dateFormat "2 January 2006" $r.date))) }}
+## Source and reference
+
+{{ template "llms-link" (dict "title" "GitHub repository" "url" $repo "desc" "Source, issues, and the contributing guide.") -}}
+{{- template "llms-link" (dict "title" "Go package reference" "url" (replace $repo "https://github.com/" "https://pkg.go.dev/github.com/") "desc" "Generated API documentation for the exported Go surface.") -}}
+{{- template "llms-link" (dict "title" "Releases" "url" (printf "%s/releases" $repo) "desc" "Version history and changelogs.") -}}
+{{- template "llms-link" (dict "title" "Discussions" "url" "https://github.com/orgs/aixgo-dev/discussions" "desc" "Community questions and design conversations.") -}}
+{{- template "llms-link" (dict "title" "Full documentation text" "url" (printf "%s/llms-full.txt" $site) "desc" "Every guide's markdown source concatenated into one file.") }}
+## Optional
+
+{{ template "llms-link" (dict "title" "Roadmap" "url" "https://github.com/orgs/aixgo-dev/projects/1" "desc" "Public project board and milestone tracking.") -}}
+{{- with .OutputFormats.Get "RSS" -}}
+{{- template "llms-link" (dict "title" "RSS feed" "url" .Permalink "desc" "New posts as they publish.") -}}
+{{- end -}}

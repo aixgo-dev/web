@@ -33,8 +33,30 @@ enableEmoji = true
   filename = 'sitemap.xml'
   priority = 0.5
 
+# Two plain-text views of the site for LLM readers, following the llms.txt
+# proposal at https://llmstxt.org/. Both are rendered from the same content and
+# data the HTML pages render from, so a new guide, product or post reaches them
+# on the next build without anyone editing a list by hand.
+#
+# isPlainText is load-bearing. Without it Hugo runs the template through
+# html/template and a guide category like "RAG & Embeddings" ships as
+# "RAG &amp; Embeddings". notAlternative keeps both out of any alternate-format
+# listing on the home page: they describe the whole site, not another rendering
+# of one page.
+[outputFormats]
+  [outputFormats.llms]
+    mediaType = "text/plain"
+    baseName = "llms"
+    isPlainText = true
+    notAlternative = true
+  [outputFormats.llmsfull]
+    mediaType = "text/plain"
+    baseName = "llms-full"
+    isPlainText = true
+    notAlternative = true
+
 [outputs]
-  home = ["HTML", "RSS", "JSON"]
+  home = ["HTML", "RSS", "JSON", "llms", "llmsfull"]
 
 [params]
   description = "Production-grade AI agent framework for Go. Session persistence, 8+ LLM providers, 13 orchestration patterns, enterprise security. Single <20MB binary, <100ms startup."
