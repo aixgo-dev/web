@@ -54,3 +54,15 @@ jobs:
 
       - name: Lint HTML
         run: htmlhint "public/**/*.html" --config .htmlhintrc
+
+  release-fact:
+    name: Release fact
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+
+      - name: Gate the release fact (shape, and scope for bot PRs)
+        run: ./scripts/check-release.sh shape scope

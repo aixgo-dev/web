@@ -2,8 +2,9 @@
   The homepage.
 
   Built from the section primitives in sections.css, the same set /code is
-  assembled from. Lists come from data/home.yaml, data/milestones.yaml and
-  data/products.yaml; the prose lives here.
+  assembled from. Lists come from data/home.yaml and data/products.yaml; the
+  release fact comes from data/release.json, which the release-sync loop
+  maintains — never edit it by hand. The prose lives here.
 
   content/_index.md carries front matter only. This template never calls
   .Content, so anything written in that file renders nowhere.
@@ -31,8 +32,8 @@
           <p class="ax-microlabel">Status</p>
           <p>
             {{ $v.current }}. The agent types, the orchestration patterns and the
-            provider integrations are implemented; the releases below say what
-            landed when.
+            provider integrations are implemented; the latest release is named
+            below, and the blog says what each one changed.
           </p>
         </div>
 
@@ -177,14 +178,21 @@
   </section>
 
   <!-- ========================================================== 05 Releases -->
-  <section class="ax-section ax-section--alt" id="roadmap">
+  {{- $r := hugo.Data.release -}}
+  <section class="ax-section ax-section--alt" id="releases">
     <div class="ax-wrap">
       <div class="ax-section__intro">
         <p class="ax-eyebrow"><span class="ax-eyebrow__num">05</span>Releases</p>
-        <h2>What shipped, and when.</h2>
+        <h2>Latest release: {{ $r.tag }} &middot; {{ dateFormat "2 January 2006" $r.date }}</h2>
+        <p>
+          This line maintains itself: a workflow reads the GitHub API, a gate
+          checks what it wrote, and a daily run fails loudly if the deployed
+          page ever falls behind. No one edits it by hand.
+          <a href="{{ $r.url }}">Release notes</a> &middot;
+          <a href="https://github.com/aixgo-dev/aixgo/releases">All releases</a> &middot;
+          <a href="/blog/">What each release changed</a>
+        </p>
       </div>
-
-      {{ partial "milestone-cards.html" . }}
     </div>
   </section>
 
