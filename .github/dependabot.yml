@@ -3,7 +3,9 @@
 
 version: 2
 updates:
-  # Monitor npm dependencies (markdownlint-cli2, htmlhint)
+  # Monitor the pinned lint toolchain in package.json: markdownlint-cli2 and
+  # htmlhint. Both are declared as exact versions, so a bump is a reviewable
+  # PR that moves the pin rather than a range that moves on its own.
   - package-ecosystem: "npm"
     directory: "/"
     schedule:
