@@ -1,6 +1,6 @@
 # CLAUDE.md - AI Assistant Project Guide
 
-**Last Updated**: 2026-05-03
+**Last Updated**: 2026-08-10
 **Target**: AI assistants (Claude Code, GitHub Copilot, Cursor, etc.)
 **Scope**: Source for the [aixgo.dev](https://aixgo.dev) marketing and documentation site.
 
@@ -44,6 +44,8 @@ Cloudflare Pages with GitHub-app integration. Every push to `main` triggers a bu
 Build command: `hugo --minify --environment production`
 Output dir: `public/`
 Required env vars (set in Cloudflare Pages project, not this repo): `HUGO_VERSION`, `HUGO_POSTHOG_KEY`, `HUGO_POSTHOG_HOST`.
+
+The Hugo version is pinned in `.hugo-version` at the repo root — that file is canonical and CI builds with it. Cloudflare Pages supports no version file for Hugo, so the `HUGO_VERSION` env var in the Pages dashboard is a hand-maintained copy: change `.hugo-version` and you must change the dashboard too. No gate catches the drift yet (issue #32).
 
 ## Code Conventions
 

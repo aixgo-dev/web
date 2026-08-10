@@ -24,7 +24,9 @@ make build                         # production build → public/
 make lint                          # markdown + html lint
 ```
 
-The production Hugo version is set via `HUGO_VERSION` in the Cloudflare Pages project env vars (the canonical pin — not committed to this repo). Copy the value from the Cloudflare Pages dashboard to match locally.
+The Hugo version is pinned in `.hugo-version`, which is the canonical value: CI builds with it, and local builds should match it (`hugo version`).
+
+Cloudflare Pages cannot read that file — Pages supports no version file for Hugo, only the `HUGO_VERSION` project env var. So the dashboard value is a hand-maintained copy that must be updated to match whenever `.hugo-version` changes. Nothing fails the build when the two drift; closing that gap is tracked in [#32](https://github.com/aixgo-dev/web/issues/32).
 
 ## Repository layout
 
@@ -110,7 +112,7 @@ These are set in the Cloudflare Pages project settings (not in this repo). For l
 
 | Variable | Purpose |
 |---|---|
-| `HUGO_VERSION` | Hugo version pin (must match local) |
+| `HUGO_VERSION` | Hugo version (must be set by hand to match `.hugo-version`) |
 | `HUGO_POSTHOG_KEY` | PostHog Project API Key (`phc_...`); analytics gated on this being set |
 | `HUGO_POSTHOG_HOST` | Optional, defaults to `https://us.i.posthog.com` |
 
