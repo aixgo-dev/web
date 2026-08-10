@@ -1,0 +1,149 @@
+# The loop that keeps the homepage release fact current, with no manual step
+# anywhere in its steady state.
+#
+# Two independent triggers, so one dying does not silence the section:
+#   1. repository_dispatch from aixgo's own release workflow. That dispatch is
+#      sent by an explicit step inside release.yml using the App token — an
+#      `on: release` trigger here would never fire, because GoReleaser
+#      publishes with GITHUB_TOKEN and token-raised events start no workflows.
+#   2. A daily cron. On a day with no new release it degrades into the gate:
+#      drift (file vs API) and live (deployed page vs file) both run, so a
+#      silent failure anywhere becomes a red run within 24 hours.
+#
+# When the fact changes, the job opens a PR with the App token (a
+# GITHUB_TOKEN-created PR would never trigger lint, and auto-merge would hang
+# forever), flags it for auto-merge, and then confirms both the merge and the
+# deployed page. Two consecutive red runs open an escalation issue instead of
+# pushing through — the loop stops and asks, it never force-lands anything.
+name: release-sync
+
+on:
+  repository_dispatch:
+    types: [aixgo-release-published]
+  schedule:
+    - cron: "17 3 * * *"
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+  issues: write
+
+concurrency:
+  group: release-sync
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - name: Mint GitHub App token
+        id: app-token
+        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1 # v3.2.0
+        with:
+          client-id: ${{ vars.AIXGO_GH_APP_CLIENT_ID }}
+          private-key: ${{ secrets.AIXGO_GH_APP_PRIVATE_KEY }}
+          owner: ${{ github.repository_owner }}
+          # Hardcoded: schedule events carry no repository object in their
+          # payload, and an empty value here would break exactly the cron leg
+          # that exists as the backstop.
+          repositories: web
+          permission-contents: write
+          permission-pull-requests: write
+
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          token: ${{ steps.app-token.outputs.token }}
+
+      - name: Write the current release fact
+        env:
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
+        run: ./scripts/release-sync.sh --write
+
+      - name: Detect a change
+        id: diff
+        run: |
+          if git diff --quiet -- data/release.json; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      # No new release: this run IS the daily gate. Drift catches the file
+      # falling behind the API; live catches a deploy that never landed.
+      - name: Gate the standing state
+        if: steps.diff.outputs.changed == 'false'
+        env:
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
+        run: ./scripts/check-release.sh shape drift live
+
+      - name: Open the update PR and flag auto-merge
+        if: steps.diff.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
+        run: |
+          ./scripts/check-release.sh shape
+          tag=$(jq -r .tag data/release.json)
+          branch="release-sync/${tag}"
+          git config user.name "aixgo-code[bot]"
+          git config user.email "315010479+aixgo-code[bot]@users.noreply.github.com"
+          git checkout -b "$branch"
+          git add data/release.json
+          git commit -m "Update the release fact to ${tag}
+
+Written by the release-sync loop from the GitHub API. Gated by
+release-shape and sync-scope pre-merge, and by the live-page check
+after the deploy."
+          git push -u origin "$branch" --force
+          gh pr create --base main --head "$branch" \
+            --title "Update the release fact to ${tag}" \
+            --body "Automated by release-sync: the latest aixgo release is ${tag}. This PR touches only data/release.json (the sync-scope gate enforces that) and auto-merges when the checks pass." \
+            || echo "PR already exists for ${branch}"
+          gh pr merge --auto --squash "$branch"
+
+      - name: Confirm the merge landed
+        if: steps.diff.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
+        run: |
+          tag=$(jq -r .tag data/release.json)
+          branch="release-sync/${tag}"
+          for i in $(seq 1 30); do
+            state=$(gh pr view "$branch" --json state --jq .state 2>/dev/null || echo "UNKNOWN")
+            [ "$state" = "MERGED" ] && { echo "merged"; exit 0; }
+            [ "$state" = "CLOSED" ] && { echo "PR closed without merge" >&2; exit 1; }
+            sleep 30
+          done
+          echo "PR not merged within 15 minutes" >&2
+          exit 1
+
+      - name: Confirm the live page shows it
+        if: steps.diff.outputs.changed == 'true'
+        env:
+          LIVE_TRIES: "20"
+          LIVE_SLEEP: "30"
+        run: ./scripts/check-release.sh live
+
+      # One red run can be weather (an API blip, a Pages hiccup); the next
+      # cron retries it. Two in a row is a stopped loop, and a stopped loop
+      # asks a human instead of staying quiet.
+      - name: Escalate after two consecutive red runs
+        if: failure()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          prev=$(gh run list --workflow=release-sync --limit 2 \
+            --json databaseId,conclusion --jq '.[1].conclusion // "none"')
+          if [ "$prev" != "failure" ]; then
+            echo "first red run; the next scheduled run retries"
+            exit 0
+          fi
+          open=$(gh issue list --state open --search 'in:title "release-sync is red"' --json number --jq length)
+          if [ "$open" = "0" ]; then
+            gh issue create \
+              --title "release-sync is red" \
+              --body "Two consecutive release-sync runs failed. The homepage release fact is no longer maintaining itself: check the run log at ${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}, fix the cause, and re-run the workflow. The loop does not push through failures by design."
+          else
+            echo "escalation issue already open"
+          fi

@@ -21,7 +21,7 @@ End users of Aixgo should land on [aixgo.dev](https://aixgo.dev), not on this re
 config/_default/          # Hugo configuration
 content/                  # Markdown content (guides, blog, examples)
 layouts/                  # Hugo templates and partials
-data/                     # YAML data files (features, milestones, version)
+data/                     # Data files (features, version, release fact)
 static/                   # Static assets (css, js, images, _headers, CNAME)
 archetypes/               # Hugo archetypes for `hugo new`
 .markdownlint.json        # Markdown linting config
@@ -33,7 +33,7 @@ archetypes/               # Hugo archetypes for `hugo new`
 Two kinds of content live here:
 
 - **Markdown** in `content/` — prose for users (guides, blog posts). Edit when writing new docs.
-- **YAML data** in `data/` — structured data for templates (feature matrix, roadmap milestones). Edit when updating status, adding features, etc.
+- **Data files** in `data/` — structured data for templates (feature matrix, version strings, the release fact). Edit by hand EXCEPT `data/release.json`, which the release-sync loop owns.
 
 Templates in `layouts/` consume both. The convention is: prefer YAML data updates over hardcoded content in templates.
 
@@ -64,7 +64,7 @@ Required env vars (set in Cloudflare Pages project, not this repo): `HUGO_VERSIO
 ### Data file conventions
 
 - `data/features.yaml`: each feature has `status: complete | in_progress | roadmap`. The status renders as a badge via the `status-badge` shortcode. Do not hardcode feature info in templates.
-- `data/milestones.yaml`: release milestone cards with `version`, `status` (`complete | in_progress | planned`), `date` (month + year; omit on planned cards), and `highlights` (list of one-line strings). Rendered on the homepage by `layouts/partials/milestone-cards.html`. Every line must be sourced from the release notes at github.com/aixgo-dev/aixgo/releases.
+- `data/release.json`: the homepage release fact — `tag`, `date`, `url`, nothing else. Written by `scripts/release-sync.sh --write` inside `.github/workflows/release-sync.yml`; gated by `scripts/check-release.sh` (shape and scope pre-merge, drift and live in the daily sync run). Never edit it by hand — a hand edit is the defect the loop exists to remove, and the sync-scope gate will flag any bot PR that touches anything else.
 - `data/version.yaml`: site-wide tagline/version data.
 
 ### Template conventions
@@ -129,9 +129,9 @@ Either way the page switches to `summary_large_image` and declares 1200x630. Set
 
 Edit `data/features.yaml`. Status transitions are usually: `roadmap` → `in_progress` → `complete`. The site re-renders automatically on next deploy.
 
-### Update a roadmap milestone
+### The release fact
 
-Edit `data/milestones.yaml`. Each entry: `version` (a real tag), `status` (`complete | in_progress | planned` — the template renders an empty badge for anything else), `date` (omit on planned cards; a roadmap date nobody re-checks is how this file went stale), `highlights`.
+Nothing to do. `release-sync.yml` updates `data/release.json` when aixgo publishes a release (and a daily cron double-checks drift and the live page). If the section is wrong, look at the latest release-sync run — do not patch the file by hand.
 
 ### Add a Hugo shortcode
 

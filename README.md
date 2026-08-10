@@ -40,7 +40,7 @@ layouts/                # Hugo templates
   └── shortcodes/       # Markdown components (feature-card, status-badge, ...)
 data/                   # YAML data files driving content
   ├── features.yaml     # Feature matrix (status indicators)
-  ├── milestones.yaml   # Roadmap milestones
+  ├── release.json      # Homepage release fact (owned by the release-sync loop)
   └── version.yaml      # Site version metadata
 static/                 # Assets (css, js, favicon, _headers, CNAME)
 archetypes/             # Hugo archetypes (templates for `hugo new`)
@@ -53,7 +53,7 @@ archetypes/             # Hugo archetypes (templates for `hugo new`)
 The site is a mix of Markdown content and YAML data files. **Most updates are to the YAML data files, not the templates.** Examples:
 
 - Adding a feature to the matrix → edit `data/features.yaml`, no code or template change.
-- Updating a roadmap milestone → edit `data/milestones.yaml`.
+- The homepage release fact updates itself (`release-sync.yml`); never edit `data/release.json` by hand.
 - Tweaking the homepage tagline → edit `data/version.yaml`.
 
 Anything that's prose for users (guides, blog posts) lives in `content/` as Markdown.
@@ -89,7 +89,7 @@ Edit `data/features.yaml`. The `status` field uses `complete` / `in_progress` / 
 
 ### Update a milestone
 
-Edit `data/milestones.yaml`. Same pattern — the homepage milestone cards read from this file.
+The homepage release line reads `data/release.json`, which `.github/workflows/release-sync.yml` maintains from the GitHub API. If it is wrong, check the latest release-sync run rather than editing the file.
 
 ### Add a Hugo shortcode
 
