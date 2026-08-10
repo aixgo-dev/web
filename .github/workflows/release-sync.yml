@@ -90,11 +90,9 @@ jobs:
           git config user.email "315010479+aixgo-code[bot]@users.noreply.github.com"
           git checkout -b "$branch"
           git add data/release.json
-          git commit -m "Update the release fact to ${tag}
-
-Written by the release-sync loop from the GitHub API. Gated by
-release-shape and sync-scope pre-merge, and by the live-page check
-after the deploy."
+          git commit \
+            -m "Update the release fact to ${tag}" \
+            -m "Written by the release-sync loop from the GitHub API. Gated by release-shape and sync-scope pre-merge, and by the live-page check after the deploy."
           git push -u origin "$branch" --force
           gh pr create --base main --head "$branch" \
             --title "Update the release fact to ${tag}" \
