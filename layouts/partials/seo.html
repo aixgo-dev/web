@@ -16,7 +16,10 @@
      Both paths declare 1200x630. That is the size a card has to be for the
      large treatment to render, and it is what the width and height tags tell a
      scraper before it has fetched the file. Ship cards at that size. */}}
-{{- $ogImage := absURL "aixgo-logo.png" -}}
+{{- /* The fallback must be near-square: X's summary card silently drops
+     images with extreme aspect ratios, which is why the 883x154 wordmark
+     produced cards with no thumbnail at all. */ -}}
+{{- $ogImage := absURL "og-default.png" -}}
 {{- $ogImageAlt := .Site.Title -}}
 {{- $twitterCard := "summary" -}}
 {{- $slugCard := printf "og-%s.png" (path.Base .RelPermalink) -}}
