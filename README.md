@@ -26,7 +26,9 @@ make lint                          # markdown + html lint
 
 The Hugo version is pinned in `.hugo-version`, which is the canonical value: CI builds with it, and local builds should match it (`hugo version`).
 
-Cloudflare Pages cannot read that file — Pages supports no version file for Hugo, only the `HUGO_VERSION` project env var. So the dashboard value is a hand-maintained copy that must be updated to match whenever `.hugo-version` changes. Nothing fails the build when the two drift; closing that gap is tracked in [#32](https://github.com/aixgo-dev/web/issues/32).
+Cloudflare Pages cannot read that file — Pages supports no version file for Hugo, only the `HUGO_VERSION` project env var. So the dashboard value is a hand-maintained copy that must be updated to match whenever `.hugo-version` changes, in **both** the Production and Preview environments.
+
+`hugo-pin.yml` runs daily and on any push that moves the pin, and fails when either environment has drifted. Run the pieces locally with `make check-hugo` (pin vs the hugo on your PATH) and `make check-hugo-drift` (the Cloudflare comparison against saved fixtures, no token needed).
 
 ## Repository layout
 

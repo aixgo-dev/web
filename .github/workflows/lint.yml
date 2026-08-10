@@ -44,13 +44,20 @@ jobs:
       # Nothing yet fails when the two drift: aixgo-dev/web#32.
       - name: Read the pinned Hugo version
         id: hugo-pin
-        run: echo "version=$(cat .hugo-version)" >> "$GITHUB_OUTPUT"
+        run: |
+          ./scripts/check-hugo-version.sh shape
+          echo "version=$(cat .hugo-version)" >> "$GITHUB_OUTPUT"
 
       - name: Set up Hugo
         uses: peaceiris/actions-hugo@2752ce1d29631191ea3f27c23495fa06139a5b78 # v3
         with:
           hugo-version: ${{ steps.hugo-pin.outputs.version }}
           extended: true
+
+      # Proves the version that built the site below IS the pinned one, rather
+      # than trusting that the setup step honoured its input.
+      - name: Confirm the installed Hugo matches the pin
+        run: ./scripts/check-hugo-version.sh binary
 
       - name: Build site
         run: hugo --minify --environment production

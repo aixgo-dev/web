@@ -1,0 +1,55 @@
+# The gate that makes .hugo-version binding on production.
+#
+# Cloudflare Pages supports version files for Node, Python, Ruby and Swift,
+# but for Hugo it supports only the HUGO_VERSION project env var. So the
+# version production actually builds with is a hand-maintained copy of a
+# committed value, living in a dashboard field, and the repo cannot enforce
+# it at build time the way lint.yml enforces it on CI.
+#
+# What it can do is notice. This job reads the Pages project over the API and
+# fails when either environment's HUGO_VERSION has drifted from the pin. That
+# is the difference between a convention and a gate: the estate ran on
+# 0.156.0 in production and 0.164.0 everywhere else for as long as it took
+# someone to open the dashboard and read it.
+#
+# Deliberately not a pre-merge check. It needs a credential and it grades
+# state that lives outside the PR, so a stale dashboard value would otherwise
+# block every unrelated typo fix. Daily instead, plus on any push that moves
+# the pin -- the moment the two are most likely to disagree.
+name: hugo-pin
+
+on:
+  push:
+    branches: [main]
+    paths: ['.hugo-version']
+  schedule:
+    - cron: "23 4 * * *"
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+
+concurrency:
+  group: hugo-pin
+  cancel-in-progress: false
+
+jobs:
+  drift:
+    name: Pin vs Cloudflare
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    # The token lives in an environment restricted to main rather than in a
+    # repo secret: it is read-only, but nothing else in this repo holds a
+    # Cloudflare credential at all, and keeping the blast radius to one branch
+    # costs one dashboard setting.
+    environment: cloudflare
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Compare the pin against the Pages project
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ vars.CLOUDFLARE_ACCOUNT_ID }}
+          CLOUDFLARE_PROJECT: ${{ vars.CLOUDFLARE_PROJECT }}
+        run: ./scripts/check-hugo-version.sh shape cloudflare

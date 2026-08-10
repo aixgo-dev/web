@@ -1,0 +1,31 @@
+{
+  "_comment": "Trimmed GET /accounts/{id}/pages/projects/{name} response, kept only for the fields check-hugo-version.sh reads. Set HUGO_PIN_FIXTURE to this file to exercise the extraction and comparison without a Cloudflare token. Values here are deliberately the matching case; scripts/fixtures/pages-project-drift.json is the failing one.",
+  "success": true,
+  "errors": [],
+  "messages": [],
+  "result": {
+    "name": "aixgo",
+    "production_branch": "main",
+    "deployment_configs": {
+      "production": {
+        "build_image_major_version": 3,
+        "compatibility_date": "2026-05-03",
+        "env_vars": {
+          "GO_VERSION": { "type": "plain_text", "value": "1.26.2" },
+          "HUGO_POSTHOG_HOST": { "type": "plain_text", "value": "https://us.i.posthog.com" },
+          "HUGO_VERSION": { "type": "plain_text", "value": "0.164.0" },
+          "NODE_VERSION": { "type": "plain_text", "value": "24" }
+        }
+      },
+      "preview": {
+        "build_image_major_version": 3,
+        "compatibility_date": "2026-05-03",
+        "env_vars": {
+          "GO_VERSION": { "type": "plain_text", "value": "1.26.2" },
+          "HUGO_VERSION": { "type": "plain_text", "value": "0.164.0" },
+          "NODE_VERSION": { "type": "plain_text", "value": "24" }
+        }
+      }
+    }
+  }
+}

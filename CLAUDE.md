@@ -45,7 +45,7 @@ Build command: `hugo --minify --environment production`
 Output dir: `public/`
 Required env vars (set in Cloudflare Pages project, not this repo): `HUGO_VERSION`, `HUGO_POSTHOG_KEY`, `HUGO_POSTHOG_HOST`.
 
-The Hugo version is pinned in `.hugo-version` at the repo root — that file is canonical and CI builds with it. Cloudflare Pages supports no version file for Hugo, so the `HUGO_VERSION` env var in the Pages dashboard is a hand-maintained copy: change `.hugo-version` and you must change the dashboard too. No gate catches the drift yet (issue #32).
+The Hugo version is pinned in `.hugo-version` at the repo root — that file is canonical and CI builds with it. Cloudflare Pages supports no version file for Hugo, so the `HUGO_VERSION` env var in the Pages dashboard is a hand-maintained copy: change `.hugo-version` and you must change the dashboard too, in both the Production and Preview environments. `scripts/check-hugo-version.sh` gates all three facts — `shape` and `binary` pre-merge in `lint.yml`, `cloudflare` daily in `hugo-pin.yml`.
 
 ## Code Conventions
 
