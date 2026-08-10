@@ -131,15 +131,17 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          prev=$(gh run list --workflow=release-sync --limit 2 \
+          # Explicit -R throughout: this step must work when the failure came
+          # before checkout, where there is no local repo for gh to infer.
+          prev=$(gh run list -R "$GITHUB_REPOSITORY" --workflow=release-sync --limit 2 \
             --json databaseId,conclusion --jq '.[1].conclusion // "none"')
           if [ "$prev" != "failure" ]; then
             echo "first red run; the next scheduled run retries"
             exit 0
           fi
-          open=$(gh issue list --state open --search 'in:title "release-sync is red"' --json number --jq length)
+          open=$(gh issue list -R "$GITHUB_REPOSITORY" --state open --search 'in:title "release-sync is red"' --json number --jq length)
           if [ "$open" = "0" ]; then
-            gh issue create \
+            gh issue create -R "$GITHUB_REPOSITORY" \
               --title "release-sync is red" \
               --body "Two consecutive release-sync runs failed. The homepage release fact is no longer maintaining itself: check the run log at ${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}, fix the cause, and re-run the workflow. The loop does not push through failures by design."
           else
