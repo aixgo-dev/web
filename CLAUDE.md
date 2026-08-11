@@ -26,7 +26,16 @@ static/                   # Static assets (css, js, images, _headers, CNAME)
 archetypes/               # Hugo archetypes for `hugo new`
 .markdownlint.json        # Markdown linting config
 .htmlhintrc               # HTML linting config
+package.json              # Pinned lint toolchain + the lint:md / lint:html scripts
 ```
+
+### The lint toolchain
+
+`markdownlint-cli2` and `htmlhint` are pinned at **exact** versions in `package.json`, with `package-lock.json` holding the tree. They are the only npm dependencies here; there is no application JavaScript.
+
+Nothing installs them globally. `make lint-install` runs `npm ci`, and every lint path — local and CI — invokes the local binaries through the `lint:md` / `lint:html` npm scripts, so the glob and the config path are defined once and CI runs the identical command. Do not reintroduce `npm install -g`, and do not loosen the versions to `^` ranges: `scripts/check-lint-pins.sh shape` fails the build on either, and it runs pre-merge in `lint.yml`.
+
+The reason is the same one behind `.hugo-version`: markdownlint's MD029 governs the `1.`-for-every-item convention below, so an unpinned linter can regrade every guide on the site with no diff in `content/`. Version bumps arrive as Dependabot PRs that move the pin, which is a change you can see and review.
 
 ### Content vs data
 
@@ -156,7 +165,8 @@ make clean             # Remove public/ and resources/
 make lint              # markdownlint + htmlhint (after build)
 make lint-md           # markdownlint only
 make lint-html         # htmlhint only (requires built public/)
-make lint-install      # one-time: install markdownlint-cli2 and htmlhint
+make lint-install      # one-time: npm ci, installing the pinned linters
+make check-lint-pins   # confirm the linters are still pinned exactly
 ```
 
 ### Files-by-feature
@@ -169,6 +179,7 @@ make lint-install      # one-time: install markdownlint-cli2 and htmlhint
 - **SEO/analytics**: `layouts/partials/seo.html`, `layouts/partials/posthog.html`
 - **Cache rules**: `static/_headers`
 - **Custom domain**: `static/CNAME`
+- **Lint toolchain**: `package.json`, `package-lock.json`, `scripts/check-lint-pins.sh`, `.github/workflows/lint.yml`
 
 ### Environment
 
