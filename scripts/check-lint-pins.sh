@@ -52,7 +52,48 @@ SCANNED=(Makefile .github scripts)
 # global install has no `-g`/`--global` at all -- `global` is a subcommand
 # family (`yarn global add|upgrade|remove|bin|list|dir`) -- so it needs its
 # own alternative rather than fitting the flag-shaped ones above.
-INSTALL_PATTERN='(npm|pnpm|yarn|bun)[^#]*([[:space:]]-g([[:space:]]|$)|--global|--location[=[:space:]]+global|[[:space:]]global[[:space:]]+(add|upgrade|remove|bin|list|dir))|(^|[^[:alnum:]_./-])npx[[:space:]]'
+#
+# `dlx`/`exec`/`x`/`bunx` are the same defect as `npx` wearing several more
+# names. `pnpm dlx` and `yarn dlx` fetch and run a package from the registry
+# when it is not already local, same as `npx`, and both tools are already in
+# the shared group -- fine to catch broadly there, since neither tool has any
+# other legitimate use of the word "dlx". `npm exec` does the same, but is
+# kept to npm specifically rather than joining the shared group: `yarn exec`
+# and `pnpm exec` are common, legitimate commands that just run an already-
+# installed local binary and fetch nothing, so matching them the way `-g` is
+# matched broadly across all four tools would be the "trains people to ignore
+# it" failure mode this file already warns about, not the same trade as `-g`
+# (where all four tools genuinely share the flag). `npm x` is `npm exec`'s
+# documented one-letter alias (`npm help exec` prints `alias: x`), matched
+# the same way and for the same reason. `npm` is required to be a complete
+# word (an immediate `[[:space:]]` before `[^#]*` starts) rather than merely
+# a substring with a boundary before it, so that e.g. a stray mention of
+# `.npmrc` earlier on the same line as unrelated prose containing "exec"
+# can't complete the alternative the way a too-loose `npm exec` briefly
+# matched inside `pnpm exec` during this change's own review; `[^#]*` still
+# freely absorbs any flags between `npm` and `exec`/`x`.
+#
+# `bun x` is documented as another alias of `bunx`, but is deliberately not
+# covered: unlike `npm x`, nobody in this change's own review had `bun`
+# installed to confirm the alias is real, and every regex shape tried for it
+# either failed to match the real `bun x pkg` case or reopened a substring
+# collision (`bun` is also the first three letters of `bundle`, and `x` alone
+# is too short a suffix to bound safely against an arbitrary trailing token
+# like a script named `somex`). `bunx` -- confirmed, documented, and the
+# dominant real-world spelling -- is caught below; it is bun's own name for
+# its `npx` equivalent, not a flag on `bun` at all, so it joins `npx` in the
+# bare-keyword alternative rather than either flag group.
+#
+# `npm_config_global` is npm's environment-variable spelling of `--global` --
+# config keys become `npm_config_<key>` env vars, npm reads either casing,
+# and accepts `1`/`true` interchangeably as boolean-truthy the same way it
+# does on the command line -- so both value spellings are covered rather than
+# just the one written out in #38. `npm_config_location=global` is the same
+# env-var treatment of `--location=global`, already covered as a flag above.
+# Both are their own alternative, independent of whether an `npm install`
+# appears on the same line: the env var can be set once and consumed by a
+# completely different line, even a different file sourcing this one.
+INSTALL_PATTERN='(npm|pnpm|yarn|bun)[^#]*([[:space:]]-g([[:space:]]|$)|--global|--location[=[:space:]]+global|[[:space:]]global[[:space:]]+(add|upgrade|remove|bin|list|dir)|[[:space:]]dlx([[:space:]]|$))|(^|[^[:alnum:]_./-])npm[[:space:]][^#]*(exec|x)([[:space:]]|$)|(^|[^[:alnum:]_./-])(npx|bunx)[[:space:]]|[Nn][Pp][Mm]_[Cc][Oo][Nn][Ff][Ii][Gg]_[Gg][Ll][Oo][Bb][Aa][Ll]=(true|1)|[Nn][Pp][Mm]_[Cc][Oo][Nn][Ff][Ii][Gg]_[Ll][Oo][Cc][Aa][Tt][Ii][Oo][Nn]=global'
 
 fail() { echo "FAIL ${1}: ${2}" >&2; exit 1; }
 
@@ -174,14 +215,15 @@ strip_noise() { awk '{ sub(/\r$/, ""); sub(/#.*/, ""); print }'; }
 # differently in the two places is the exact false-success class this file
 # exists to prevent.
 #
-# The file is read via stdin redirection, not as an awk operand: awk treats a
-# bare `var=value` operand as a variable assignment rather than a filename, so
-# a tracked file literally named `foo=bar.sh` would have been silently read as
-# stdin instead of opened -- an attacker-controlled filename choosing to skip
-# its own scan. Piping through strip_noise first means join_continuations
-# never sees a raw file operand at all.
+# Reads stdin, not a file argument: awk treats a bare `var=value` operand as
+# a variable assignment rather than a filename, so a tracked file literally
+# named `foo=bar.sh` would have been silently read as stdin instead of opened
+# -- an attacker-controlled filename choosing to skip its own scan. Taking
+# stdin here sidesteps that entirely, and lets the same function join
+# continuations in package.json's scripts values (piped in from jq, not a
+# file at all) the same way it does for a real file's content.
 join_continuations() {
-  strip_noise < "$1" | awk '
+  strip_noise | awk '
     function flush() { if (started) { print start_line ":" buf; started = 0; buf = "" } }
     {
       if (!started) { start_line = NR; buf = $0; started = 1 } else { buf = buf " " $0 }
@@ -203,18 +245,28 @@ join_continuations() {
 # match", which is the common case (a clean file), and without it every clean
 # scan would trip `set -e` and abort the gate before it ever reported ok.
 #
-# Tagging uses `awk -v`, not `sed "s#^#${tag}:#"`. A tag built from a tracked
-# file's path is attacker-influenced (anyone who can land a commit picks the
-# filename), and interpolating it into a sed *program* means a path shaped
-# like `x#e#rest` closes the replacement, opens a fresh `s` command, and hands
-# it sed's `e` flag -- which GNU sed (the CI runtime; BSD sed merely errors)
-# executes via /bin/sh. `awk -v` passes the tag as data, never as program
-# text, so there is no analogous escape.
+# Tagging avoids `sed "s#^#${tag}:#"`. A tag built from a tracked file's path
+# is attacker-influenced (anyone who can land a commit picks the filename),
+# and interpolating it into a sed *program* means a path shaped like
+# `x#e#rest` closes the replacement, opens a fresh `s` command, and hands it
+# sed's `e` flag -- which GNU sed (the CI runtime; BSD sed merely errors)
+# executes via /bin/sh.
+#
+# The tag is passed via the environment (`tag=... awk '... ENVIRON["tag"]'`),
+# not `awk -v tag="$tag"`, and that distinction is load-bearing, not
+# stylistic: POSIX requires `-v` assignments to go through the same escape
+# processing as a string literal in the awk program text, so a tracked
+# filename containing the two characters `\` `n` becomes a real newline in
+# the tag once `-v` unescapes it, forging extra lines into this gate's own
+# FAIL output. An `ENVIRON` lookup reads the value verbatim; nothing above
+# `grep_installs`/`scan_manifest_scripts` ever puts the tag in program text,
+# so there is still no path to the `sed` RCE this replaced, and now no
+# escape-driven output forgery either.
 grep_installs() {
   local file="$1" tag="$2"
-  join_continuations "$file" \
+  join_continuations < "$file" \
     | grep -E "$INSTALL_PATTERN" \
-    | awk -v tag="$tag" '{ print tag ":" $0 }' \
+    | tag="$tag" awk '{ print ENVIRON["tag"] ":" $0 }' \
     || true
 }
 
@@ -232,6 +284,28 @@ grep_installs() {
 # a wider hole now that the scan reaches all of .github and every tracked
 # *.sh rather than just this file's own directory.
 is_self() { [ "${1#./}" = "${0#./}" ]; }
+
+# A broken symlink (its target missing or removed) fails to open; without
+# this, that failure lands inside grep_installs's `<` redirection, whose
+# surrounding `|| true` -- there to tolerate grep's ordinary "no match" --
+# would swallow it identically and the file would scan as silently clean.
+# Only scan_stray_scripts calls this: `find -type f` in scan_scanned_paths
+# below excludes symlinks outright (it checks the entry's own type, not its
+# target's), so a broken symlink under a SCANNED directory never reaches
+# grep_installs from there to begin with, and an unreadable *regular* file in
+# this maintainer-controlled tree is not a scenario worth guarding.
+#
+# `-f` as well as `-r`: `-r` alone passes for a tracked symlink pointing at a
+# directory or a device file, neither of which `-r` distinguishes from a
+# plain readable file. A dir-symlink then fails inside `join_continuations`'s
+# `<` redirection with an I/O error that lands in the exact `|| true` this
+# guard exists to route around -- silently clean again, the failure mode
+# moved rather than closed. A device-symlink (e.g. to `/dev/zero`) is worse:
+# `awk` blocks reading it, hanging the gate rather than failing it. `-f`
+# rejects both before either is attempted.
+require_readable() {
+  { [ -f "$1" ] && [ -r "$1" ]; } || fail lint-shape "cannot read '${1}' (missing, not a regular file, or a permissions problem) -- this check would otherwise skip it and report ok"
+}
 
 scan_scanned_paths() {
   local path file
@@ -269,20 +343,32 @@ scan_scanned_paths() {
 # guarantees it), so pipefail surfaces git's failure, not the loop's success.
 scan_stray_scripts() {
   local file
+  # The loop runs on the pipe's read side, so a failure inside it (an
+  # unreadable file's own FAIL from require_readable, already printed by the
+  # time this is reached) and a failure in `git ls-files` itself both surface
+  # here the same way, via pipefail -- hence a message broad enough to cover
+  # either cause rather than asserting it was specifically git that failed.
   git -c core.quotepath=false ls-files -z -- '*.sh' | while IFS= read -r -d '' file; do
-    is_self "$file" || grep_installs "$file" "$file"
-  done || fail lint-shape "git ls-files failed; cannot confirm no install survives in a tracked *.sh file outside ${SCANNED[*]}"
+    is_self "$file" || { require_readable "$file"; grep_installs "$file" "$file"; }
+  done || fail lint-shape "git ls-files failed, or a file it listed could not be read; cannot confirm no install survives in a tracked *.sh file outside ${SCANNED[*]}"
 }
 
 # package.json's own `scripts` block (preinstall/postinstall/prepare, etc.) is
 # data the manifest holds, not a path in SCANNED, so a global install hiding
 # in a lifecycle hook was invisible to every check above it.
+#
+# Routed through join_continuations, the same as a real file's content: a
+# JSON string can carry a literal backslash followed by a real embedded
+# newline (`"preinstall": "npm install \\\n  -g pkg"`), and jq -r prints that
+# escape decoded, so it reaches this scan as two physical lines shaped
+# exactly like a shell script's own line continuation. Scanning those lines
+# independently, as this used to, would see "-g" on its own line with no
+# tool name on the same line to anchor the match -- missed entirely.
 scan_manifest_scripts() {
   jq -r '(.scripts // {}) | to_entries[] | "\(.key): \(.value)"' "$MANIFEST" \
-    | awk '{ print NR ":" $0 }' \
-    | strip_noise \
+    | join_continuations \
     | grep -E "$INSTALL_PATTERN" \
-    | awk -v tag="${MANIFEST} (scripts)" '{ print tag ":" $0 }' \
+    | tag="${MANIFEST} (scripts)" awk '{ print ENVIRON["tag"] ":" $0 }' \
     || true
 }
 
