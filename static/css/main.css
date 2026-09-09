@@ -666,8 +666,13 @@ header {
   .nav-menu { gap: 1.125rem; }
 }
 
-/* Navigation GitHub Icon (desktop: icon-only ghost; mobile: labeled full-width) */
-.nav-github-icon {
+/* Navigation GitHub Icon (desktop: icon-only ghost; mobile: labeled full-width)
+   Selector is qualified with `.nav-menu a` deliberately: the generic
+   `.nav-menu a` rule above is (0,1,1) and would otherwise outrank a bare
+   `.nav-github-icon` (0,1,0), forcing `display: block` and
+   `padding-block: 1.25rem` back on and pushing the glyph down and left out of
+   its own 36x36 box. */
+.nav-menu a.nav-github-icon {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -1148,8 +1153,9 @@ h1, h2, h3, h4, h5, h6 {
     padding-left: 0.75rem;
   }
 
-  /* Mobile GitHub: show label, full-width like other items */
-  .nav-github-icon {
+  /* Mobile GitHub: show label, full-width like other items. Matches the
+     desktop rule's specificity so this block still wins on source order. */
+  .nav-menu a.nav-github-icon {
     display: flex !important;
     justify-content: center;
     align-items: center;
