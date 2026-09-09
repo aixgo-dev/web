@@ -153,9 +153,13 @@ check_shape() {
   # scripts/*.sh is walked by scan_scanned_paths (it's in SCANNED) and again
   # by scan_stray_scripts (it's tracked); `sort -u` collapses the duplicate so
   # one real defect doesn't print as two.
+  #
+  # $hits can hold either an install/npx hit or a scan_one "cannot read"
+  # line -- the header names both, since after the diagnostics fix above a
+  # failure here is no longer always the former.
   hits=$( { scan_scanned_paths; scan_stray_scripts; scan_manifest_scripts; } | sort -u)
   if [ -n "$hits" ]; then
-    echo "FAIL lint-shape: a global install or npx call survives, and no lockfile binds it:" >&2
+    echo "FAIL lint-shape: a global install, an npx call, or an unscannable file survives:" >&2
     echo "$hits" >&2
     bad=1
   else
@@ -278,22 +282,23 @@ grep_installs() {
 # global installs is not a failure mode a broader regex would have caught
 # anyway.
 #
-# Compares the repo-relative path, not the basename: matching on basename
-# alone would exempt *any* tracked file named check-lint-pins.sh, wherever it
-# lives -- e.g. a planted .github/actions/setup/check-lint-pins.sh -- which is
-# a wider hole now that the scan reaches all of .github and every tracked
-# *.sh rather than just this file's own directory.
-is_self() { [ "${1#./}" = "${0#./}" ]; }
+# `-ef` (same device and inode), not a path-string comparison: an earlier
+# version compared `${1#./}` to `${0#./}`, which only recognized itself when
+# both the scanned path and $0 used the same relative form. Both current
+# callers invoke this script as `./scripts/check-lint-pins.sh`, so that had
+# no live effect, but it also matched *any* tracked file named
+# check-lint-pins.sh, wherever it lives -- e.g. a planted
+# .github/actions/setup/check-lint-pins.sh -- which is a wider hole now that
+# the scan reaches all of .github and every tracked *.sh rather than just
+# this file's own directory. `-ef` identifies the file itself regardless of
+# which path string reached it, so it stays correct if a future CI refactor
+# invokes this script by an absolute path.
+is_self() { [ "$1" -ef "$0" ]; }
 
 # A broken symlink (its target missing or removed) fails to open; without
 # this, that failure lands inside grep_installs's `<` redirection, whose
 # surrounding `|| true` -- there to tolerate grep's ordinary "no match" --
 # would swallow it identically and the file would scan as silently clean.
-# Only scan_stray_scripts calls this: `find -type f` in scan_scanned_paths
-# below excludes symlinks outright (it checks the entry's own type, not its
-# target's), so a broken symlink under a SCANNED directory never reaches
-# grep_installs from there to begin with, and an unreadable *regular* file in
-# this maintainer-controlled tree is not a scenario worth guarding.
 #
 # `-f` as well as `-r`: `-r` alone passes for a tracked symlink pointing at a
 # directory or a device file, neither of which `-r` distinguishes from a
@@ -303,19 +308,43 @@ is_self() { [ "${1#./}" = "${0#./}" ]; }
 # moved rather than closed. A device-symlink (e.g. to `/dev/zero`) is worse:
 # `awk` blocks reading it, hanging the gate rather than failing it. `-f`
 # rejects both before either is attempted.
-require_readable() {
-  { [ -f "$1" ] && [ -r "$1" ]; } || fail lint-shape "cannot read '${1}' (missing, not a regular file, or a permissions problem) -- this check would otherwise skip it and report ok"
+#
+# Reports into the hits stream rather than hard-failing via `fail`: an
+# earlier version called `fail` (which exits) directly on an unreadable file,
+# which correctly failed the gate but also killed the rest of the pipeline
+# mid-scan -- a real `npm install -g` hit already found in an earlier stage
+# of the same run never got printed, leaving only the unreadable-file
+# message to explain a failure it did not fully cause. Emitting a line here
+# instead lets every stage finish and every real defect still get named,
+# while `[ -n "$hits" ]` in check_shape still fails the gate on this line
+# alone if nothing else is wrong.
+scan_one() {
+  local file="$1" tag="$2"
+  if { [ -f "$file" ] && [ -r "$file" ]; }; then
+    grep_installs "$file" "$tag"
+  else
+    # printf, not `echo "${tag}: ..."`: bash's builtin echo does not expand
+    # backslash escapes without `-e`, so this is not the same escape-driven
+    # forgery `awk -v` had -- but a tracked file's path is still
+    # attacker-influenced data, and `%s` substitution is the form that stays
+    # correct regardless of which `echo` a future edit ends up calling.
+    printf '%s: cannot read (missing, not a regular file, or a permissions problem)\n' "$tag"
+  fi
 }
 
 scan_scanned_paths() {
   local path file
   for path in "${SCANNED[@]}"; do
     if [ -d "$path" ]; then
-      while IFS= read -r file; do
-        is_self "$file" || grep_installs "$file" "$file"
-      done < <(find "$path" -type f)
+      # -print0 / -d '': a filename containing a literal newline -- unusual,
+      # but git and the filesystem both allow it -- would otherwise split
+      # across two `read` iterations into two bogus, nonexistent paths, both
+      # silently unscanned rather than the one real file being scanned.
+      while IFS= read -r -d '' file; do
+        is_self "$file" || scan_one "$file" "$file"
+      done < <(find "$path" -type f -print0)
     else
-      is_self "$path" || grep_installs "$path" "$path"
+      is_self "$path" || scan_one "$path" "$path"
     fi
   done
 }
@@ -343,14 +372,9 @@ scan_scanned_paths() {
 # guarantees it), so pipefail surfaces git's failure, not the loop's success.
 scan_stray_scripts() {
   local file
-  # The loop runs on the pipe's read side, so a failure inside it (an
-  # unreadable file's own FAIL from require_readable, already printed by the
-  # time this is reached) and a failure in `git ls-files` itself both surface
-  # here the same way, via pipefail -- hence a message broad enough to cover
-  # either cause rather than asserting it was specifically git that failed.
   git -c core.quotepath=false ls-files -z -- '*.sh' | while IFS= read -r -d '' file; do
-    is_self "$file" || { require_readable "$file"; grep_installs "$file" "$file"; }
-  done || fail lint-shape "git ls-files failed, or a file it listed could not be read; cannot confirm no install survives in a tracked *.sh file outside ${SCANNED[*]}"
+    is_self "$file" || scan_one "$file" "$file"
+  done || fail lint-shape "git ls-files failed; cannot confirm no install survives in a tracked *.sh file outside ${SCANNED[*]}"
 }
 
 # package.json's own `scripts` block (preinstall/postinstall/prepare, etc.) is
