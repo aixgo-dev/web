@@ -1,0 +1,71 @@
+# Sync product page (/sync/).
+#
+# Claims here trace to github.com/aixgo-dev/sync README.md and
+# github.com/aixgo-dev/sync-mcp README.md. If a fact is not in those
+# READMEs, it does not belong on the page.
+
+repo: "https://github.com/aixgo-dev/sync"
+release: "v0.1.0"
+
+hero:
+  eyebrow: "Sync · Open source · Apache-2.0"
+  status: >-
+    v0.1.0. Sessions, messages and jobs with compare-and-swap, on memory
+    or S3-compatible storage. You host it. Session attach and Code offload
+    are not in this release. MCP clients use sync-mcp against the same API.
+
+stats:
+  - value: "CAS"
+    label: "JSON objects with If-Match / ETag"
+    accent: true
+  - value: "org/project"
+    label: "Tenant path and API-key scope"
+    accent: true
+  - value: "stdio"
+    label: "sync-mcp talks MCP, then HTTP to Sync"
+  - value: "Apache-2.0"
+    label: "Open source licence"
+
+cta:
+  primary_text: "Run it"
+  primary_href: "#run"
+  heading: "Run a local Sync."
+  sub: "One process, a tenant key, then optional sync-mcp on stdio."
+
+security_heading: "Tenant keys, and what they do not cover."
+security_intro: >-
+  Keys are bound to one org and project. Sync stores and claims jobs.
+  It does not sandbox workers or execute payloads.
+
+defends:
+  - "A token is bound to one org and project. A path outside that tenant returns 403."
+  - "Every route except GET /healthz needs a known key. Unknown paths do not leak as 404 without a key."
+  - "MCP org and project are fixed at start. Tools have no tenant arguments. --read-only drops write and claim tools."
+
+cannot:
+  - "Process or syscall sandboxing. That is Aixgate, a separate product."
+  - "Executing or inspecting job payloads. A worker that claims the job is what runs it."
+  - "Encrypting stored JSON, terminating TLS on the listen socket, OIDC, quotas, or an audit log."
+  - "Prompt injection. Message, label and job fields are untrusted data."
+
+roadmap:
+  - version: "v0.1.0"
+    state: "done"
+    item: "CAS store, tenant keys, HTTP sessions, messages and jobs"
+  - version: "next"
+    state: "progress"
+    item: "Desired-state GET/PUT, session attach, device register"
+  - version: "later"
+    state: "todo"
+    item: "Notify plane, Code offload contract, Cloudflare Containers runbook"
+
+links:
+  - text: "Sync repository"
+    url: "https://github.com/aixgo-dev/sync"
+    note: "Source, issues and releases"
+  - text: "sync-mcp"
+    url: "https://github.com/aixgo-dev/sync-mcp"
+    note: "MCP stdio server"
+  - text: "Product requirements"
+    url: "https://github.com/aixgo-dev/sync/blob/main/docs/PRD.md"
+    note: "The Sync PRD"

@@ -81,7 +81,7 @@ Every link below is read out of this site's own pages and data files when the si
 {{- end }}
 ## About the framework
 
-{{ $productURLs := slice -}}
+{{ $productURLs := slice "/products/" -}}
 {{- range hugo.Data.products }}{{ $productURLs = $productURLs | append .url }}{{ end -}}
 {{- range (where site.RegularPages "Section" "").ByTitle -}}
   {{- if not (in $productURLs .RelPermalink) -}}

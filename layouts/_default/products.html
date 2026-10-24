@@ -1,0 +1,45 @@
+{{/*
+  /products/ hub. The top nav collapses Code, Aixgate and Sync into this
+  page once a third sibling product exists (see config/_default/menus.en.toml).
+
+  The framework card is first and hardcoded: data/products.yaml is the
+  sibling list used on the homepage "Also from us" band, which must not
+  include a link back to /.
+*/}}
+{{ define "main" }}
+<div class="ax-page">
+
+  <section class="ax-section ax-hero ax-hero--compact">
+    <div class="ax-hero__halo ax-halo" aria-hidden="true"></div>
+    <div class="ax-hero__grid ax-dotgrid ax-dotgrid--fade" aria-hidden="true"></div>
+    <div class="ax-wrap">
+      <div class="ax-hero__body ax-edge ax-edge--section">
+        <p class="ax-eyebrow"><span class="ax-eyebrow__num">&rarr;</span>Aixgo · Products</p>
+        <h1 class="ax-hero__title">{{ .Title }}</h1>
+        <span class="ax-rule ax-rule--wide" aria-hidden="true"></span>
+        {{ with .Description }}<p class="ax-hero__sub">{{ . }}</p>{{ end }}
+      </div>
+    </div>
+  </section>
+
+  <section class="ax-section ax-section--alt ax-textured">
+    <div class="ax-wrap">
+      <div class="ax-grid ax-grid--2">
+        <a class="ax-card sibling-card" href="/">
+          <h2>Framework</h2>
+          <p>The Go framework for building agents. One module, one binary.</p>
+          <p class="ax-microlabel sibling-status">MIT</p>
+        </a>
+        {{- range hugo.Data.products }}
+        <a class="ax-card sibling-card" href="{{ .url }}">
+          <h2>{{ .name }}</h2>
+          <p>{{ .description }}</p>
+          <p class="ax-microlabel sibling-status">{{ .status }}</p>
+        </a>
+        {{- end }}
+      </div>
+    </div>
+  </section>
+
+</div>
+{{ end }}

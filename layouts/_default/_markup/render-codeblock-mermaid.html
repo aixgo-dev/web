@@ -1,0 +1,10 @@
+{{/*
+  Mermaid fences. The generic render-codeblock.html would wrap these in the
+  copy-button chrome, which is wrong for a diagram. Hugo picks this file
+  for ```mermaid because of the -mermaid suffix.
+
+  The page store flag loads mermaid.js once, in baseof.html, and only on
+  pages that actually drew a diagram.
+*/}}
+{{- .Page.Store.Set "hasMermaid" true -}}
+<pre class="mermaid">{{ .Inner | safeHTML }}</pre>
