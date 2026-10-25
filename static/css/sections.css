@@ -953,13 +953,8 @@
 .ax-guidegroup .ax-grid { margin-top: var(--ax-s-5); }
 
 .ax-listcard {
-  display: flex;
-  flex-direction: column;
+  display: block;
   text-decoration: none;
-}
-
-.sibling-card {
-  min-height: 11.5rem;
 }
 
 .ax-listcard__meta { margin-bottom: var(--ax-s-3); }

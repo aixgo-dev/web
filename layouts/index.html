@@ -206,7 +206,7 @@
 
       <div class="ax-grid ax-grid--3">
         {{- range hugo.Data.products }}
-        <a class="ax-card sibling-card" href="{{ .url }}">
+        <a class="ax-card ax-listcard sibling-card" href="{{ .url }}">
           <h3>{{ .name }}</h3>
           <p>{{ .description }}</p>
           <p class="ax-microlabel sibling-status">{{ .status }}</p>
