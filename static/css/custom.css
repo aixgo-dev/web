@@ -187,6 +187,16 @@
   color: var(--ax-text-body);
 }
 
+.content pre.mermaid {
+  background: var(--ax-bg-3);
+  text-align: center;
+}
+
+.content pre.mermaid svg {
+  max-width: 100%;
+  height: auto;
+}
+
 /* ==========================================================================
    Tables. One implementation, shared with `.ax-table` in main.css. A clipped
    table needs to read as clipped, so the wrapper scrolls and is focusable.

@@ -52,6 +52,9 @@
         {{- else if hasPrefix .RelPermalink "/aixgate" -}}
           {{- $ctaURL = "/aixgate/#install" -}}
           {{- $ctaText = "Install" -}}
+        {{- else if hasPrefix .RelPermalink "/sync" -}}
+          {{- $ctaURL = "/sync/#run" -}}
+          {{- $ctaText = "Run it" -}}
         {{- end }}
         <li class="nav-cta">
           <a href="{{ $ctaURL }}" class="btn-get-started">{{ $ctaText }}</a>

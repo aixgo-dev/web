@@ -152,7 +152,7 @@ Nothing to do. `release-sync.yml` updates `data/release.json` when aixgo publish
 
 ### Update site nav
 
-Edit `config/_default/menus.en.toml`. Keep the top nav to ≤4 items (per recent design decision in commit `b8454a1`).
+Edit `config/_default/menus.en.toml`. Keep the top nav to ≤4 items (per recent design decision in commit `b8454a1`). Sibling products (Code, Aixgate, Sync) live under `/products/`, not as extra top-nav entries.
 
 ## Quick Reference
 
@@ -198,6 +198,7 @@ For Cloudflare Pages deploys, env vars are set in the Pages project settings (no
 - Live site: <https://aixgo.dev>
 - Framework repo: <https://github.com/aixgo-dev/aixgo>
 - Sandbox companion: <https://github.com/aixgo-dev/aixgate>
+- Coordination plane: <https://github.com/aixgo-dev/sync>
 - Hugo docs: <https://gohugo.io/documentation/>
 - Cloudflare Pages docs: <https://developers.cloudflare.com/pages/>
 

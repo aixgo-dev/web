@@ -201,12 +201,12 @@
     <div class="ax-wrap">
       <div class="ax-section__intro">
         <p class="ax-eyebrow"><span class="ax-eyebrow__num">06</span>Also from us</p>
-        <h2>Aixgo builds agents. The other two deal with what agents do next.</h2>
+        <h2>Aixgo builds agents. Code, Aixgate and Sync handle the rest.</h2>
       </div>
 
-      <div class="ax-grid ax-grid--2">
+      <div class="ax-grid ax-grid--3">
         {{- range hugo.Data.products }}
-        <a class="ax-card sibling-card" href="{{ .url }}">
+        <a class="ax-card ax-listcard sibling-card" href="{{ .url }}">
           <h3>{{ .name }}</h3>
           <p>{{ .description }}</p>
           <p class="ax-microlabel sibling-status">{{ .status }}</p>

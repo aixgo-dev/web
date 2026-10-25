@@ -18,5 +18,27 @@
 
   <!-- JavaScript -->
   <script src="/js/main.js"></script>
+  {{ if .Page.Store.Get "hasMermaid" }}
+  {{/* Loaded only on pages that rendered a mermaid fence. Pinned ESM, not a
+       site-wide bundle. Theme tokens match :root in main.css. */}}
+  <script type="module">
+    import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.12.0/dist/mermaid.esm.min.mjs";
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: "dark",
+      securityLevel: "strict",
+      themeVariables: {
+        background: "#0a0f1c",
+        primaryColor: "#1a2233",
+        primaryTextColor: "#cbd5e1",
+        primaryBorderColor: "#2a3544",
+        lineColor: "#22d3ee",
+        secondaryColor: "#141b2d",
+        tertiaryColor: "#0d1424",
+        fontFamily: "Inter, sans-serif"
+      }
+    });
+  </script>
+  {{ end }}
 </body>
 </html>
