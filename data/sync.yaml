@@ -16,7 +16,7 @@ hero:
 
 stats:
   - value: "CAS"
-    label: "JSON objects with If-Match / ETag"
+    label: "Compare-and-swap: a write is rejected if the document changed since you read it"
     accent: true
   - value: "org/project"
     label: "Tenant path and API-key scope"
@@ -51,7 +51,7 @@ cannot:
 roadmap:
   - version: "v0.1.0"
     state: "done"
-    item: "CAS store, tenant keys, HTTP sessions, messages and jobs"
+    item: "Compare-and-swap store, tenant keys, HTTP sessions, messages and jobs"
   - version: "next"
     state: "progress"
     item: "Desired-state GET/PUT, session attach, device register"

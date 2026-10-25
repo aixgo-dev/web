@@ -25,13 +25,13 @@
   <section class="ax-section ax-section--alt ax-textured">
     <div class="ax-wrap">
       <div class="ax-grid ax-grid--2">
-        <a class="ax-card sibling-card" href="/">
+        <a class="ax-card ax-listcard sibling-card" href="/">
           <h2>Framework</h2>
           <p>The Go framework for building agents. One module, one binary.</p>
           <p class="ax-microlabel sibling-status">MIT</p>
         </a>
         {{- range hugo.Data.products }}
-        <a class="ax-card sibling-card" href="{{ .url }}">
+        <a class="ax-card ax-listcard sibling-card" href="{{ .url }}">
           <h2>{{ .name }}</h2>
           <p>{{ .description }}</p>
           <p class="ax-microlabel sibling-status">{{ .status }}</p>

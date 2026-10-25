@@ -152,6 +152,10 @@
   letter-spacing: -0.028em;
   line-height: 1.04;
   color: var(--ax-text);
+  /* Global h1 uses text-wrap: balance, which will keep a short title on
+     one line even when it overflows. The hero clips overflow, so wrap. */
+  text-wrap: wrap;
+  overflow-wrap: break-word;
 }
 
 .ax-hero .ax-rule { margin-top: 1.25rem; }
@@ -955,6 +959,7 @@
 .ax-listcard {
   display: block;
   text-decoration: none;
+  color: inherit;
 }
 
 .ax-listcard__meta { margin-bottom: var(--ax-s-3); }

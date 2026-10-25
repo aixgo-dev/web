@@ -14,6 +14,14 @@ The default store is in memory and is lost on restart. Set `SYNC_S3_BUCKET` (and
 
 Sync does not run agents, merge pull requests, or execute jobs. Workers that claim a job are what run the payload.
 
+## Compare-and-swap
+
+CAS is compare-and-swap. Sync keeps JSON documents, not rows in a SQL database. Each document has an ETag, a version stamp from the last write.
+
+An update sends that stamp as `If-Match`. The write succeeds only if the document is still the version you read. If another worker wrote first, Sync returns `412` and you read again.
+
+That is how two agents can share a session or claim a job without silently overwriting each other.
+
 ## MCP companion
 
 MCP clients should not call that HTTP API themselves. [sync-mcp](https://github.com/aixgo-dev/sync-mcp) is a stdio MCP server that wraps Sync and exposes sessions, messages and jobs as tools.
