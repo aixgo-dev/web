@@ -146,6 +146,7 @@ For framework documentation (API reference, ADRs), contribute to the [aixgo](htt
 
 - [aixgo](https://github.com/aixgo-dev/aixgo) — The Go framework this site documents.
 - [aixgate](https://github.com/aixgo-dev/aixgate) — The runtime sandbox companion.
+- [sync](https://github.com/aixgo-dev/sync) — The coordination plane. MCP companion: [sync-mcp](https://github.com/aixgo-dev/sync-mcp).
 
 ## License
 

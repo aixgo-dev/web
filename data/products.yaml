@@ -1,6 +1,7 @@
-# The sibling products surfaced on the homepage "Also from us" band and in the
-# footer's Products column. Add an entry here rather than building another
-# one-off section in layouts/index.html.
+# The sibling products surfaced on the homepage "Also from us" band, the
+# /products/ hub (after the hardcoded Framework card), and llms.txt.
+# Add an entry here rather than building another one-off section in
+# layouts/index.html. The footer Products column is still hardcoded.
 
 - name: "Code"
   url: "/code/"
@@ -16,3 +17,10 @@
     Aider or OpenAI Codex without giving them your .env, ~/.aws or ~/.ssh,
     blocked at the syscall boundary, even under prompt injection.
   status: "v0.1 proof of concept · MIT"
+
+- name: "Sync"
+  url: "/sync/"
+  description: >-
+    A coordination plane for sessions, messages and jobs. MCP clients reach
+    it through sync-mcp.
+  status: "v0.1.0 · Apache-2.0"

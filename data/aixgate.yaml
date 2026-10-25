@@ -7,6 +7,12 @@
 repo: "https://github.com/aixgo-dev/aixgate"
 release: "v0.1"
 
+cta:
+  primary_text: "Install it"
+  primary_href: "#install"
+  heading: "Wrap your agent and try to read a secret."
+  sub: "That is the whole test, and it takes about a minute."
+
 hero:
   eyebrow: "Aixgate · Open source · MIT"
   status: >-

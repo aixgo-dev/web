@@ -431,6 +431,7 @@
   border-radius: var(--ax-r-lg);
   padding: var(--ax-s-5);
   box-shadow: var(--ax-e-1);
+  overflow-wrap: break-word;
   transition:
     border-color var(--ax-dur-1) var(--ax-ease),
     box-shadow var(--ax-dur-2) var(--ax-ease),
