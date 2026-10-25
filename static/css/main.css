@@ -459,6 +459,31 @@
   color: var(--ax-text-muted);
 }
 
+/* Card-as-link. Guides already opted in via .ax-listcard. Product and
+   homepage sibling cards were bare <a class="ax-card">, so the browser
+   painted every heading, paragraph and status line as a visited link. */
+a.ax-card {
+  display: flex;
+  flex-direction: column;
+  color: inherit;
+  text-decoration: none;
+}
+
+a.ax-card:visited {
+  color: inherit;
+}
+
+a.ax-card:focus-visible {
+  outline: 2px solid var(--ax-accent);
+  outline-offset: 3px;
+}
+
+a.ax-card .ax-microlabel:last-child {
+  margin-top: auto;
+  padding-top: var(--ax-s-5);
+  color: var(--ax-text-dim);
+}
+
 /* Buttons. */
 .ax-btn {
   display: inline-flex;
