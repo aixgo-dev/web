@@ -1,22 +1,17 @@
 # -- Main Menu --
 #
-# Two products sit above Docs because they are products, not reference. When a
-# THIRD product lands, stop adding entries here: build /products/ as a hub page
-# and collapse these two into one item. That is the trigger condition.
+# Code and Aixgate used to sit above Docs. A third sibling (Sync) is the
+# trigger to collapse them into one Products hub. Individual product URLs
+# stay: /code/, /aixgate/, /sync/.
 #
 # "Code", not "Aixgo Code" — decided 2026-08-10: with the Aixgo wordmark on
 # every page, the short label reads fine, and the product page and footer
 # note carry the disambiguation.
 
 [[main]]
-  name = "Code"
-  url = "/code/"
+  name = "Products"
+  url = "/products/"
   weight = 5
-
-[[main]]
-  name = "Aixgate"
-  url = "/aixgate/"
-  weight = 6
 
 # /docs is an alias declared on content/guides/_index.md. Following it costs a
 # 308 to /docs/ and then a meta-refresh to /guides/. Point the nav at the
