@@ -24,7 +24,7 @@ make build                         # production build → public/
 make lint                          # markdown + html lint
 ```
 
-The lint toolchain is pinned in `package.json` at exact versions, with `package-lock.json` holding the full tree. `make lint-install` runs `npm ci`, and both lint targets run the local binaries through the `lint:md` / `lint:html` npm scripts — the same commands CI runs. Nothing installs these tools globally, so the linter grading a PR is never whatever npm served that morning. `make check-lint-pins` asserts the declaration is still exact and that no global install has crept back; it runs pre-merge in `lint.yml`.
+The lint toolchain is pinned in `package.json` at exact versions, with `package-lock.json` holding the full tree. `make lint-install` runs `npm ci`, and both lint targets run the local binaries through the `lint:md` / `lint:html` npm scripts — the same commands CI runs. Nothing installs these tools globally, so the linter grading a PR is never whatever npm served that morning. `make check-lint-pins` asserts the declaration is still exact, that no global install has crept back, and that the only npm override is `markdownlint`'s `re2js` pinned to 2.8.7 (GHSA-gg6h-894w-4m9c). It runs pre-merge in `lint.yml`.
 
 The Hugo version is pinned in `.hugo-version`, which is the canonical value: CI builds with it, and local builds should match it (`hugo version`).
 

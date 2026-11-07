@@ -35,6 +35,17 @@ set -euo pipefail
 
 MANIFEST="package.json"
 TOOLS=(markdownlint-cli2 htmlhint)
+# The only transitive pin report_override_policy allows. markdownlint-cli2
+# 0.24.0 depends on markdownlint 0.42.0, which depends on re2js 2.8.6
+# (GHSA-gg6h-894w-4m9c / CVE-2026-116795, lookbehind denial of service,
+# patched in 2.8.7). No markdownlint-cli2 release past 0.24.0 exists, so the
+# wrapper cannot be bumped onto a patched tree. markdownlint 0.42.1 does
+# depend on re2js 2.9.1, but that release also changes MD042 and MD054 -- the
+# regrade this gate exists to stop -- so the rule engine stays at the version
+# the wrapper pinned and only re2js moves, to the first patched release.
+# regress_override_policy hardcodes this same version in its allow fixture, so
+# editing the constant without editing the fixture fails the gate.
+ALLOWED_RE2JS_PIN="2.8.7"
 # .github (not .github/workflows) so a global install hiding in
 # .github/actions/ is scanned too -- actions are shell scripts same as
 # anything in scripts/, just in a directory the original list skipped.
@@ -97,6 +108,164 @@ INSTALL_PATTERN='(npm|pnpm|yarn|bun)[^#]*([[:space:]]-g([[:space:]]|$)|--global|
 
 fail() { echo "FAIL ${1}: ${2}" >&2; exit 1; }
 
+# ok | resolutions | overrides. resolutions is reported first when both are
+# wrong, so a yarn resolutions block cannot hide behind an allowed-looking
+# overrides object. jq object equality ignores key order, so the allowlist is
+# the object itself, not its formatting. A non-object (a string, an array) is
+# not empty and is not the allowlist.
+override_policy_verdict() {
+  local manifest="$1"
+  jq -r --arg pin "$ALLOWED_RE2JS_PIN" '
+    def obj: type == "object";
+    def resolutions_bad:
+      has("resolutions")
+      and (
+        (.resolutions | obj | not)
+        or (.resolutions | length) != 0
+      );
+    def overrides_ok:
+      (.overrides == null)
+      or (
+        (.overrides | obj)
+        and (
+          (.overrides | length) == 0
+          or .overrides == {"markdownlint": {"re2js": $pin}}
+        )
+      );
+    if resolutions_bad then "resolutions"
+    elif overrides_ok then "ok"
+    else "overrides"
+    end
+  ' "$manifest"
+}
+
+report_override_policy() {
+  local manifest="$1" verdict
+  verdict=$(override_policy_verdict "$manifest") || fail lint-shape "cannot read overrides in ${manifest}"
+  case "$verdict" in
+    ok)
+      if jq -e --arg pin "$ALLOWED_RE2JS_PIN" \
+        '.overrides == {"markdownlint": {"re2js": $pin}}' "$manifest" >/dev/null; then
+        echo "  ok lint-shape: the only override pins markdownlint's re2js to ${ALLOWED_RE2JS_PIN}"
+      else
+        echo "  ok lint-shape: no overrides or resolutions"
+      fi
+      ;;
+    resolutions)
+      echo "FAIL lint-shape: ${manifest} has a non-empty 'resolutions' block; it can move the rule engine underneath a pinned wrapper" >&2
+      return 1
+      ;;
+    overrides)
+      echo "FAIL lint-shape: ${manifest} overrides are not the single allowed pin (markdownlint -> re2js ${ALLOWED_RE2JS_PIN}). Any other override can move the rule engine underneath a pinned wrapper" >&2
+      return 1
+      ;;
+    *)
+      echo "FAIL lint-shape: unexpected override verdict '${verdict}' for ${manifest}" >&2
+      return 1
+      ;;
+  esac
+}
+
+# Silent on success. Returns 1 when the verdict is not the one the case claims,
+# so a later edit that makes the allowlist match a range, a different re2js, or
+# a retargeted markdownlint goes red here even if the live manifest is still
+# the one allowed object.
+expect_override_verdict() {
+  local file="$1" expect="$2" label="$3" got
+  got=$(override_policy_verdict "$file") || {
+    echo "FAIL lint-shape: override regression could not read ${label}" >&2
+    return 1
+  }
+  if [ "$got" = "$expect" ]; then
+    echo "  ok lint-shape: override regression ${label} -> ${expect}"
+    return 0
+  fi
+  echo "FAIL lint-shape: override regression ${label}: expected ${expect}, got ${got}" >&2
+  return 1
+}
+
+# Fixtures are hardcoded, including the allowed "2.8.7", rather than generated
+# from ALLOWED_RE2JS_PIN. The live manifest is checked against the constant;
+# these fixtures are checked against the verdict function. If the constant
+# moves and the allow fixture does not, the allow case stops returning ok.
+regress_override_policy() {
+  local tmp rc=0
+  tmp=$(mktemp -d) || fail lint-shape "mktemp failed; cannot regression-test the override allowlist"
+
+  cat > "${tmp}/absent.json" <<'EOF'
+{}
+EOF
+  cat > "${tmp}/empty-overrides.json" <<'EOF'
+{"overrides":{}}
+EOF
+  cat > "${tmp}/empty-resolutions.json" <<'EOF'
+{"resolutions":{}}
+EOF
+  cat > "${tmp}/allowed.json" <<'EOF'
+{"overrides":{"markdownlint":{"re2js":"2.8.7"}}}
+EOF
+  cat > "${tmp}/allowed-key-order.json" <<'EOF'
+{"overrides":{"markdownlint":{"re2js":"2.8.7"}},"private":true}
+EOF
+  cat > "${tmp}/resolutions.json" <<'EOF'
+{"resolutions":{"re2js":"2.8.7"}}
+EOF
+  cat > "${tmp}/both.json" <<'EOF'
+{"overrides":{"markdownlint":{"re2js":"2.8.7"}},"resolutions":{"re2js":"2.8.7"}}
+EOF
+  cat > "${tmp}/other-package.json" <<'EOF'
+{"overrides":{"htmlhint":"1.9.3"}}
+EOF
+  cat > "${tmp}/retarget-engine.json" <<'EOF'
+{"overrides":{"markdownlint":"0.42.1"}}
+EOF
+  cat > "${tmp}/range.json" <<'EOF'
+{"overrides":{"markdownlint":{"re2js":"^2.8.7"}}}
+EOF
+  cat > "${tmp}/vulnerable.json" <<'EOF'
+{"overrides":{"markdownlint":{"re2js":"2.8.6"}}}
+EOF
+  cat > "${tmp}/later-re2js.json" <<'EOF'
+{"overrides":{"markdownlint":{"re2js":"2.9.1"}}}
+EOF
+  cat > "${tmp}/unscoped.json" <<'EOF'
+{"overrides":{"re2js":"2.8.7"}}
+EOF
+  cat > "${tmp}/extra-nested.json" <<'EOF'
+{"overrides":{"markdownlint":{"re2js":"2.8.7","left-pad":"1.0.0"}}}
+EOF
+  cat > "${tmp}/extra-top.json" <<'EOF'
+{"overrides":{"markdownlint":{"re2js":"2.8.7"},"htmlhint":"1.9.2"}}
+EOF
+  cat > "${tmp}/overrides-array.json" <<'EOF'
+{"overrides":[]}
+EOF
+  cat > "${tmp}/null-overrides.json" <<'EOF'
+{"overrides":null}
+EOF
+
+  expect_override_verdict "${tmp}/absent.json" ok "absent" || rc=1
+  expect_override_verdict "${tmp}/empty-overrides.json" ok "empty overrides" || rc=1
+  expect_override_verdict "${tmp}/empty-resolutions.json" ok "empty resolutions" || rc=1
+  expect_override_verdict "${tmp}/allowed.json" ok "allowed re2js 2.8.7 pin" || rc=1
+  expect_override_verdict "${tmp}/allowed-key-order.json" ok "allowed pin beside other manifest keys" || rc=1
+  expect_override_verdict "${tmp}/resolutions.json" resolutions "resolutions block" || rc=1
+  expect_override_verdict "${tmp}/both.json" resolutions "resolutions plus the allowed override" || rc=1
+  expect_override_verdict "${tmp}/other-package.json" overrides "override of a different package" || rc=1
+  expect_override_verdict "${tmp}/retarget-engine.json" overrides "markdownlint retarget" || rc=1
+  expect_override_verdict "${tmp}/range.json" overrides "re2js range" || rc=1
+  expect_override_verdict "${tmp}/vulnerable.json" overrides "vulnerable re2js" || rc=1
+  expect_override_verdict "${tmp}/later-re2js.json" overrides "re2js newer than the allowlist" || rc=1
+  expect_override_verdict "${tmp}/unscoped.json" overrides "top-level re2js override" || rc=1
+  expect_override_verdict "${tmp}/extra-nested.json" overrides "extra package under markdownlint" || rc=1
+  expect_override_verdict "${tmp}/extra-top.json" overrides "second top-level override" || rc=1
+  expect_override_verdict "${tmp}/overrides-array.json" overrides "overrides array" || rc=1
+  expect_override_verdict "${tmp}/null-overrides.json" ok "null overrides" || rc=1
+
+  rm -rf "$tmp"
+  [ "$rc" -eq 0 ]
+}
+
 check_shape() {
   local tool want hits bad=0
   [ -f "$MANIFEST" ] || fail lint-shape "$MANIFEST does not exist"
@@ -120,18 +289,22 @@ check_shape() {
   done
 
   # An override moves a transitive dependency without touching the version this
-  # gate reads. That is not a corner case here: markdownlint-cli2 is a wrapper,
-  # and the rule engine it bundles -- markdownlint, where MD029 lives -- is
-  # exactly the kind of thing an override retargets. Pinning the wrapper to
-  # X.Y.Z while the engine floats would leave this check printing ok about a
-  # toolchain that regrades content. The repo's whole npm surface is these two
-  # linters, so any override at all is a version nobody chose.
-  for field in overrides resolutions; do
-    if [ "$(jq -r --arg f "$field" '(.[$f] // {}) | length' "$MANIFEST")" != "0" ]; then
-      echo "FAIL lint-shape: ${MANIFEST} has a non-empty '${field}' block; it can move the rule engine underneath a pinned wrapper" >&2
-      bad=1
-    fi
-  done
+  # gate reads. markdownlint-cli2 is a wrapper, and the rule engine it bundles
+  # -- markdownlint, where MD029 lives -- is exactly the kind of thing an
+  # override retargets. Pinning the wrapper to X.Y.Z while the engine floats
+  # would leave this check printing ok about a toolchain that regrades content.
+  #
+  # The one allowed object is {"markdownlint":{"re2js": ALLOWED_RE2JS_PIN}}.
+  # It does not retarget markdownlint. It replaces the vulnerable re2js that
+  # markdownlint 0.42.0 declares, because that is the smallest patched release
+  # and no wrapper release contains it. resolutions stay empty: this repo
+  # installs with npm, and a second override mechanism is another way to move
+  # the engine. A range, a different re2js, a top-level re2js pin, an engine
+  # retarget, or any other key fails. regress_override_policy, run below on
+  # every shape check, is what keeps a later edit from widening that exception
+  # while this branch of the case statement still prints ok.
+  report_override_policy "$MANIFEST" || bad=1
+  regress_override_policy || bad=1
 
   # scan_manifest_scripts assumes .scripts is an object; jq's `to_entries`
   # throws on any other type, and that error would otherwise be swallowed by
