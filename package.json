@@ -6,7 +6,7 @@
   },
   "devDependencies": {
     "htmlhint": "1.9.2",
-    "markdownlint-cli2": "0.24.0"
+    "markdownlint-cli2": "0.24.1"
   },
   "overrides": {
     "markdownlint": {
